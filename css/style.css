@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.nav {
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.title {
+  float: left;
+}
+
+.nav_buttons {
+  float: right;
+}
+
+.main img {
+  width: 500px;
+  height: auto;
+}
