@@ -4,14 +4,14 @@ const NUMBER_OF_COLUMNS = 8;
 const FIELD_COLOR_DARK = "#000000";
 const FIELD_COLOR_LIGHT = "#FFFFFF";
 
-const PIECE_PAWN = 0,
+/* const PIECE_PAWN = 0,
     PIECE_CASTLE = 1,
     PIECE_KNIGHT = 2,
     PIECE_BISHOP = 3,
     PIECE_QUEEN = 4,
-    PIECE_KING = 5;
+    PIECE_KING = 5; */
 
-const IN_PLAY = true;
+/* const IN_PLAY = true; */
 
 $(document).ready(function () {
     drawBoard();
@@ -31,7 +31,7 @@ function drawBoard() {
         // Row
         for (i = 0; i < NUMBER_OF_ROWS; i++) {
             // Column
-            for (i = 0; i < NUMBER_OF_COLUMNS; i++) {
+            for (j = 0; j < NUMBER_OF_COLUMNS; j++) {
                 drawField(i, j);
             }
         }
@@ -45,10 +45,7 @@ function drawBoard() {
  */
 function drawField(rowCount, columnCount) {
     var canvas = $("#chess")[0],
-        boardTopOffset = 50,
-        squareSize = Math.floor(
-            canvas.height - (2 * boardTopOffset) / NUMBER_OF_ROWS
-        ),
+        squareSize = Math.floor(canvas.height / NUMBER_OF_ROWS),
         context;
 
     // Check if canvas exists and is supported.
@@ -80,214 +77,11 @@ function getFieldColor(rowCount, columnCount) {
 
 /**
  *
- * @param {JSON} positions positions of all pieces
- */
-function drawPieces(positions, piecesPNG) {} //drawPieces()
-
-/**
- *
  * @returns {JSON}
  * TODO: Get board state from server
  */
 function getBoardState() {
-    var positionJSON = {
-        white: [
-            {
-                piece: PIECE_CASTLE,
-                row: 0,
-                col: 0,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_KNIGHT,
-                row: 0,
-                col: 1,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_BISHOP,
-                row: 0,
-                col: 2,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_KING,
-                row: 0,
-                col: 3,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_QUEEN,
-                row: 0,
-                col: 4,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_BISHOP,
-                row: 0,
-                col: 5,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_KNIGHT,
-                row: 0,
-                col: 6,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_CASTLE,
-                row: 0,
-                col: 7,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 1,
-                col: 0,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 1,
-                col: 1,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 1,
-                col: 2,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 1,
-                col: 3,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 1,
-                col: 4,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 1,
-                col: 5,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 1,
-                col: 6,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 1,
-                col: 7,
-                status: IN_PLAY,
-            },
-        ],
-        black: [
-            {
-                piece: PIECE_CASTLE,
-                row: 7,
-                col: 0,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_KNIGHT,
-                row: 7,
-                col: 1,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_BISHOP,
-                row: 7,
-                col: 2,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_KING,
-                row: 7,
-                col: 3,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_QUEEN,
-                row: 7,
-                col: 4,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_BISHOP,
-                row: 7,
-                col: 5,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_KNIGHT,
-                row: 7,
-                col: 6,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_CASTLE,
-                row: 7,
-                col: 7,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 6,
-                col: 0,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 6,
-                col: 1,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 6,
-                col: 2,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 6,
-                col: 3,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 6,
-                col: 4,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 6,
-                col: 5,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 6,
-                col: 6,
-                status: IN_PLAY,
-            },
-            {
-                piece: PIECE_PAWN,
-                row: 6,
-                col: 7,
-                status: IN_PLAY,
-            },
-        ],
-    };
+    var positionJSON = $.getJson("defaultBoardState.json");
 
     return positionJSON;
 } //getBoardState()
