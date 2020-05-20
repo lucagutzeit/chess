@@ -4,8 +4,18 @@ const NUMBER_OF_COLUMNS = 8;
 const FIELD_COLOR_DARK = "#000000";
 const FIELD_COLOR_LIGHT = "#FFFFFF";
 
+const PIECE_PAWN = 0,
+    PIECE_CASTLE = 1,
+    PIECE_KNIGHT = 2,
+    PIECE_BISHOP = 3,
+    PIECE_QUEEN = 4,
+    PIECE_KING = 5;
+
+const IN_PLAY = true,
+
+
 $(document).ready(function () {
-  drawBoard();
+    drawBoard();
 });
 
 /**
@@ -13,20 +23,21 @@ $(document).ready(function () {
  * height of the canvas.
  */
 function drawBoard() {
-  var i = 0,
-    canvas = $("#chess")[0];
+    var i = 0,
+        j = 0,
+        canvas = $("#chess")[0];
 
-  // Check for existance of canvas and support in the browser.
-  if (canvas && canvas.getContext) {
-    // Draw each row.
-    for (i = 0; i < NUMBER_OF_ROWS; i++) {
-      drawRow(i);
+    // Check if canvas exists and is supported.
+    if (canvas && canvas.getContext) {
+        // Row
+        for (i = 0; i < NUMBER_OF_ROWS; i++) {
+            // Column
+            for (i = 0; i < NUMBER_OF_COLUMNS; i++) {
+                drawField(i, j);
+            }
+        }
     }
-  }
 } // drawBoard()
-
-/**
-  // drawRow()
 
 /**
  * Draws a field at the given position on the board
@@ -34,23 +45,26 @@ function drawBoard() {
  * @param {*} columnCount
  */
 function drawField(rowCount, columnCount) {
-  var canvas = $("#chess")[0],
-    squareSize = Math.floor(canvas.height / NUMBER_OF_ROWS),
-    context;
+    var canvas = $("#chess")[0],
+        boardTopOffset = 50,
+        squareSize = Math.floor(
+            canvas.height - (2 * boardTopOffset) / NUMBER_OF_ROWS
+        ),
+        context;
 
-  // Check if canvas exists and is supported.
-  if (canvas && canvas.getContext) {
-    context = canvas.getContext("2d");
+    // Check if canvas exists and is supported.
+    if (canvas && canvas.getContext) {
+        context = canvas.getContext("2d");
 
-    // Draw Field.
-    context.fillStyle = getFieldColor(rowCount, columnCount);
-    context.fillRect(
-      columnCount * squareSize,
-      rowCount * squareSize,
-      squareSize,
-      squareSize
-    );
-  }
+        // Draw Field.
+        context.fillStyle = getFieldColor(rowCount, columnCount);
+        context.fillRect(
+            columnCount * squareSize,
+            rowCount * squareSize,
+            squareSize,
+            squareSize
+        );
+    }
 } // drawField()
 
 /**
@@ -60,19 +74,221 @@ function drawField(rowCount, columnCount) {
  * TODO: Choose color by user setting (predertemined skin or custom color)
  */
 function getFieldColor(rowCount, columnCount) {
-  return (rowCount + columnCount) % 2 === 0
-    ? FIELD_COLOR_LIGHT
-    : FIELD_COLOR_DARK;
+    return (rowCount + columnCount) % 2 === 0
+        ? FIELD_COLOR_LIGHT
+        : FIELD_COLOR_DARK;
 } //getField()
 
 /**
- *  Draw the given row of the chess board.
- * @param {Integer} rowCount Row to be drawn.
+ *
+ * @param {JSON} positions positions of all pieces
  */
-function drawRow(rowCount) {
-  var i = 0;
+function drawPieces(positions, piecesPNG) {} //drawPieces()
 
-  for (i = 0; i < NUMBER_OF_COLUMNS; i++) {
-    drawField(rowCount, i);
-  }
-}
+/**
+ *
+ * @returns {JSON}
+ * TODO: Get board state from server
+ */
+function getBoardState() {
+    var positionJSON = {
+        white: [
+            {
+                piece: PIECE_CASTLE,
+                row: 0,
+                col: 0,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_ROUKE,
+                row: 0,
+                col: 1,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_BISHOP,
+                row: 0,
+                col: 2,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_KING,
+                row: 0,
+                col: 3,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_QUEEN,
+                row: 0,
+                col: 4,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_BISHOP,
+                row: 0,
+                col: 5,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_ROUKE,
+                row: 0,
+                col: 6,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_CASTLE,
+                row: 0,
+                col: 7,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 1,
+                col: 0,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 1,
+                col: 1,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 1,
+                col: 2,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 1,
+                col: 3,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 1,
+                col: 4,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 1,
+                col: 5,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 1,
+                col: 6,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 1,
+                col: 7,
+                status: IN_PLAY,
+            },
+        ],
+        black: [
+            {
+                piece: PIECE_CASTLE,
+                row: 7,
+                col: 0,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_ROUKE,
+                row: 7,
+                col: 1,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_BISHOP,
+                row: 7,
+                col: 2,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_KING,
+                row: 7,
+                col: 3,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_QUEEN,
+                row: 7,
+                col: 4,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_BISHOP,
+                row: 7,
+                col: 5,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_ROUKE,
+                row: 7,
+                col: 6,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_CASTLE,
+                row: 7,
+                col: 7,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 6,
+                col: 0,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 6,
+                col: 1,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 6,
+                col: 2,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 6,
+                col: 3,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 6,
+                col: 4,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 6,
+                col: 5,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 6,
+                col: 6,
+                status: IN_PLAY,
+            },
+            {
+                piece: PIECE_PAWN,
+                row: 6,
+                col: 7,
+                status: IN_PLAY,
+            },
+        ],
+    };
+
+    return positionJSON;
+} //getBoardState()
