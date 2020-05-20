@@ -11,8 +11,7 @@ const PIECE_PAWN = 0,
     PIECE_QUEEN = 4,
     PIECE_KING = 5;
 
-const IN_PLAY = true,
-
+const IN_PLAY = true;
 
 $(document).ready(function () {
     drawBoard();
@@ -100,7 +99,7 @@ function getBoardState() {
                 status: IN_PLAY,
             },
             {
-                piece: PIECE_ROUKE,
+                piece: PIECE_KNIGHT,
                 row: 0,
                 col: 1,
                 status: IN_PLAY,
@@ -130,7 +129,7 @@ function getBoardState() {
                 status: IN_PLAY,
             },
             {
-                piece: PIECE_ROUKE,
+                piece: PIECE_KNIGHT,
                 row: 0,
                 col: 6,
                 status: IN_PLAY,
@@ -198,7 +197,7 @@ function getBoardState() {
                 status: IN_PLAY,
             },
             {
-                piece: PIECE_ROUKE,
+                piece: PIECE_KNIGHT,
                 row: 7,
                 col: 1,
                 status: IN_PLAY,
@@ -228,7 +227,7 @@ function getBoardState() {
                 status: IN_PLAY,
             },
             {
-                piece: PIECE_ROUKE,
+                piece: PIECE_KNIGHT,
                 row: 7,
                 col: 6,
                 status: IN_PLAY,
