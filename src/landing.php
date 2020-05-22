@@ -23,7 +23,7 @@
             <input type="email" class="form-control" id="exampleInputEmail1" required>
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
+            <label for="exampleInputPassword1">Passwort</label>
             <input type="password" class="form-control" id="exampleInputPassword1" required>
           </div>
           <button type="submit" class="btn btn-outline-success">Login</button>

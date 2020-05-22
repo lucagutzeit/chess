@@ -10,11 +10,11 @@
       <div class="form-row">
         <div class="form-group col-md-7">
           <label for="inputEmail4">Email</label>
-          <input type="email" class="form-control" id="inputEmail" name="inputEmail4" required>
+          <input type="email" class="form-control" id="inputEmail" name="inputEmail" required>
         </div>
           <div class="form-group col-md-5">
             <label for="inputPassword">Passwort</label>
-            <input type="password" class="form-control" id="inputPassword" name="inputPassword4" required>
+            <input type="password" class="form-control" id="inputPassword" name="inputPassword" required>
         </div>
       </div>
       <div class="form-group">
