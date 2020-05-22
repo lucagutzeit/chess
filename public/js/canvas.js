@@ -1,27 +1,33 @@
-const NUMBER_OF_ROWS = 8;
-const NUMBER_OF_COLUMNS = 8;
 
-const FIELD_COLOR_DARK = "#000000";
-const FIELD_COLOR_LIGHT = "#FFFFFF";
+class Board {
+	
+// Constructor
+	constructor(){
+		this.numberOfRows = 8;
+		this.numberOfColumns = 8;
+		this.fieldColorBlack = "#000000";
+		this.fieldColorWhite = "#FFFFFF";
+		
+		// two dimensional Array as a coordinate System to work with. 
+		// for basic functionalities nesseccary
+		this.coordinates = 
+	   [[0,0,0,0,0,0,0,0]
+		[0,0,0,0,0,0,0,0]
+		[0,0,0,0,0,0,0,0]
+		[0,0,0,0,0,0,0,0]
+		[0,0,0,0,0,0,0,0]
+		[0,0,0,0,0,0,0,0]
+		[0,0,0,0,0,0,0,0]
+		[0,0,0,0,0,0,0,0]];
+	}
 
-/* const PIECE_PAWN = 0,
-    PIECE_CASTLE = 1,
-    PIECE_KNIGHT = 2,
-    PIECE_BISHOP = 3,
-    PIECE_QUEEN = 4,
-    PIECE_KING = 5; */
-
-/* const IN_PLAY = true; */
-
-$(document).ready(function () {
-    drawBoard();
-});
+// Methods
 
 /**
  * Draws the chess board, by calculating the size of one field depending on the
  * height of the canvas.
  */
-function drawBoard() {
+drawBoard() {
     var i = 0,
         j = 0,
         canvas = $("#chess")[0];
@@ -29,23 +35,22 @@ function drawBoard() {
     // Check if canvas exists and is supported.
     if (canvas && canvas.getContext) {
         // Row
-        for (i = 0; i < NUMBER_OF_ROWS; i++) {
+        for (i = 0; i < this.numberOfRows; i++) {
             // Column
-            for (j = 0; j < NUMBER_OF_COLUMNS; j++) {
-                drawField(i, j);
-            }
-        }
-    }
-} // drawBoard()
-
+            for (j = 0; j < this.numberOfColumns; j++) {
+                this.drawField(i, j);
+			}
+		}
+	}
+}
 /**
  * Draws a field at the given position on the board
  * @param {*} rowCount
  * @param {*} columnCount
  */
-function drawField(rowCount, columnCount) {
+drawField(rowCount, columnCount) {
     var canvas = $("#chess")[0],
-        squareSize = Math.floor(canvas.height / NUMBER_OF_ROWS),
+        squareSize = Math.floor(canvas.height / this.numberOfRows),
         context;
 
     // Check if canvas exists and is supported.
@@ -53,7 +58,7 @@ function drawField(rowCount, columnCount) {
         context = canvas.getContext("2d");
 
         // Draw Field.
-        context.fillStyle = getFieldColor(rowCount, columnCount);
+        context.fillStyle = this.getFieldColor(rowCount, columnCount);
         context.fillRect(
             columnCount * squareSize,
             rowCount * squareSize,
@@ -61,27 +66,98 @@ function drawField(rowCount, columnCount) {
             squareSize
         );
     }
-} // drawField()
-
+}
 /**
  * Calculates the color of a field by its position.
  * @param {Integer} rowCount Row of the field.
  * @param {Integer} columnCount Column of the field.
  * TODO: Choose color by user setting (predertemined skin or custom color)
  */
-function getFieldColor(rowCount, columnCount) {
+getFieldColor(rowCount, columnCount) {
     return (rowCount + columnCount) % 2 === 0
-        ? FIELD_COLOR_LIGHT
-        : FIELD_COLOR_DARK;
-} //getField()
-
+        ? this.fieldColorWhite
+        : this.fieldColorBlack;
+}
 /**
+ * Draws a piece onto the chessboard
  *
- * @returns {JSON}
- * TODO: Get board state from server
+ * @returns
+ * TODO:
  */
-function getBoardState() {
-    var positionJSON = $.getJson("defaultBoardState.json");
+drawPiece(chesspiece,coordX,coordY){
+	
+	var canvas = $("#chess")[0];
+	var ctx = canvas.getContext("2d");
+	
+	switch(chesspiece){
+		
+		// Pawn
+		case 1:{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\test\\pawn.png';
+			break;
+			}
+		
+		// Rook
+		case 2:{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\test\\rook.png';
+			break;
+			}
+		
+		// Knight
+		case 3:{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\test\\knight.png';
+			break;
+			}	
+		
+		// Bishop
+		case 4:{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\test\\bishop.png';
+			break;
+			}
+		
+		// Queen
+		case 5:{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\test\\queen.png';
+			break;
+			}
+		
+		// King
+		case 6:{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\test\\king.png';
+			break;
+			}
+	}
+ }
 
-    return positionJSON;
-} //getBoardState()
+//end
+}
+
+$(document).ready(function () {
+	var board = new Board();
+	board.drawBoard();
+	board.drawPiece(1,0,0);
+});
