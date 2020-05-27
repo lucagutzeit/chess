@@ -11,20 +11,20 @@
   <body>
     <nav class="navbar navbar-light bg-light">
       <a class="navbar-brand">Chess</a>
-        <form class="form-inline">
+        <form class="form-inline" >
           <a href="anmelden.php"><button type="button" class="btn btn-outline-danger">Anmelden</button></a>
         </form>
       </nav>
 
     <div class = register>
-      <form method="post">
+      <form action= "Login_logic.php" method="post">
           <div class="form-group">
-            <label for="exampleInputEmail1">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" required>
+            <label for="nickname">Nickname</label>
+            <input type="nickname" class="form-control" id="nickname" required>
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Passwort</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" required>
+            <label for="password">Passwort</label>
+            <input type="password" class="form-control" id="password" required>
           </div>
           <button type="submit" class="btn btn-outline-success">Login</button>
       </form>
