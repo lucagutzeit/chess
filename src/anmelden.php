@@ -11,6 +11,14 @@
         <div class="form-group col-md-7">
           <label for="inputEmail4">Email</label>
           <input type="email" class="form-control" id="inputEmail" name="inputEmail" required>
+
+          <div class="invalid-feedback">
+            Diese Email ist bereits registriert!
+          </div>
+          <div class="valid-feedback">
+            Diese Email wurde noch nicht registriert.
+          </div>
+
         </div>
           <div class="form-group col-md-5">
             <label for="inputPassword">Passwort</label>
@@ -30,5 +38,11 @@
 
 
     <?php
+
+    $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    if (strpos($Url, "email=exist")==true){
+      $('#inputEmail').addClass("is-invalid");
+    }
+
     include 'footer.html'
      ?>

@@ -24,7 +24,15 @@ if($sql_email_results->num_rows == 0 && $sql_nickname_results->num_rows ==0 ){
     $sql_insert->execute();
     header('location: landing.php');
   }else{
-    header('location: landing.php');
+    if($sql_email_results->num_rows == 1 ){
+      header('location: anmelden.php?email=exist');
+      //echo"Email existiert bereits";
+
+    }
+    else if ($sql_nickname_results->num_rows ==1) {
+      echo"Nickname existiert bereits";
+    }
+
     exit();
   }
 
