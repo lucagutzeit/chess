@@ -1,4 +1,17 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="Stylesheet" href="../public/css/Stylesheet.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <title>
+      Anmeldung
+    </title>
+  </head>
+<body>
+  
 <form class="container" action= "anmelden_logic.php" method="post">
 
       <div class="form-row">
@@ -41,7 +54,7 @@
 
     $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     if (strpos($Url, "email=exist")==true){
-      $('#inputEmail').addClass("is-invalid");
+      echo '<script>$("#inputEmail").addClass("is-invalid")</script>';
     }
 
     include 'footer.html'
