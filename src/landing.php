@@ -20,11 +20,15 @@
       <form action= "Login_logic.php" method="post">
           <div class="form-group">
             <label for="nickname">Nickname</label>
-            <input type="nickname" class="form-control" id="nickname" required>
+            <input type="nickname" class="form-control" id="nickname" name="nickname" required>
           </div>
           <div class="form-group">
             <label for="password">Passwort</label>
-            <input type="password" class="form-control" id="password" required>
+            <input type="password" class="form-control" id="password" name="password" required>
+
+            <div class="invalid-feedback">
+              Das Passwort ist Falsch
+            </div>
           </div>
           <button type="submit" class="btn btn-outline-success">Login</button>
       </form>
@@ -32,5 +36,11 @@
   </body>
 
 <?php
+  $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+  if (strpos($Url, "error=passwort")==true){
+    echo '<script>$("#password").addClass("is-invalid")</script>';
+  }
+
   include 'footer.html';
  ?>
