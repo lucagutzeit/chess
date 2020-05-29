@@ -11,14 +11,18 @@
     $sql->execute();
     $sql_result = $sql->get_result();
 
+    //If nickname does exist 
     if ($sql_result->num_rows==1){
       $result = $sql_result->fetch_assoc();
+
+      // Checks if passwort exists in $result
       if (isset($result['Passwort'])){
-        if(password_verify ( $password, $result['Passwort'] ) == true){
+
+        // Validates password
+        if(password_verify( $password, $result['Passwort'] ) == true){
           echo "Congrats";
         }else {
           header ('location: landing.php?error=passwort');
-          exit();
         }
       }else{
         echo "array Fehler";
@@ -26,8 +30,8 @@
     }
     else{
       header ('location: landing.php?error=nickname');
-      exit();
     }
 
-
+    $connection->close();
+    $sql->close();
  ?>

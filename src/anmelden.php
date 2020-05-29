@@ -22,7 +22,7 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-7">
-          <label for="inputEmail4">Email</label>
+          <label for="inputEmail">Email</label>
           <input type="email" class="form-control" id="inputEmail" name="inputEmail" required>
 
           <div class="invalid-feedback">
