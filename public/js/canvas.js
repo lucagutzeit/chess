@@ -1,4 +1,3 @@
-
 //TODO: attribut des Typs Skin einfügen und Skin klasse schreiben welche die src als attribut speichert
 class Board {
 	
@@ -177,63 +176,63 @@ initializeBoardstate(){
 				// rooks
 				case 0:
 				case 7:
-				this.boardstate[i][j] = "blackRook";
+				this.boardstate[i][j] = new Rook(i,j,"black","blackRook");
 				break;
 				// knights
 				case 1:
 				case 6:
-				this.boardstate[i][j] = "blackKnight";
+				this.boardstate[i][j] = new Knight(i,j,"black","blackKnight");
 				break;
 				// bishops
 				case 2:
 				case 5:
-				this.boardstate[i][j] = "blackBishop";
+				this.boardstate[i][j] = new Bishop(i,j,"black","blackBishop");
 				break;
 				// Queen
 				case 3:
-				this.boardstate[i][j] = "blackQueen";
+				this.boardstate[i][j] = new Queen(i,j,"black","blackQueen");
 				break;
 				// King
 				case 4:
-				this.boardstate[i][j] = "blackKing";
+				this.boardstate[i][j] = new King(i,j,"black","blackKing");
 				break;
 				
 				default: break;
 				}
 			}
 			else if (i === 1) {
-				this.boardstate[i][j] = "blackPawn";
+				this.boardstate[i][j] = new Pawn(i,j,"black","blackPawn");
 			}
 			else if (i > 1 && i < 6) {
 				this.boardstate[i][j] = "";
 			}
 			else if (i === 6) {
-				this.boardstate[i][j] = "whitePawn";
+				this.boardstate[i][j] = new Pawn(i,j,"white","whitePawn");
 			}
 			else if (i === 7) {
 				switch(j){
 				// rooks
 				case 0:
 				case 7:
-				this.boardstate[i][j] = "whiteRook";
+				this.boardstate[i][j] = new Rook(i,j,"white","whiteRook");
 				break;
 				// knights
 				case 1:
 				case 6:
-				this.boardstate[i][j] = "whiteKnight";
+				this.boardstate[i][j] = new Knight(i,j,"white","whiteKnight");
 				break;
 				// bishops
 				case 2:
 				case 5:
-				this.boardstate[i][j] = "whiteBishop";
+				this.boardstate[i][j] = new Bishop(i,j,"white","whiteBishop");
 				break;
 				// Queen
 				case 3:
-				this.boardstate[i][j] = "whiteQueen";
+				this.boardstate[i][j] = new Queen(i,j,"white","whiteQueen");
 				break;
 				// King
 				case 4:
-				this.boardstate[i][j] = "whiteKing";
+				this.boardstate[i][j] = new King(i,j,"white","whiteKing");
 				break;
 				
 				default: break;
@@ -254,49 +253,51 @@ drawBoardstate(){
 		
 	for(var i = 0; i< 8; i++){
 		for(var j = 0; j< 8; j++){
-			switch(this.boardstate[i][j]){
-				
-				//white
-				case "whitePawn" :
-				this.drawPiece(1,j*canvas.width/8,i*canvas.height/8);
-				break;
-				case "whiteRook" :
-				this.drawPiece(2,j*canvas.width/8,i*canvas.height/8);
-				break;
-				case "whiteKnight":
-				this.drawPiece(3,j*canvas.width/8,i*canvas.height/8);
-				break;
-				case "whiteBishop":
-				this.drawPiece(4,j*canvas.width/8,i*canvas.height/8);
-				break;
-				case "whiteQueen":
-				this.drawPiece(5,j*canvas.width/8,i*canvas.height/8);
-				break;
-				case "whiteKing" :
-				this.drawPiece(6,j*canvas.width/8,i*canvas.height/8);
-				break;
-				
-				//black
-				case "blackPawn":
-				this.drawPiece(1,j*canvas.width/8,i*canvas.height/8);
-				break;
-				case "blackRook":
-				this.drawPiece(2,j*canvas.width/8,i*canvas.height/8);
-				break;
-				case "blackKnight":
-				this.drawPiece(3,j*canvas.width/8,i*canvas.height/8);
-				break;
-				case "blackBishop":
-				this.drawPiece(4,j*canvas.width/8,i*canvas.height/8);
-				break;
-				case "blackQueen":
-				this.drawPiece(5,j*canvas.width/8,i*canvas.height/8);
-				break;
-				case "blackKing":
-				this.drawPiece(6,j*canvas.width/8,i*canvas.height/8);
-				break;
-				
-				default : break;
+			if(this.boardstate[i][j] != ""){
+				switch(this.boardstate[i][j].name){
+					
+					//white
+					case "whitePawn" :
+					this.drawPiece(1,j*canvas.width/8,i*canvas.height/8);
+					break;
+					case "whiteRook" :
+					this.drawPiece(2,j*canvas.width/8,i*canvas.height/8);
+					break;
+					case "whiteKnight":
+					this.drawPiece(3,j*canvas.width/8,i*canvas.height/8);
+					break;
+					case "whiteBishop":
+					this.drawPiece(4,j*canvas.width/8,i*canvas.height/8);
+					break;
+					case "whiteQueen":
+					this.drawPiece(5,j*canvas.width/8,i*canvas.height/8);
+					break;
+					case "whiteKing" :
+					this.drawPiece(6,j*canvas.width/8,i*canvas.height/8);
+					break;
+					
+					//black
+					case "blackPawn":
+					this.drawPiece(1,j*canvas.width/8,i*canvas.height/8);
+					break;
+					case "blackRook":
+					this.drawPiece(2,j*canvas.width/8,i*canvas.height/8);
+					break;
+					case "blackKnight":
+					this.drawPiece(3,j*canvas.width/8,i*canvas.height/8);
+					break;
+					case "blackBishop":
+					this.drawPiece(4,j*canvas.width/8,i*canvas.height/8);
+					break;
+					case "blackQueen":
+					this.drawPiece(5,j*canvas.width/8,i*canvas.height/8);
+					break;
+					case "blackKing":
+					this.drawPiece(6,j*canvas.width/8,i*canvas.height/8);
+					break;
+					
+					default : break;
+				}
 			}
 		}
 	}
