@@ -1,22 +1,18 @@
 class Chesspiece {
 	
-	if (this.constructor === AbstractClass){
-		throw new Error('Cannot instanciate abstract class');
+	constructor(row,column,color,name){
+		this.row = row;
+		this.column = column;
+		this.color = color;
+		this.name = name;
+		this.moves = [];
 	}
-	var name;
-	var color;
-	var row;
-	var column;
+
 }
 class Pawn extends Chesspiece {
-	var moves;
 	//constructor 
-	constructor(row,column,color){
-		this.color = color;
-		this.name = "Pawn";
-		this.row = row;
-		this.column = column:
-		this.moves = [];
+	constructor(row,column,color,name){
+		super(row,column,color,name);
 	}
 	setColor(color){
 		this.color = color;
@@ -27,17 +23,12 @@ class Pawn extends Chesspiece {
 	}
 }
 class Rook extends Chesspiece {
-	var moves;
 	//constructor 
-	constructor(row,column,color){
-		this.color = "color";
-		this.name = "Rook";
-		this.row = row;
-		this.column = column:
-		this.moves = [];
+	constructor(row,column,color,name){
+		super(row,column,color,name);
 	}
 	setColor(color){
-			this.color = color;
+		this.color = color;
 	}
 	//TODO: implement logic
 	setMoves(board){
@@ -45,17 +36,12 @@ class Rook extends Chesspiece {
 	}
 }
 class Knight extends Chesspiece {
-	var moves;
 	//constructor 
-	constructor(row,column){
-		this.color = "color";
-		this.name = "Knight";
-		this.row = row;
-		this.column = column:
-		this.moves = [];
+	constructor(row,column,color,name){
+		super(row,column,color,name);
 	}
 	setColor(color){
-			this.color = color;
+		this.color = color;
 	}
 	//TODO: implement logic
 	setMoves(board){
@@ -63,17 +49,12 @@ class Knight extends Chesspiece {
 	}
 }
 class Bishop extends Chesspiece {
-	var moves;
 	//constructor 
-	constructor(row,column){
-		this.color = "color";
-		this.name = "Bishop";
-		this.row = row;
-		this.column = column:
-		this.moves = [];
+	constructor(row,column,color,name){
+		super(row,column,color,name);
 	}
 	setColor(color){
-			this.color = color;
+		this.color = color;
 	}
 	//TODO: implement logic
 	setMoves(board){
@@ -81,17 +62,12 @@ class Bishop extends Chesspiece {
 	}
 }
 class Queen extends Chesspiece {
-	var moves;
 	//constructor 
-	constructor(row,column){
-		this.color = "color";
-		this.name = "Queen";
-		this.row = row;
-		this.column = column:
-		this.moves = [];
+		constructor(row,column,color,name){
+		super(row,column,color,name);
 	}
 	setColor(color){
-			this.color = color;
+		this.color = color;
 	}
 	//TODO: implement logic
 	setMoves(board){
@@ -99,17 +75,13 @@ class Queen extends Chesspiece {
 	}
 }
 class King extends Chesspiece {
-	var moves;
 	//constructor 
-	constructor(row,column){
-		this.color = "color";
-		this.name = "King";
-		this.row = row;
-		this.column = column:
-		this.moves = [];
+	constructor(row,column,color,name){
+		super(row,column,color,name);
+
 	}
 	setColor(color){
-			this.color = color;
+		this.color = color;
 	}
 	//TODO: implement logic
 	setMoves(board){
