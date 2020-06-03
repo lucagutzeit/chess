@@ -9,10 +9,10 @@
 
 }
 .rectangle{
-
+  border-radius: 10px;
   height: 227px;
   width: 255px;
-  background-color: #ADADAD;
+  background-color: #CFCFCF;
 }
 
 .login{

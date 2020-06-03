@@ -46,7 +46,7 @@
         <div class="form-check">
           <input class="form-check-input" type="checkbox" id="gridCheck" required>
           <label class="form-check-label" for="gridCheck">
-            Ich akzeptiere die <a href="AGB.php" target="_blank">AGB</a> //opens AGB in new Tab
+            Ich akzeptiere die <a href="AGB.php" target="_blank">AGB</a> <!--opens in new tab-->
           </label>
         </div>
       </div>
