@@ -176,7 +176,7 @@ initializeBoardstate(){
 				// rooks
 				case 0:
 				case 7:
-				this.boardstate[i][j] = new Rook(i,j,"black","blackRook");
+				this.boardstate[i][j] = new Rook(i,j,"black","blackRook",this.boardstate);
 				break;
 				// knights
 				case 1:
@@ -186,7 +186,7 @@ initializeBoardstate(){
 				// bishops
 				case 2:
 				case 5:
-				this.boardstate[i][j] = new Bishop(i,j,"black","blackBishop");
+				this.boardstate[i][j] = new Bishop(i,j,"black","blackBishop",this.boardstate);
 				break;
 				// Queen
 				case 3:
@@ -201,20 +201,20 @@ initializeBoardstate(){
 				}
 			}
 			else if (i === 1) {
-				this.boardstate[i][j] = new Pawn(i,j,"black","blackPawn");
+				this.boardstate[i][j] = new Pawn(i,j,"black","blackPawn",this.boardstate);
 			}
 			else if (i > 1 && i < 6) {
 				this.boardstate[i][j] = "";
 			}
 			else if (i === 6) {
-				this.boardstate[i][j] = new Pawn(i,j,"white","whitePawn");
+				this.boardstate[i][j] = new Pawn(i,j,"white","whitePawn",this.boardstate);
 			}
 			else if (i === 7) {
 				switch(j){
 				// rooks
 				case 0:
 				case 7:
-				this.boardstate[i][j] = new Rook(i,j,"white","whiteRook");
+				this.boardstate[i][j] = new Rook(i,j,"white","whiteRook",this.boardstate);
 				break;
 				// knights
 				case 1:
@@ -224,7 +224,7 @@ initializeBoardstate(){
 				// bishops
 				case 2:
 				case 5:
-				this.boardstate[i][j] = new Bishop(i,j,"white","whiteBishop");
+				this.boardstate[i][j] = new Bishop(i,j,"white","whiteBishop",this.boardstate);
 				break;
 				// Queen
 				case 3:
@@ -310,6 +310,15 @@ $(document).ready(function () {
 	board.drawBoard();
 	//board.drawPiece(1,0,0);
 	board.initializeBoardstate();
+	//test
+	board.boardstate[5][5] = new Rook(5,5,"white","whiteRook",board.boardstate);
+	board.boardstate[4][4] = new Bishop(4,4,"white","whiteBishop",board.boardstate);
+	
+	console.log(board.boardstate[4][4].moves);
+	console.log(board.boardstate[5][5].moves);
+	console.log(board.boardstate[6][6].moves);
+	
+	//test ende
 	board.drawBoardstate();
 	
 });
