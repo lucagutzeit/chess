@@ -5,34 +5,31 @@ class Chesspiece {
 		this.column = column;
 		this.color = color;
 		this.name = name;
+		// einträge im array moves nach schema [row,column],[row2,column2]...
 		this.moves = [];
 	}
 
 }
 class Pawn extends Chesspiece {
 	//constructor 
-	constructor(row,column,color,name){
+	constructor(row,column,color,name,boardstate){
 		super(row,column,color,name);
-	}
-	setColor(color){
-		this.color = color;
+		this.setMoves(boardstate);
 	}
 	//TODO: implement logic
-	setMoves(board){
-		var boardstate = board.getBoardstate();
+	setMoves(boardstate){
+		moveLogic(this,boardstate);
 	}
 }
 class Rook extends Chesspiece {
 	//constructor 
-	constructor(row,column,color,name){
+	constructor(row,column,color,name,boardstate){
 		super(row,column,color,name);
-	}
-	setColor(color){
-		this.color = color;
+		this.setMoves(boardstate);
 	}
 	//TODO: implement logic
-	setMoves(board){
-		var boardstate = board.getBoardstate();
+	setMoves(boardstate){
+		moveLogic(this,boardstate);
 	}
 }
 class Knight extends Chesspiece {
@@ -40,25 +37,20 @@ class Knight extends Chesspiece {
 	constructor(row,column,color,name){
 		super(row,column,color,name);
 	}
-	setColor(color){
-		this.color = color;
-	}
 	//TODO: implement logic
-	setMoves(board){
-		var boardstate = board.getBoardstate();
+	setMoves(boardstate){
+		moveLogic(this,boardstate);
 	}
 }
 class Bishop extends Chesspiece {
 	//constructor 
-	constructor(row,column,color,name){
+	constructor(row,column,color,name,boardstate){
 		super(row,column,color,name);
-	}
-	setColor(color){
-		this.color = color;
+		this.setMoves(boardstate);
 	}
 	//TODO: implement logic
-	setMoves(board){
-		var boardstate = board.getBoardstate();
+	setMoves(boardstate){
+		moveLogic(this,boardstate);
 	}
 }
 class Queen extends Chesspiece {
@@ -66,12 +58,9 @@ class Queen extends Chesspiece {
 		constructor(row,column,color,name){
 		super(row,column,color,name);
 	}
-	setColor(color){
-		this.color = color;
-	}
 	//TODO: implement logic
-	setMoves(board){
-		var boardstate = board.getBoardstate();
+	setMoves(boardstate){
+		moveLogic(this,boardstate);
 	}
 }
 class King extends Chesspiece {
@@ -80,11 +69,8 @@ class King extends Chesspiece {
 		super(row,column,color,name);
 
 	}
-	setColor(color){
-		this.color = color;
-	}
 	//TODO: implement logic
-	setMoves(board){
-		var boardstate = board.getBoardstate();
+	setMoves(boardstate){
+		moveLogic(this,boardstate);
 	}
 }
