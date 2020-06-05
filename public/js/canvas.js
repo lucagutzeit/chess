@@ -153,7 +153,7 @@ drawPiece(chesspiece,coordX,coordY){
 			img.onload = function(){
 				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
 			};
-			img.src = '..\\resources\\skins\\test\\king.png';
+			img.src = '..\\resources\\skins\\beton\\KingSchwarz1-01.png';
 			break;
 			}
 			
@@ -181,7 +181,7 @@ initializeBoardstate(){
 				// knights
 				case 1:
 				case 6:
-				this.boardstate[i][j] = new Knight(i,j,"black","blackKnight");
+				this.boardstate[i][j] = new Knight(i,j,"black","blackKnight",this.boardstate);
 				break;
 				// bishops
 				case 2:
@@ -190,11 +190,11 @@ initializeBoardstate(){
 				break;
 				// Queen
 				case 3:
-				this.boardstate[i][j] = new Queen(i,j,"black","blackQueen");
+				this.boardstate[i][j] = new Queen(i,j,"black","blackQueen",this.boardstate);
 				break;
 				// King
 				case 4:
-				this.boardstate[i][j] = new King(i,j,"black","blackKing");
+				this.boardstate[i][j] = new King(i,j,"black","blackKing",this.boardstate);
 				break;
 				
 				default: break;
@@ -219,7 +219,7 @@ initializeBoardstate(){
 				// knights
 				case 1:
 				case 6:
-				this.boardstate[i][j] = new Knight(i,j,"white","whiteKnight");
+				this.boardstate[i][j] = new Knight(i,j,"white","whiteKnight",this.boardstate);
 				break;
 				// bishops
 				case 2:
@@ -228,11 +228,11 @@ initializeBoardstate(){
 				break;
 				// Queen
 				case 3:
-				this.boardstate[i][j] = new Queen(i,j,"white","whiteQueen");
+				this.boardstate[i][j] = new Queen(i,j,"white","whiteQueen",this.boardstate);
 				break;
 				// King
 				case 4:
-				this.boardstate[i][j] = new King(i,j,"white","whiteKing");
+				this.boardstate[i][j] = new King(i,j,"white","whiteKing",this.boardstate);
 				break;
 				
 				default: break;
@@ -313,10 +313,15 @@ $(document).ready(function () {
 	//test
 	board.boardstate[5][5] = new Rook(5,5,"white","whiteRook",board.boardstate);
 	board.boardstate[4][4] = new Bishop(4,4,"white","whiteBishop",board.boardstate);
+	board.boardstate[4][2] = new Queen(4,2,"black","blackQueen",board.boardstate);
+	board.boardstate[3][6] = new King(3,6,"black","blackKing",board.boardstate);
 	
 	console.log(board.boardstate[4][4].moves);
 	console.log(board.boardstate[5][5].moves);
 	console.log(board.boardstate[6][6].moves);
+	console.log(board.boardstate[6][7].moves);
+	console.log(board.boardstate[4][2].moves);
+	console.log(board.boardstate[3][6].moves);
 	
 	//test ende
 	board.drawBoardstate();

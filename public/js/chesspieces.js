@@ -16,7 +16,7 @@ class Pawn extends Chesspiece {
 		super(row,column,color,name);
 		this.setMoves(boardstate);
 	}
-	//TODO: implement logic
+
 	setMoves(boardstate){
 		moveLogic(this,boardstate);
 	}
@@ -27,17 +27,17 @@ class Rook extends Chesspiece {
 		super(row,column,color,name);
 		this.setMoves(boardstate);
 	}
-	//TODO: implement logic
+
 	setMoves(boardstate){
 		moveLogic(this,boardstate);
 	}
 }
 class Knight extends Chesspiece {
 	//constructor 
-	constructor(row,column,color,name){
-		super(row,column,color,name);
+	constructor(row,column,color,name,boardstate){
+		super(row,column,color,name,boardstate);
 	}
-	//TODO: implement logic
+
 	setMoves(boardstate){
 		moveLogic(this,boardstate);
 	}
@@ -48,28 +48,29 @@ class Bishop extends Chesspiece {
 		super(row,column,color,name);
 		this.setMoves(boardstate);
 	}
-	//TODO: implement logic
+	
 	setMoves(boardstate){
 		moveLogic(this,boardstate);
 	}
 }
 class Queen extends Chesspiece {
 	//constructor 
-		constructor(row,column,color,name){
+		constructor(row,column,color,name,boardstate){
 		super(row,column,color,name);
+		this.setMoves(boardstate);
 	}
-	//TODO: implement logic
+	
 	setMoves(boardstate){
 		moveLogic(this,boardstate);
 	}
 }
 class King extends Chesspiece {
 	//constructor 
-	constructor(row,column,color,name){
+	constructor(row,column,color,name,boardstate){
 		super(row,column,color,name);
-
+		this.setMoves(boardstate);
 	}
-	//TODO: implement logic
+	
 	setMoves(boardstate){
 		moveLogic(this,boardstate);
 	}
