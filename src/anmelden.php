@@ -60,7 +60,7 @@
 
     $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     //check if there is a String after the URL. If so the user gets an error message
-    if (strpos($Url, "email=exist")==true){
+    if (strpos($Url, "email=exist")==true){  
       echo '<script>$("#inputEmail").addClass("is-invalid")</script>';
     }
     if (strpos($Url, "nickname=exist")==true){

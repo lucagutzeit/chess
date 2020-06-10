@@ -24,7 +24,7 @@
     </nav>
 
     <?php
-    //Error Message when there is a wrong input
+    //Error Message when the nickname or the password is wrong
     $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     if (strpos($Url, "error=FalscheEingabe")==true){
       echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -35,6 +35,7 @@
             </div> </html>';
     }
 
+    //Error Message if there is a Error wich is not caused by the user
     if (strpos($Url, "error=Fehler")==true){
       echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>Etwas ist schief gelaufen!</strong> Bitte versuchen sie es später noch einmal.

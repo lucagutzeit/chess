@@ -11,7 +11,7 @@
     $sql->execute();
     $sql_result = $sql->get_result();
 
-    //If nickname does exist
+    //check if nickname exists
     if ($sql_result->num_rows==1){
       //results gets written in an array
       $result = $sql_result->fetch_assoc();
@@ -28,7 +28,6 @@
         }
       }else{
         //if there is a Problem with the array
-        //echo "array Fehler";
         header ('location: landing.php?Fehler');
       }
     }
