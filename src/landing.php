@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="Stylesheet" href="../public/css/Stylesheet.css">
-    <link rel="Stylesheet" href="../public/css/StylesheetLanding.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <title>
-        Chess
-    </title>
-  </head>
+<head>
+  <meta charset="utf-8">
+  <link rel="Stylesheet" href="./public/css/Stylesheet.css">
+  <link rel="Stylesheet" href="./public/css/StylesheetLanding.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <title>
+    Chess
+  </title>
+</head>
 
 
-  <body>
-    <nav class="navbar navbar-light bg-light">
+<body>
+  <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand">Chess</a>
-        <form class="form-inline" >
-        <a href="anmelden.php">
-            <button type="button" class="btn btn-outline-danger">Anmelden</button>
-        </a>
-        </form>
-    </nav>
+    <form class="form-inline">
+      <a href="anmelden.php">
+        <button type="button" class="btn btn-outline-danger">Anmelden</button>
+      </a>
+    </form>
+  </nav>
+  <div class="background">
 
     <?php
+    // TODO: Change to AJAX
     //Error Message when the nickname or the password is wrong
     $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    if (strpos($Url, "error=FalscheEingabe")==true){
+    if (strpos($Url, "error=FalscheEingabe") == true) {
       echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>Falsche Eingabe!</strong> Passwort/Nickname ist Falsch.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -35,8 +38,9 @@
             </div> </html>';
     }
 
+
     //Error Message if there is a Error wich is not caused by the user
-    if (strpos($Url, "error=Fehler")==true){
+    if (strpos($Url, "error=Fehler") == true) {
       echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>Etwas ist schief gelaufen!</strong> Bitte versuchen sie es später noch einmal.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -46,29 +50,29 @@
     }
     ?>
 
-    <div class = register>
-      <div class = rectangle>
-        <div class =login>
-        <form action= "Login_logic.php" method="post">
+    <div class=register>
+      <div class=rectangle>
+        <div class=login>
+          <form action="./src/Login_logic.php" method="post">
             <div class="form-group">
-                <label for="nickname">Nickname</label>
-                <input type="nickname" class="form-control" id="nickname" name="nickname" required>
+              <label for="nickname">Nickname</label>
+              <input type="nickname" class="form-control" id="nickname" name="nickname" required>
             </div>
             <div class="form-group">
-                <label for="password">Passwort</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+              <label for="password">Passwort</label>
+              <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <button type="submit" class="btn btn-outline-success">Login</button>
-        </form>
+          </form>
         </div>
       </div>
     </div>
-
-  </body>
-
-
+  </div>
+</body>
 
 
-    <?php
-        include 'footer.html';
-    ?>
+
+
+<?php
+include 'footer.html';
+?>
