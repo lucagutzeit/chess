@@ -95,68 +95,113 @@ drawPiece(chesspiece,coordX,coordY){
 	var canvas = $("#chess")[0];
 	var ctx = canvas.getContext("2d");
 	
-	switch(chesspiece){
+	switch(chesspiece.name){
 		
 		// Pawn
-		case 1:{
+		case "whitePawn":{
 			var img = new Image();
 			img.onload = function(){
 				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
 			};
-			img.src = '..\\resources\\skins\\test\\pawn.png';
+			img.src = '..\\resources\\skins\\beton\\BauerWeiss-01.png';
 			break;
-			}
+		}
+		case "blackPawn":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\BauerSchwarz-01.png';
+			break;
+		}
 		
 		// Rook
-		case 2:{
+		case "whiteRook":{
 			var img = new Image();
 			img.onload = function(){
 				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
 			};
-			img.src = '..\\resources\\skins\\test\\rook.png';
+			img.src = '..\\resources\\skins\\beton\\TurmWeiss-01.png';
 			break;
-			}
+		}
+		case "blackRook":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\TurmWeiss-01.png';
+			break;
+		}
 		
 		// Knight
-		case 3:{
+		case "whiteKnight":{
 			var img = new Image();
 			img.onload = function(){
 				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
 			};
-			img.src = '..\\resources\\skins\\test\\knight.png';
+			img.src = '..\\resources\\skins\\beton\\SpringerWeiss-01.png';
 			break;
-			}	
-		
+		}
+		case "blackKnight":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\SpringerSchwarz-01.png';
+			break;
+		}
 		// Bishop
-		case 4:{
+		case "whiteBishop":{
 			var img = new Image();
 			img.onload = function(){
 				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
 			};
-			img.src = '..\\resources\\skins\\test\\bishop.png';
+			img.src = '..\\resources\\skins\\beton\\LauferWeiss-01.png';
 			break;
-			}
-		
+		}
+		case "blackBishop":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\LauferSchwarz-01.png';
+			break;
+		}
 		// Queen
-		case 5:{
+		case "whiteQueen":{
 			var img = new Image();
 			img.onload = function(){
 				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
 			};
-			img.src = '..\\resources\\skins\\test\\queen.png';
+			img.src = '..\\resources\\skins\\beton\\QueenWeiss-01.png';
 			break;
-			}
-		
+		}
+		case "blackQueen":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\QueenSchwarz-01.png';
+			break;
+		}
 		// King
-		case 6:{
+		case "whiteKing":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\KingWeiss-01.png';
+			break;
+		}
+		case "blackKing":{
 			var img = new Image();
 			img.onload = function(){
 				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
 			};
 			img.src = '..\\resources\\skins\\beton\\KingSchwarz1-01.png';
 			break;
-			}
-			
+		}
+	
 		// default
 		default: break;
 	}
@@ -258,42 +303,42 @@ drawBoardstate(){
 					
 					//white
 					case "whitePawn" :
-					this.drawPiece(1,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "whiteRook" :
-					this.drawPiece(2,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "whiteKnight":
-					this.drawPiece(3,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "whiteBishop":
-					this.drawPiece(4,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "whiteQueen":
-					this.drawPiece(5,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "whiteKing" :
-					this.drawPiece(6,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					
 					//black
 					case "blackPawn":
-					this.drawPiece(1,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "blackRook":
-					this.drawPiece(2,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "blackKnight":
-					this.drawPiece(3,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "blackBishop":
-					this.drawPiece(4,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "blackQueen":
-					this.drawPiece(5,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "blackKing":
-					this.drawPiece(6,j*canvas.width/8,i*canvas.height/8);
+					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					
 					default : break;
