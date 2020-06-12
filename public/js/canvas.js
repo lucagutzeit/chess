@@ -114,7 +114,6 @@ drawPiece(chesspiece,coordX,coordY){
 			img.src = '..\\resources\\skins\\beton\\BauerSchwarz-01.png';
 			break;
 		}
-		
 		// Rook
 		case "whiteRook":{
 			var img = new Image();
@@ -129,10 +128,9 @@ drawPiece(chesspiece,coordX,coordY){
 			img.onload = function(){
 				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
 			};
-			img.src = '..\\resources\\skins\\beton\\TurmWeiss-01.png';
+			img.src = '..\\resources\\skins\\beton\\TurmSchwarz-01.png';
 			break;
 		}
-		
 		// Knight
 		case "whiteKnight":{
 			var img = new Image();
@@ -221,63 +219,63 @@ initializeBoardstate(){
 				// rooks
 				case 0:
 				case 7:
-				this.boardstate[i][j] = new Rook(i,j,"black","blackRook",this.boardstate);
+				this.boardstate[i][j] = new Rook(i,j,"black","blackRook");
 				break;
 				// knights
 				case 1:
 				case 6:
-				this.boardstate[i][j] = new Knight(i,j,"black","blackKnight",this.boardstate);
+				this.boardstate[i][j] = new Knight(i,j,"black","blackKnight");
 				break;
 				// bishops
 				case 2:
 				case 5:
-				this.boardstate[i][j] = new Bishop(i,j,"black","blackBishop",this.boardstate);
+				this.boardstate[i][j] = new Bishop(i,j,"black","blackBishop");
 				break;
 				// Queen
 				case 3:
-				this.boardstate[i][j] = new Queen(i,j,"black","blackQueen",this.boardstate);
+				this.boardstate[i][j] = new Queen(i,j,"black","blackQueen");
 				break;
 				// King
 				case 4:
-				this.boardstate[i][j] = new King(i,j,"black","blackKing",this.boardstate);
+				this.boardstate[i][j] = new King(i,j,"black","blackKing");
 				break;
 				
 				default: break;
 				}
 			}
 			else if (i === 1) {
-				this.boardstate[i][j] = new Pawn(i,j,"black","blackPawn",this.boardstate);
+				this.boardstate[i][j] = new Pawn(i,j,"black","blackPawn");
 			}
 			else if (i > 1 && i < 6) {
 				this.boardstate[i][j] = "";
 			}
 			else if (i === 6) {
-				this.boardstate[i][j] = new Pawn(i,j,"white","whitePawn",this.boardstate);
+				this.boardstate[i][j] = new Pawn(i,j,"white","whitePawn");
 			}
 			else if (i === 7) {
 				switch(j){
 				// rooks
 				case 0:
 				case 7:
-				this.boardstate[i][j] = new Rook(i,j,"white","whiteRook",this.boardstate);
+				this.boardstate[i][j] = new Rook(i,j,"white","whiteRook");
 				break;
 				// knights
 				case 1:
 				case 6:
-				this.boardstate[i][j] = new Knight(i,j,"white","whiteKnight",this.boardstate);
+				this.boardstate[i][j] = new Knight(i,j,"white","whiteKnight");
 				break;
 				// bishops
 				case 2:
 				case 5:
-				this.boardstate[i][j] = new Bishop(i,j,"white","whiteBishop",this.boardstate);
+				this.boardstate[i][j] = new Bishop(i,j,"white","whiteBishop");
 				break;
 				// Queen
 				case 3:
-				this.boardstate[i][j] = new Queen(i,j,"white","whiteQueen",this.boardstate);
+				this.boardstate[i][j] = new Queen(i,j,"white","whiteQueen");
 				break;
 				// King
 				case 4:
-				this.boardstate[i][j] = new King(i,j,"white","whiteKing",this.boardstate);
+				this.boardstate[i][j] = new King(i,j,"white","whiteKing");
 				break;
 				
 				default: break;
@@ -285,6 +283,7 @@ initializeBoardstate(){
 			}
 		}
 	}
+	this.setMovesOfChesspieces();
 }
 /**
  * Prints the complete Boardstate
@@ -295,7 +294,7 @@ initializeBoardstate(){
 drawBoardstate(){
 	
 	var canvas = $("#chess")[0];
-		
+
 	for(var i = 0; i< 8; i++){
 		for(var j = 0; j< 8; j++){
 			if(this.boardstate[i][j] != ""){
@@ -347,16 +346,28 @@ drawBoardstate(){
 		}
 	}
 }
+setMovesOfChesspieces(){
+	for(var i = 0; i< 8; i++){
+		for(var j = 0; j< 8; j++){
+			if(this.boardstate[i][j] != ""){
+				this.boardstate[i][j].setMoves(this.boardstate);
+			}
+		}
+	}
+}
 //end
 }
 
 $(document).ready(function () {
 	var board = new Board();
 	board.drawBoard();
-	//board.drawPiece(1,0,0);
 	board.initializeBoardstate();
+	
+	var canvas = $("#chess")[0];
+	canvas.addEventListener("click",function(){highlighting(event,board.boardstate);});
 	//test
-	board.boardstate[5][5] = new Rook(5,5,"white","whiteRook",board.boardstate);
+	console.log(board.boardstate);
+/*  board.boardstate[5][5] = new Rook(5,5,"white","whiteRook",board.boardstate);
 	board.boardstate[4][4] = new Bishop(4,4,"white","whiteBishop",board.boardstate);
 	board.boardstate[4][2] = new Queen(4,2,"black","blackQueen",board.boardstate);
 	board.boardstate[3][6] = new King(3,6,"black","blackKing",board.boardstate);
@@ -367,8 +378,9 @@ $(document).ready(function () {
 	console.log(board.boardstate[6][7].moves);
 	console.log(board.boardstate[4][2].moves);
 	console.log(board.boardstate[3][6].moves);
-	
+*/
 	//test ende
+	
 	board.drawBoardstate();
 	
 });
