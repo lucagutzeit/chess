@@ -24,7 +24,7 @@
     <form class="form-inline my-2 my-lg-0">
       <form class="form-inline" >
       <a href="landing.php">
-          <button type="button" class="btn btn-outline-danger">Anmelden</button>
+          <button type="button" class="btn btn-outline-danger">Abmelden</button>
       </a>
     </form>
   </div>
