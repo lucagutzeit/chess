@@ -1,4 +1,4 @@
-.message-box {
+#message-box {
     min-height: 500px;
     border: lightgray 1px solid;
 }
