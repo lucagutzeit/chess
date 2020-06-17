@@ -1,8 +1,3 @@
-<?php
-$colors = array('#007AFF', '#FF7000', '#FF7000', '#15E25F', '#CFC700', '#CFC700', '#CF1100', '#CF00BE', '#F00');
-$color_pick = array_rand($colors);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +11,10 @@ $color_pick = array_rand($colors);
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
 
+    <!-- JavaScript -->
     <script src="../../public/js/chat.js"></script>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="../../public/css/chat.css" />
 
     <title>
