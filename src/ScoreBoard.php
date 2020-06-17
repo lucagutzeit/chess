@@ -6,7 +6,7 @@ require 'DBConnection.php'
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="Stylesheet" href="../public/css/Stylesheet.css">
+    <link rel="stylesheet" href="../public/css/Stylesheet.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>Score Board</title>
   </head>
@@ -24,34 +24,34 @@ require 'DBConnection.php'
     $sql->execute();
     $sql_result = $sql->get_result();
 
-    $results = $sql_result->fetch_assoc();
-?>
-        <table>
-               <thead>
-                   <tr>
-                       <td>Nickname</td>
-                   </tr>
-               </thead>
-               <tbody>
-               <?php
-                   while($row = mysql_fetch_array($results)) {
-                   ?>
-                       <tr>
-                           <td><?php echo $row['Nickname']?></td>
-                       </tr>
-
-                   <?php
-                   }
-                   ?>
-                   </tbody>
-                   </table>
-
-      }
-
     ?>
 
+    <div class="ScoreBoard">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Nickname</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+      <tbody>
 
+               <?php
+                  while($results = $sql_result->fetch_assoc()){
 
+                   ?>
+
+                        <tr>
+                            <td><?php echo $results['Nickname']?></td>
+                            <td><?php echo $results['Nickname']?></td>
+                        </tr>
+
+                <?php
+                }
+                ?>
+                   </tbody>
+                   </table>
+                 </div>
 
 <?php
   include 'footer.html'
