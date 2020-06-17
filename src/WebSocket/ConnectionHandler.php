@@ -21,12 +21,13 @@ class ConnectionHandler
         socket_listen($this->connectionSocket);
         socket_set_option($this->connectionSocket, SOL_SOCKET, SO_REUSEADDR, 1);
     }
+
     /**
      * Checks if there is a new Request on the socket, initiates a handshake and adds it
      * to $client with the subprotocol as its key.
      * 
      * @param Handshaker $handshaker Handshaker that performs the handshake
-     * @return socket|false returns the accepted socket. False if error.
+     * @return clientSocket|false returns the accepted socket. False if error.
      */
     public function receiveNewConnection(Handshaker $handshaker)
     {
@@ -41,8 +42,9 @@ class ConnectionHandler
 
             if (!empty($requestArray)) {
                 $response = $handshaker->createResponse($requestArray);
-
                 socket_write($newSocket, $response, strlen($response));
+
+                // Catching error codes
                 if ($response === -2) {
                     printf("Handshake not successful. Upgrade request denied.\nOrigin is not allowed.\n");
                 } elseif ($response === -1) {
