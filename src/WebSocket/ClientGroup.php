@@ -40,7 +40,7 @@ abstract class ClientGroup
     {
         $this->clientSockets[] = $socket;
         printf("New Client added to %s.\n", $this->id);
-        print("List of Clients: " . implode(', ', $this->clientSockets) . "\n");
+        printf("List of Clients: %s", implode(', ', $this->clientSockets) . "\n");
     }
 
     /**

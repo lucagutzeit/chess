@@ -8,7 +8,7 @@ $(document).ready(function () {
     websocket.onopen = function () {
         console.log("Message open.");
         $("#message-box").append(
-            '<div class="msg system_msg">Verbindung hergestellt.</div>'
+            '<div class="system_msg">Verbindung hergestellt.</div>'
         );
     };
 
@@ -16,25 +16,25 @@ $(document).ready(function () {
         var response = JSON.parse(ev.data); //PHP sends Json data
 
         var res_type = response.type; //message type
-        var user_message = response.message; //message text
+        var message = response.message; //message text
         var user_name = response.name; //user name
         var user_color = response.color; //color
 
         switch (res_type) {
             case "usermsg":
                 $("#message-box").append(
-                    '<div><span class="user_name" style="color:' +
+                    '<div class="msg m1"><span class="user_name" style="color:' +
                         user_color +
                         '">' +
                         user_name +
                         '</span> : <span class="user_message">' +
-                        user_message +
+                        message +
                         "</span></div>"
                 );
                 break;
             case "system":
                 $("#message-box").append(
-                    '<div style="color:#bbbbbb">' + user_message + "</div>"
+                    '<div style="msg system_msg">' + message + "</div>"
                 );
                 break;
         }
