@@ -31,6 +31,10 @@ abstract class ClientGroup
                 if ($msg != false) {
                     $msg->unmask();
                     switch ($msg->getOpcode()) {
+                        case '8':
+                            $this->removeClient($socket);
+                            socket_close($socket);
+                            break;
                         default:
                             $this->sendToAll($msg);
                             break;
