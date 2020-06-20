@@ -15,10 +15,34 @@ $handshaker = new Handshaker($protocols, [$host]);
 $allChat = new ChatGroup("chatGlobal");
 
 while (true) {
+    // Chech for new connection request
     $newSocket = $chatConnections->receiveNewConnection($handshaker);
     if ($newSocket != false) {
+
+        // Read request and create response
+        $requestArray = $handshaker->readRequest($newSocket);
+        $response = $handshaker->createResponse($requestArray);
+
+        printRequest($requestArray);
+
+        // Send response to the socket from which the request originates
+        socket_write($newSocket, $response, strlen($response));
+
+        // add the new socket to the chat
         $allChat->addClient($newSocket);
     }
 
     $allChat->update();
+}
+
+/**
+ * !! Help function
+ */
+function printRequest(array $requestArray)
+{
+    print("_________________\nStart of request:\n");
+    foreach ($requestArray as $key => $value) {
+        printf("%s : %s\n", $key, $value);
+    }
+    print("End of request\n______________\n\n");
 }

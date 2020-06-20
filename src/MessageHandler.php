@@ -3,7 +3,7 @@ class MessageHandler
 {
     public static function mask($msg)
     {
-        $b1 = 0x80 | (0x1 & 0x0f);
+        $b1 = 0x81;
         $length = strlen($msg);
 
         if ($length <= 125)
