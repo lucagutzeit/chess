@@ -33,7 +33,7 @@ abstract class ClientGroup
                     switch ($msg->getOpcode()) {
                         case '8':
                             $this->removeClient($socket);
-                            socket_close($socket);
+
                             break;
                         default:
                             $this->sendToAll($msg);
@@ -62,6 +62,7 @@ abstract class ClientGroup
     {
         if (($key = array_search($socket, $this->clientSockets)) !== false) {
             unset($this->clientSockets[$key]);
+            socket_close($socket);
         } else {
             printf('No such socket.');
         }
