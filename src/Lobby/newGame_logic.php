@@ -1,6 +1,6 @@
 <?php
 session_start();
-  require 'DBConnection.php';
+  require __DIR__ . '/../Include/DBConnection.php';
 
   $nickname = $_SESSION["nickname"];
   $ID = random_int ( 1 , 1000 ) ;
@@ -11,4 +11,3 @@ session_start();
   $sql_insert->execute();
 
   header('location: Lobby.php');
-?>

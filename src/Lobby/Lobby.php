@@ -1,8 +1,8 @@
 <?php
 session_start();
-require 'DBConnection.php';
+require __DIR__ . '/../Include/DBConnection.php';
 
-include 'nav.php';
+include __DIR__ . '/../Include/nav.php';
 ?>
 
 <!DOCTYPE html>
@@ -75,10 +75,8 @@ include 'nav.php';
   }
   ?>
 
-
-
   <?php
 
-  include 'footer.html'
+  include __DIR__ . '/../Include/footer.html'
 
   ?>
