@@ -30,27 +30,44 @@
     padding-top: 50px;
 }
 
-<<<<<<< HEAD
 .button{
-  float: right;
-  padding-bottom: 50px;
   padding-top: 50px;
-  padding-right: 50px;
+  padding-left: 50px;
 }
 
 .Karte{
-  padding-top: 50px;
+
+  width:auto;
+  display:grid;
+  overflow-y: inherit;
+  float:left;
   padding-left: 50px;
-=======
+  padding-top: 25px;
+  padding-bottom: 5px;
+
+}
+
 .ScoreBoard{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding-top: 50px;
-  padding-left: 200px;
-  padding-right: 200px;
+  padding: 20px;
 
->>>>>>> develop
+}
+
+.chat_include{
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 100%; /* Set the width of the sidebar */
+   /*z-index: 1; */
+ /*  top: 0; */
+/**  right: 0;*/
+  float: right;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position:fixed;
+  padding-top: 50px;
+  float: right;
+  padding-left: 50px;
 }
