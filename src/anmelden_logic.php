@@ -1,5 +1,5 @@
 <?php
-  require __DIR__ . '/../Include/DBConnection.php';
+  require 'DBConnection.php';
 
   $nickname = $_POST['inputName'];
   $email = $_POST['inputEmail'];
@@ -36,3 +36,4 @@ if($sql_email_results->num_rows == 0 && $sql_nickname_results->num_rows ==0 ){
   $sql_email->close();
   $sql_nickname->close();
   $sql_insert->close();
+ ?>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require __DIR__ . '/../Include/DBConnection.php';
+require 'DBConnection.php';
 
 $nickname = $_POST['nickname'];
 $password = $_POST['password'];

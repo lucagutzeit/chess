@@ -78,5 +78,5 @@
 
 
 <?php
-require __DIR__ . '/../Include/footer.html';
+include 'footer.html';
 ?>
