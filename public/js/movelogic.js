@@ -38,7 +38,7 @@ function moveLogic(chesspiece,boardstate){
 	}	
 }
 
-function getWhitePawnMoves(chesspiece,boardstate){
+function getBlackPawnMoves(chesspiece,boardstate){
 	var row = chesspiece.row;
 	var column = chesspiece.column;
 	var counter = 0;
@@ -61,18 +61,18 @@ function getWhitePawnMoves(chesspiece,boardstate){
 		//TODO Bauernumwandlung
 	}
 	if(topHelp == 0){
-		if (boardstate[row - 1][column] == ""){
+		if (boardstate[row + 1][column] == ""){
 			chesspiece.moves[counter] = [row+1,column];
 			counter++;
 		}
 		
-		if (rightHelp == 0 && boardstate[row-1][column+1] != ""){
+		if (rightHelp == 0 && boardstate[row+1][column+1] != ""){
 			if (boardstate[row-1][column+1].color == "black"){
 				chesspiece.moves[counter] = [row+1,column+1];
 				counter++;
 			}
 		}
-		if (leftHelp == 0 && boardstate[row-1][column-1] != ""){
+		if (leftHelp == 0 && boardstate[row+1][column-1] != ""){
 			if (boardstate[row-1][column-1].color == "black"){
 				chesspiece.moves[counter] = [row+1,column-1];
 				counter++;
@@ -80,7 +80,7 @@ function getWhitePawnMoves(chesspiece,boardstate){
 		}
 	}	
 }
-function getBlackPawnMoves(chesspiece,boardstate){
+function getWhitePawnMoves(chesspiece,boardstate){
 	var row = chesspiece.row;
 	var column = chesspiece.column;
 	var counter = 0;
@@ -104,17 +104,17 @@ function getBlackPawnMoves(chesspiece,boardstate){
 		//TODO Bauernumwandlung
 	}
 	if(bottomHelp == 0){
-		if (boardstate[row +1][column] == ""){
+		if (boardstate[row-1][column] == ""){
 			chesspiece.moves[counter] = [row-1,column];
 			counter++;
 		}
-		if (rightHelp == 0 && boardstate[row+1][column+1] != ""){
+		if (rightHelp == 0 && boardstate[row-1][column+1] != ""){
 			if (boardstate[row+1][column+1].color == "black"){
 				chesspiece.moves[counter] = [row-1,column+1];
 				counter++;
 			}
 		}
-		if (leftHelp == 0 && boardstate[row+1][column-1] != ""){
+		if (leftHelp == 0 && boardstate[row-1][column-1] != ""){
 			if (boardstate[row+1][column-1].color == "black"){
 				chesspiece.moves[counter] = [row-1,column-1];
 				counter++;
@@ -170,8 +170,8 @@ function getRookMoves(chesspiece,boardstate){
 		}
 		//check for Edges
 		if(column - i == 0){
-				leftHelp = 1;
-			}
+			leftHelp = 1;
+		}
 		//right
 		//check if its free Space
 		if(rightHelp == 0 && boardstate[row][column + i] == ""){
