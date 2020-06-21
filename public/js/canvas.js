@@ -1,13 +1,13 @@
 //TODO: attribut des Typs Skin einfügen und Skin klasse schreiben welche die src als attribut speichert
+var FIELD_COLOR_BLACK = "#000000";
+var FIELD_COLOR_WHITE = "#FFFFFF";
+var NUMBER_OF_ROWS = 8;
+var NUMBER_OF_COLUMNS = 8;
 class Board {
-	
 // Constructor
 	constructor(){
 		this.numberOfRows = 8;
 		this.numberOfColumns = 8;
-		this.fieldColorBlack = "#000000";
-		this.fieldColorWhite = "#FFFFFF";
-		
 		// two dimensional Array as a coordinate System to work with. 
 		// for basic functionalities nesseccary
 		// boardstate[x][y] = boardstate{zeilen][spalten]
@@ -24,10 +24,6 @@ class Board {
 
 // Methods
 
-//getter for Boardstate
-getBoardstate(){
-	return this.boardstate;
-}
 
 /**
  * Draws the chess board, by calculating the size of one field depending on the
@@ -44,166 +40,13 @@ drawBoard() {
         for (i = 0; i < this.numberOfRows; i++) {
             // Column
             for (j = 0; j < this.numberOfColumns; j++) {
-                this.drawField(i, j);
+                drawField(i, j);
 			}
 		}
 	}
 }
-/**
- * Draws a field at the given position on the board
- * @param {*} rowCount
- * @param {*} columnCount
- */
-drawField(rowCount, columnCount) {
-    var canvas = $("#chess")[0],
-        squareSize = Math.floor(canvas.height / this.numberOfRows),
-        context;
 
-    // Check if canvas exists and is supported.
-    if (canvas && canvas.getContext) {
-        context = canvas.getContext("2d");
 
-        // Draw Field.
-        context.fillStyle = this.getFieldColor(rowCount, columnCount);
-        context.fillRect(
-            columnCount * squareSize,
-            rowCount * squareSize,
-            squareSize,
-            squareSize
-        );
-    }
-}
-/**
- * Calculates the color of a field by its position.
- * @param {Integer} rowCount Row of the field.
- * @param {Integer} columnCount Column of the field.
- * TODO: Choose color by user setting (predertemined skin or custom color)
- */
-getFieldColor(rowCount, columnCount) {
-    return (rowCount + columnCount) % 2 === 0
-        ? this.fieldColorWhite
-        : this.fieldColorBlack;
-}
-/**
- * Draws a piece onto the chessboard
- *
- * @returns
- * TODO:
- */
-drawPiece(chesspiece,coordX,coordY){
-	
-	var canvas = $("#chess")[0];
-	var ctx = canvas.getContext("2d");
-	
-	switch(chesspiece.name){
-		
-		// Pawn
-		case "whitePawn":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\BauerWeiss-01.png';
-			break;
-		}
-		case "blackPawn":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\BauerSchwarz-01.png';
-			break;
-		}
-		// Rook
-		case "whiteRook":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\TurmWeiss-01.png';
-			break;
-		}
-		case "blackRook":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\TurmSchwarz-01.png';
-			break;
-		}
-		// Knight
-		case "whiteKnight":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\SpringerWeiss-01.png';
-			break;
-		}
-		case "blackKnight":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\SpringerSchwarz-01.png';
-			break;
-		}
-		// Bishop
-		case "whiteBishop":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\LauferWeiss-01.png';
-			break;
-		}
-		case "blackBishop":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\LauferSchwarz-01.png';
-			break;
-		}
-		// Queen
-		case "whiteQueen":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\QueenWeiss-01.png';
-			break;
-		}
-		case "blackQueen":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\QueenSchwarz-01.png';
-			break;
-		}
-		// King
-		case "whiteKing":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\KingWeiss-01.png';
-			break;
-		}
-		case "blackKing":{
-			var img = new Image();
-			img.onload = function(){
-				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
-			};
-			img.src = '..\\resources\\skins\\beton\\KingSchwarz1-01.png';
-			break;
-		}
-	
-		// default
-		default: break;
-	}
- }
 
 /**
  * Initializes the boardstate Array
@@ -283,7 +126,7 @@ initializeBoardstate(){
 			}
 		}
 	}
-	this.setMovesOfChesspieces();
+	setMovesOfChesspieces(this.boardstate);
 }
 /**
  * Prints the complete Boardstate
@@ -302,42 +145,42 @@ drawBoardstate(){
 					
 					//white
 					case "whitePawn" :
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "whiteRook" :
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "whiteKnight":
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "whiteBishop":
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "whiteQueen":
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "whiteKing" :
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					
 					//black
 					case "blackPawn":
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "blackRook":
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "blackKnight":
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "blackBishop":
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "blackQueen":
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					case "blackKing":
-					this.drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
+					drawPiece(this.boardstate[i][j],j*canvas.width/8,i*canvas.height/8);
 					break;
 					
 					default : break;
@@ -346,16 +189,184 @@ drawBoardstate(){
 		}
 	}
 }
-setMovesOfChesspieces(){
+//end
+}
+function setMovesOfChesspieces(boardstate){
 	for(var i = 0; i< 8; i++){
 		for(var j = 0; j< 8; j++){
-			if(this.boardstate[i][j] != ""){
-				this.boardstate[i][j].setMoves(this.boardstate);
+			if(boardstate[i][j] != ""){
+				boardstate[i][j].setMoves(boardstate);
 			}
 		}
 	}
 }
-//end
+/**
+ * Draws a piece onto the chessboard
+ *
+ * @returns
+ * TODO:
+ */
+function drawPiece(chesspiece,coordX,coordY){
+	
+	var canvas = $("#chess")[0];
+	var ctx = canvas.getContext("2d");
+	
+	switch(chesspiece.name){
+		
+		// Pawn
+		case "whitePawn":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\BauerWeiss-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		case "blackPawn":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\BauerSchwarz-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		// Rook
+		case "whiteRook":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\TurmWeiss-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		case "blackRook":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\TurmSchwarz-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		// Knight
+		case "whiteKnight":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\SpringerWeiss-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		case "blackKnight":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\SpringerSchwarz-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		// Bishop
+		case "whiteBishop":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\LauferWeiss-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		case "blackBishop":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\LauferSchwarz-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		// Queen
+		case "whiteQueen":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\QueenWeiss-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		case "blackQueen":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\QueenSchwarz-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		// King
+		case "whiteKing":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\KingWeiss-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+		case "blackKing":{
+			var img = new Image();
+			img.onload = function(){
+				ctx.drawImage(img,coordX,coordY,canvas.width/8,canvas.height/8);
+			};
+			img.src = '..\\resources\\skins\\beton\\KingSchwarz1-01.png';
+			//img.crossOrigin = "anonymous";
+			break;
+		}
+	
+		// default
+		default: break;
+	}
+ }
+
+/**
+ * Calculates the color of a field by its position.
+ * @param {Integer} rowCount Row of the field.
+ * @param {Integer} columnCount Column of the field.
+ * TODO: Choose color by user setting (predertemined skin or custom color)
+ */
+function getFieldColor(rowCount, columnCount) {
+    return (rowCount + columnCount) % 2 === 0
+        ? FIELD_COLOR_WHITE
+        : FIELD_COLOR_BLACK;
+}
+/**
+ * Draws a field at the given position on the board
+ * @param {*} rowCount
+ * @param {*} columnCount
+ */
+function drawField(rowCount, columnCount) {
+    var canvas = $("#chess")[0],
+        squareSize = Math.floor(canvas.height / NUMBER_OF_ROWS),
+        context;
+
+    // Check if canvas exists and is supported.
+    if (canvas && canvas.getContext) {
+        context = canvas.getContext("2d");
+
+        // Draw Field.
+        context.fillStyle = getFieldColor(rowCount, columnCount);
+        context.fillRect(
+            columnCount * squareSize,
+            rowCount * squareSize,
+            squareSize,
+            squareSize
+        );
+    }
 }
 
 $(document).ready(function () {
@@ -365,8 +376,8 @@ $(document).ready(function () {
 	
 	var canvas = $("#chess")[0];
 	canvas.addEventListener("click",function(){highlighting(event,board.boardstate);});
+	canvas.addEventListener("click",function(){checkIfChesspieceShouldMove(event,board.boardstate);});
 	//test
-	console.log(board.boardstate);
 /*  board.boardstate[5][5] = new Rook(5,5,"white","whiteRook",board.boardstate);
 	board.boardstate[4][4] = new Bishop(4,4,"white","whiteBishop",board.boardstate);
 	board.boardstate[4][2] = new Queen(4,2,"black","blackQueen",board.boardstate);
