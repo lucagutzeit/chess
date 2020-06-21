@@ -29,3 +29,15 @@
 .anmelden {
     padding-top: 50px;
 }
+
+.button{
+  float: right;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  padding-right: 50px;
+}
+
+.Karte{
+  padding-top: 50px;
+  padding-left: 50px;
+}
