@@ -6,7 +6,7 @@ require __DIR__ . '\..\src\Chat\ChatGroup.php';
 $null = NULL;
 $host = '127.0.0.1';
 $portChat = '9001';
-$protocols = ['chat'];
+$protocols = ['games'];
 
 print("Chat daemon started\n\n");
 
@@ -33,16 +33,4 @@ while (true) {
     }
 
     $allChat->update();
-}
-
-/**
- * !! Help function
- */
-function printRequest(array $requestArray)
-{
-    print("_________________\nStart of request:\n");
-    foreach ($requestArray as $key => $value) {
-        printf("%s : %s\n", $key, $value);
-    }
-    print("End of request\n______________\n\n");
 }

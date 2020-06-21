@@ -27,51 +27,18 @@ class ConnectionHandler
      * to $client with the subprotocol as its key.
      * 
      * @param Handshaker $handshaker Handshaker that performs the handshake
-     * @return clientSocket|false returns the accepted socket. False if error.
+     * @return socket|null returns the accepted socket. Returns false , if there is no new connection 
      */
     public function receiveNewConnection(Handshaker $handshaker)
     {
         $changed[] = $this->connectionSocket;
         socket_select($changed, $null, $null, 0);
+
         if (!empty($changed)) {
             $newSocket = socket_accept($this->connectionSocket);
-            $requestArray = $handshaker->readRequest($newSocket);
-
-            // !! Debugging
-            $this->printRequest($requestArray);
-
-            if (!empty($requestArray)) {
-                $response = $handshaker->createResponse($requestArray);
-                socket_write($newSocket, $response, strlen($response));
-
-                // Catching error codes
-                if ($response === -2) {
-                    printf("Handshake not successful. Upgrade request denied.\nOrigin is not allowed.\n");
-                } elseif ($response === -1) {
-                    printf("Handshake not successful. Upgrade request denied.\nProtocol not supported.\n");
-                } elseif ($response === 0) {
-                    printf("Handshake not successful. Upgrade request denied.\nNo protocol set.\n");
-                } else {
-                    printf("Handshake successful\n");
-                    return $newSocket;
-                }
-            } else {
-                print("Error: Request is empty.\n");
-                return false;
-            }
+            return $newSocket;
+        } else {
+            return false;
         }
-    }
-
-    /**
-     * !! Help function
-     * !! Delete after use
-     */
-    public function printRequest(array $request)
-    {
-        print("_________________\nStart of request:\n");
-        foreach ($request as $key => $value) {
-            printf("%s : %s\n", $key, $value);
-        }
-        print("End of request\n______________\n\n");
     }
 }

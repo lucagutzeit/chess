@@ -30,6 +30,7 @@
     padding-top: 50px;
 }
 
+<<<<<<< HEAD
 .button{
   float: right;
   padding-bottom: 50px;
@@ -40,4 +41,16 @@
 .Karte{
   padding-top: 50px;
   padding-left: 50px;
+=======
+.ScoreBoard{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 50px;
+  padding-left: 200px;
+  padding-right: 200px;
+
+>>>>>>> develop
 }

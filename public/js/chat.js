@@ -41,15 +41,17 @@ $(document).ready(function () {
         $("#message-box")[0].scrollTop = $("#message-box")[0].scrollHeight; //scroll message
     };
 
-    websocket.onerror = function () {};
+    websocket.onerror = function (ev) {
+        $("#message-box").append(
+            '<div class="system_error">Error Occurred - ' + ev.data + "</div>"
+        );
+    };
 
     websocket.onclose = function () {
         $("#message-box").append(
             '<div class="msg system_msg">Verbindung geschlossen.</div>'
         );
     };
-
-    window.addEventListener("unload", function () {});
 });
 
 function sendMessage() {
@@ -71,7 +73,6 @@ function sendMessage() {
     var msg = {
         message: message_input.val(),
         name: name_input.val(),
-        color: "<?php echo $colors[$color_pick]; ?>",
     };
     //convert and send data to server
     websocket.send(JSON.stringify(msg));

@@ -50,10 +50,6 @@ class Handshaker
      */
     public function createResponse(array $requestArray)
     {
-        /** 
-         * TODO: Check if the protocol is supported. If not returns an error
-         */
-
         //base 64 encode after Hash with magic string.
         $secKeyAccept = base64_encode(pack('H*', sha1($requestArray['Sec-WebSocket-Key'] . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
 

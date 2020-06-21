@@ -1,14 +1,23 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 require __DIR__ . '/../Websocket/ClientGroup.php';
+require __DIR__ . '/ChatMessage.php';
 
 // TODO: Get colors from database.
-
 class ChatGroup extends ClientGroup
 {
+    // Color of usernames.
     private $color;
 
-    public function __construct()
+    /**
+     * Construtctor
+     * @param string $id Identification string of group
+     */
+    public function __construct(string $id)
     {
+        parent::__construct($id);
         $this->color = '#007AFF';
     }
 
@@ -23,23 +32,36 @@ class ChatGroup extends ClientGroup
             foreach ($changed as $socket) {
                 $msg = $this->receiveMessage($socket);
                 if ($msg != false) {
-                    $jsonMsg = json_decode($msg, true);
-                    $this->sendToAll($this->createUserMessage($jsonMsg['name'], $jsonMsg['message'], $jsonMsg['color']));
+                    $msg->unmask();
+                    switch ($msg->getOpcode()) {
+                        case '8':
+                            $this->removeClient($socket);
+                            socket_close($socket);
+                            break;
+                        default:
+                            $msg->setType('usermsg');
+                            $msg->setColor($this->color);
+                            $msg->update();
+                            $this->sendToAll($msg);
+                            break;
+                    }
                 }
             }
         }
     }
 
     /**
-     * 
+     * @param WebSocket
+     * @return ChatMessage|false returns a new Message object or false if there is no new message on the socket.
      */
     public function receiveMessage($socket)
     {
-        $receivedMsg = false;
-        if (socket_recv($socket, $buf, 1024, 0) >= 1) {
-            $receivedMsg = MessageHandler::unmask($buf);
+        if (socket_recv($socket, $buf, 1024, 0) > 0) {
+            $receivedMsg = new ChatMessage();
+            $receivedMsg->setMaskedMessage($buf);
+            return $receivedMsg;
         }
-        return $receivedMsg;
+        return false;
     }
 
     /**
@@ -51,7 +73,7 @@ class ChatGroup extends ClientGroup
             'type' => 'usermsg',
             'name' => $name,
             'message' => $message,
-            'color' => $this->color
+            'color' => $color
         ));
 
         return $jsonResponse;
