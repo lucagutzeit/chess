@@ -26,10 +26,9 @@ class ConnectionHandler
      * Checks if there is a new Request on the socket, initiates a handshake and adds it
      * to $client with the subprotocol as its key.
      * 
-     * @param Handshaker $handshaker Handshaker that performs the handshake
      * @return socket|null returns the accepted socket. Returns false , if there is no new connection 
      */
-    public function receiveNewConnection(Handshaker $handshaker)
+    public function receiveNewConnection()
     {
         $changed[] = $this->connectionSocket;
         socket_select($changed, $null, $null, 0);

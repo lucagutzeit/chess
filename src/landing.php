@@ -86,5 +86,5 @@ if (!isset($_SESSION['nickname'])) {
 <?php
   include 'footer.html';
 } else {
-  header('location: lobby.php');
+  header('location: Lobby/lobby.php');
 }

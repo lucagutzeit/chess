@@ -16,6 +16,7 @@ abstract class ClientGroup
      */
     public function __construct(string $id)
     {
+        $this->clientSockets = array();
         $this->id = $id;
     }
 

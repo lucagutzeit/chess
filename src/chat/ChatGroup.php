@@ -41,7 +41,6 @@ class ChatGroup extends ClientGroup
                         default:
                             $msg->setType('usermsg');
                             $msg->setColor($this->color);
-                            $msg->update();
                             $this->sendToAll($msg);
                             break;
                     }

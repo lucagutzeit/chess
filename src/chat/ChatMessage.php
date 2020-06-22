@@ -109,7 +109,7 @@ class ChatMessage extends Message
     /**
      * 
      */
-    public function update()
+    public function mask()
     {
         $arr['type'] = $this->getType();
         $arr['message'] = $this->getChatMessage();
@@ -120,5 +120,7 @@ class ChatMessage extends Message
 
         $this->setLength(strlen($unmaskedMessage));
         $this->setUnmaskedMessage($unmaskedMessage);
+
+        parent::mask();
     }
 }
