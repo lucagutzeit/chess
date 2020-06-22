@@ -8,6 +8,7 @@ class Board {
     constructor() {
         this.numberOfRows = 8;
         this.numberOfColumns = 8;
+
         // two dimensional Array as a coordinate System to work with.
         // for basic functionalities nesseccary
         // boardstate[x][y] = boardstate{zeilen][spalten]
@@ -184,6 +185,7 @@ class Board {
         }
         setMovesOfChesspieces(this.boardstate);
     }
+
     /**
      * Prints the complete Boardstate
      *
@@ -294,6 +296,7 @@ class Board {
     }
     //end
 }
+
 function setMovesOfChesspieces(boardstate) {
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {
@@ -303,6 +306,7 @@ function setMovesOfChesspieces(boardstate) {
         }
     }
 }
+
 /**
  * Draws a piece onto the chessboard
  *
@@ -519,6 +523,7 @@ function getFieldColor(rowCount, columnCount) {
         ? FIELD_COLOR_WHITE
         : FIELD_COLOR_BLACK;
 }
+
 /**
  * Draws a field at the given position on the board
  * @param {*} rowCount
