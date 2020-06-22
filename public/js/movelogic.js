@@ -57,8 +57,8 @@ function getBlackPawnMoves(chesspiece, boardstate) {
     //top
     if (row == 0) {
         topHelp = 1;
-        //TODO Bauernumwandlung
     }
+    //TODO Bauernumwandlung
     if (topHelp == 0) {
         if (boardstate[row + 1][column] == "") {
             chesspiece.moves[counter] = [row + 1, column];
@@ -100,8 +100,8 @@ function getWhitePawnMoves(chesspiece, boardstate) {
     //bottom
     if (row == 7) {
         bottomHelp = 1;
-        //TODO Bauernumwandlung
     }
+    //TODO Bauernumwandlung
     if (bottomHelp == 0) {
         if (boardstate[row - 1][column] == "") {
             chesspiece.moves[counter] = [row - 1, column];

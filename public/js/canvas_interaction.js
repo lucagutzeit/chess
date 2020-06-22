@@ -86,9 +86,6 @@ function resetHighlighting() {
 function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
     //initialize some variables for later usage
     var canvas = $("#chess")[0];
-    var ctx = canvas.getContext("2d");
-    var height = canvas.height;
-    var width = canvas.width;
 
     //resets Highlightings
     resetHighlighting();
@@ -113,5 +110,5 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
     setMovesOfChesspieces(boardstate);
 
     //save new ImageData
-    IMGDATA_BEFORE_HIGHLIGHTING = ctx.getImageData(0, 0, width, height);
+	IMGDATA_BEFORE_HIGHLIGHTING = false;
 }
