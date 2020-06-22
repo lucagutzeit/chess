@@ -22,6 +22,6 @@ $(document).ready(() => {
 function updateLobby(games) {
     var container = $("#lobby_container");
     $.each(games, function () {
-        container.append("Lobby");
+        container.append("<div>Lobby</div>");
     });
 }
