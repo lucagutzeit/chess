@@ -27,6 +27,8 @@ while (true) {
         socket_write($newSocket, $response, strlen($response));
 
         $lobby->addClient($newSocket);
+
+        $lobby->sendInitial($newSocket);
     }
 
     $lobby->update();

@@ -28,13 +28,12 @@ abstract class ClientGroup
         $changed = $this->getReadableSockets();
         if (!empty($changed)) {
             foreach ($changed as $socket) {
-                $msg = $this->receiveMessage($socket);
+                $msg = $this->readMessage($socket);
                 if ($msg != false) {
                     $msg->unmask();
                     switch ($msg->getOpcode()) {
                         case '8':
                             $this->removeClient($socket);
-
                             break;
                         default:
                             $this->sendToAll($msg);
@@ -75,7 +74,7 @@ abstract class ClientGroup
      * @param WebSocket
      * @return Message|false returns a new Message object or false if there is no new message on the socket.
      */
-    public function receiveMessage($socket)
+    public function readMessage($socket)
     {
         if (socket_recv($socket, $buf, 1024, 0) >= 1) {
             $receivedMsg = new Message();
@@ -100,7 +99,6 @@ abstract class ClientGroup
 
             printf("Send to %s\n", $client);
         }
-        printf("\n");
     }
 
     /**
