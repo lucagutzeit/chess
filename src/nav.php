@@ -22,13 +22,13 @@ include __DIR__ . '\..\config\config.php'
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="../ScoreBoard.php">ScoreBoard <span class="sr-only"></span></a>
+          <a class="nav-link" href="http://localhost/chess/src/ScoreBoard.php">ScoreBoard <span class="sr-only"></span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="./Lobby/lobby.php">Lobby</a>
+          <a class="nav-link" href="http://localhost/chess/src/Lobby/lobby.php">Lobby</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Games</a>
+          <a class="nav-link" href="http://localhost/chess/src/game.php">Games</a>
         </li>
       </ul>
 

@@ -23,7 +23,7 @@ if ($sql_result->num_rows == 1) {
     // Validates password
     if (password_verify($password, $result['Passwort']) == true) {
       $_SESSION['nickname'] = $nickname;
-      echo "Congrats";
+      header('location: http://localhost/chess/src/Lobby/lobby.php');
     } else {
       //if password is wrong
       header('location: landing.php?error=FalscheEingabe');
