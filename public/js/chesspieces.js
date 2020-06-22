@@ -67,6 +67,7 @@ class King extends Chesspiece {
 	constructor(row,column,color,name){
 		super(row,column,color,name);
 		this.hasMoved = false;
+		this.inCheck = false;
 	}
 	
 	setMoves(boardstate){

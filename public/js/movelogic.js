@@ -31,6 +31,7 @@ function moveLogic(chesspiece, boardstate) {
         case "whiteKing":
         case "blackKing":
             getKingMoves(chesspiece, boardstate);
+			isKingInCheck(chesspiece,boardstate);
             break;
         default:
             break;
@@ -716,4 +717,19 @@ function getKingMoves(chesspiece, boardstate) {
         chesspiece.moves[counter] = [row + 1, column + 1];
         counter++;
     }
+}
+function isKingInCheck(chesspiece,boardstate){
+	for(var i = 0; i < 8; i++){
+		for(var j = 0; j < 8; j++){
+			if(boardstate[i][j] != ""){
+				if(boardstate[i][j].color != chesspiece.color){
+					if(boardstate[i][j].moves.find((element) => element[0] === chesspiece.row && element[1] === chesspiece.column) != undefined){
+						chesspiece.inCheck = true;
+						console.log(chesspiece);
+					}
+				}
+			}		
+		}
+		
+	}
 }

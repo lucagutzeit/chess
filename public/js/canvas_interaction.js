@@ -115,7 +115,6 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
 		case "blackRook":
 		case "blackKing":
 		boardstate[yAfter][xAfter].hasMoved = true;
-		
 	}
 
     //Resets Fields on Board and draws Chesspiece at right place
