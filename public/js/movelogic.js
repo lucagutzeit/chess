@@ -44,7 +44,7 @@ function getBlackPawnMoves(chesspiece, boardstate) {
 
     var leftHelp = 0;
     var rightHelp = 0;
-    var topHelp = 0;
+    var bottomHelp = 0;
     //check Edges
     //left
     if (column == 0) {
@@ -55,11 +55,11 @@ function getBlackPawnMoves(chesspiece, boardstate) {
         rightHelp = 1;
     }
     //top
-    if (row == 0) {
-        topHelp = 1;
+    if (row == 7) {
+        bottomHelp = 1;
     }
     //TODO Bauernumwandlung
-    if (topHelp == 0) {
+    if (bottomHelp == 0) {
         if (boardstate[row + 1][column] == "") {
             chesspiece.moves[counter] = [row + 1, column];
             counter++;
@@ -86,7 +86,7 @@ function getWhitePawnMoves(chesspiece, boardstate) {
 
     var leftHelp = 0;
     var rightHelp = 0;
-    var bottomHelp = 0;
+    var topHelp = 0;
 
     //check Edges
     //left
@@ -98,11 +98,11 @@ function getWhitePawnMoves(chesspiece, boardstate) {
         rightHelp = 1;
     }
     //bottom
-    if (row == 7) {
-        bottomHelp = 1;
+    if (row == 0) {
+        topHelp = 1;
     }
     //TODO Bauernumwandlung
-    if (bottomHelp == 0) {
+    if (topHelp == 0) {
         if (boardstate[row - 1][column] == "") {
             chesspiece.moves[counter] = [row - 1, column];
             counter++;

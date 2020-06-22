@@ -43,7 +43,17 @@ function highlighting(event, boardstate) {
                 resetHighlighting();
                 CURRENTLY_SELECTED_FIELD = [];
                 return;
-            } // gegnerische figur ?
+            }else if(
+				boardstate[coordY][coordX].color !=
+                boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]].color
+				){
+				var moves = boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]].moves;
+				if(moves.find((element) => element[0] === coordY && (element[1]) === coordX) != undefined){
+					moveChesspiece(boardstate,coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
+					CURRENTLY_SELECTED_FIELD = [];
+					return;
+				}
+			}
         }
         resetHighlighting();
         highlightChesspiece(boardstate[coordY][coordX]);
