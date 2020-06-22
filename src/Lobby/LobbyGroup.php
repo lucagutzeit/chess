@@ -15,7 +15,14 @@ class LobbyGroup extends ClientGroup
     {
         parent::__construct($name);
         $this->dbConnection = $dbConnection;
-        $this->openGames = array();
+
+        $query = $this->dbConnection->prepare("SELECT id, name, player1, player2  FROM games WHERE state=0");
+        $query->execute();
+        $sql_results = $query->get_result();
+
+        while ($result = $sql_results->fetch_assoc()) {
+            $this->openGames[$result['id']] = ["name" => $result['name'], 'player1' => $result['player1'], 'player2' => $result['player2']];
+        }
     }
 
     /**

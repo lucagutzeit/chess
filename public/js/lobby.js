@@ -22,9 +22,23 @@ $(document).ready(() => {
 });
 
 function updateLobby(games) {
-    var container = $("#lobby_container");
     $.each(games, function (index, value) {
-        let lobbyCard = `${index} ${value.name}`;
-        container.append(lobbyCard);
+        addGame(value);
     });
+}
+
+function addGame({ id, name }) {
+    let container = $("#lobby_container");
+
+    let gameCard = `<div class="Karte">
+        <div class="card" id="${id}" style="width: 18rem;">
+            <img src="../../public/img/Schachbrett.jpeg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title"> ${name} </h5>
+                <a href="#" class="btn btn-outline-success">Beitreten</a>
+            </div>
+        </div>
+    </div>`;
+
+    container.append(gameCard);
 }
