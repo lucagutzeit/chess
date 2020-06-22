@@ -14,6 +14,7 @@ class Pawn extends Chesspiece {
 	//constructor 
 	constructor(row,column,color,name){
 		super(row,column,color,name);
+		this.hasMoved = false;
 	}
 
 	setMoves(boardstate){
@@ -24,6 +25,7 @@ class Rook extends Chesspiece {
 	//constructor 
 	constructor(row,column,color,name){
 		super(row,column,color,name);
+		this.hasMoved = false;
 	}
 
 	setMoves(boardstate){
@@ -64,6 +66,7 @@ class King extends Chesspiece {
 	//constructor 
 	constructor(row,column,color,name){
 		super(row,column,color,name);
+		this.hasMoved = false;
 	}
 	
 	setMoves(boardstate){

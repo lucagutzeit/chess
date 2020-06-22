@@ -105,6 +105,18 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
     boardstate[yAfter][xAfter].row = yAfter;
     boardstate[yAfter][xAfter].column = xAfter;
     boardstate[yBefore][xBefore] = "";
+	
+	//check for Pawn,rook or King
+	switch(boardstate[yAfter][xAfter].name){
+		case "whitePawn":
+		case "whiteRook":
+		case "whiteKing":
+		case "blackPawn":
+		case "blackRook":
+		case "blackKing":
+		boardstate[yAfter][xAfter].hasMoved = true;
+		
+	}
 
     //Resets Fields on Board and draws Chesspiece at right place
     drawField(yBefore, xBefore);

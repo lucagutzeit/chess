@@ -64,7 +64,12 @@ function getBlackPawnMoves(chesspiece, boardstate) {
             chesspiece.moves[counter] = [row + 1, column];
             counter++;
         }
-
+		if (chesspiece.hasMoved === false){
+			if(boardstate[row + 2][column] == ""){
+				chesspiece.moves[counter] = [row + 2, column];
+				counter++;
+			}
+		}
         if (rightHelp == 0 && boardstate[row + 1][column + 1] != "") {
             if (boardstate[row + 1][column + 1].color == "white") {
                 chesspiece.moves[counter] = [row + 1, column + 1];
@@ -107,6 +112,12 @@ function getWhitePawnMoves(chesspiece, boardstate) {
             chesspiece.moves[counter] = [row - 1, column];
             counter++;
         }
+		if (chesspiece.hasMoved === false){
+			if(boardstate[row - 2][column] == ""){
+				chesspiece.moves[counter] = [row - 2, column];
+				counter++;
+			}
+		}
         if (rightHelp == 0 && boardstate[row - 1][column + 1] != "") {
             if (boardstate[row - 1][column + 1].color == "black") {
                 chesspiece.moves[counter] = [row - 1, column + 1];
