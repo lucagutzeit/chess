@@ -6,7 +6,7 @@ require __DIR__ . '\..\src\DBconnection.php';
 
 $null = NULL;
 $host = '127.0.0.1';
-$portChat = '9002';
+$portChat = '8080';
 $protocols = ['lobby'];
 
 print("Lobby daemon started\n\n");

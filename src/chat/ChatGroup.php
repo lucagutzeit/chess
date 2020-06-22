@@ -36,7 +36,6 @@ class ChatGroup extends ClientGroup
                     switch ($msg->getOpcode()) {
                         case '8':
                             $this->removeClient($socket);
-                            socket_close($socket);
                             break;
                         default:
                             $msg->setType('usermsg');

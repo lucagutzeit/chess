@@ -62,9 +62,8 @@ abstract class ClientGroup
     {
         if (($key = array_search($socket, $this->clientSockets)) !== false) {
             unset($this->clientSockets[$key]);
-            socket_close($socket);
         } else {
-            printf('No such socket.');
+            printf("No such socket.\n");
         }
     }
 

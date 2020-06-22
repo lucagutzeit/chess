@@ -27,14 +27,17 @@ if ($sql_result->num_rows == 1) {
     } else {
       //if password is wrong
       header('location: landing.php?error=FalscheEingabe');
+      session_destroy();
     }
   } else {
     //if there is a Problem with the array
     header('location: landing.php?Fehler');
+    session_destroy();
   }
 } else {
   //if nickname does not exist
   header('location: landing.php?error=FalscheEingabe');
+  session_destroy();
 }
 
 $connection->close();

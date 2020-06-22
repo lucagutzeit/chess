@@ -50,9 +50,6 @@ class LobbyGroup extends ClientGroup
                         case '8':
                             $this->removeClient($socket);
                             break;
-                        case '1':
-                            $this->sendInitial($socket);
-                            break;
                     }
                 }
             }
