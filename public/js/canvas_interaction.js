@@ -43,13 +43,14 @@ function highlighting(event, boardstate) {
                 resetHighlighting();
                 CURRENTLY_SELECTED_FIELD = [];
                 return;
-            } // gegnrerische figur ?
+            } // gegnerische figur ?
         }
         resetHighlighting();
         highlightChesspiece(boardstate[coordY][coordX]);
         CURRENTLY_SELECTED_FIELD = [coordY, coordX];
     } else if(CURRENTLY_SELECTED_FIELD.length != 0){
-			if(boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]].moves.indexOf([coordY,coordX]) != -1){
+		var moves = boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]].moves;
+			if(moves.find((element) => element[0] === coordY && (element[1]) === coordX) != undefined){
 				moveChesspiece(boardstate,coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
 				CURRENTLY_SELECTED_FIELD = [];
 			}
@@ -75,6 +76,7 @@ function highlightChesspiece(chesspiece) {
         ctx.stroke();
     }
 }
+// Resets all Highlighting
 function resetHighlighting() {
     var canvas = $("#chess")[0];
     var ctx = canvas.getContext("2d");
@@ -107,7 +109,8 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
     );
 
     //updates Chesspiece move array
-    boardstate[xAfter][yAfter].setMoves(boardstate);
+	resetMovesOfChesspieces(boardstate);
+    setMovesOfChesspieces(boardstate);
 
     //save new ImageData
     IMGDATA_BEFORE_HIGHLIGHTING = ctx.getImageData(0, 0, width, height);

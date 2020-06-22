@@ -66,13 +66,13 @@ function getBlackPawnMoves(chesspiece, boardstate) {
         }
 
         if (rightHelp == 0 && boardstate[row + 1][column + 1] != "") {
-            if (boardstate[row - 1][column + 1].color == "black") {
+            if (boardstate[row - 1][column + 1].color == "white") {
                 chesspiece.moves[counter] = [row + 1, column + 1];
                 counter++;
             }
         }
         if (leftHelp == 0 && boardstate[row + 1][column - 1] != "") {
-            if (boardstate[row - 1][column - 1].color == "black") {
+            if (boardstate[row - 1][column - 1].color == "white") {
                 chesspiece.moves[counter] = [row + 1, column - 1];
                 counter++;
             }

@@ -306,7 +306,15 @@ function setMovesOfChesspieces(boardstate) {
         }
     }
 }
-
+function resetMovesOfChesspieces(boardstate){
+   for (var i = 0; i < 8; i++) {
+        for (var j = 0; j < 8; j++) {
+            if (boardstate[i][j] != "") {
+                boardstate[i][j].moves = [];
+            }
+        }
+    }
+}
 /**
  * Draws a piece onto the chessboard
  *
