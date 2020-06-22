@@ -32,6 +32,23 @@ class LobbyGroup extends ClientGroup
      */
     public function update()
     {
+
+        $changed = $this->getReadableSockets();
+        if (!empty($changed)) {
+            foreach ($changed as $socket) {
+                $msg = $this->receiveMessage($socket);
+                if ($msg != false) {
+                    $msg->unmask();
+                    switch ($msg->getOpcode()) {
+                        case '8':
+                            $this->removeClient($socket);
+                            socket_close($socket);
+                            break;
+                    }
+                }
+            }
+        }
+
         $newOpenGames = array();
 
         $query = $this->dbConnection->prepare("SELECT * FROM games WHERE state=0"); //? Check for player1 or player2 = null.
