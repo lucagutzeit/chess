@@ -7,6 +7,4 @@ session_unset();
 // destroy the session
 session_destroy();
 
-header("location: /src/landing.php");
-
- ?>
+header("location: http://localhost/chess/src/landing.php");
