@@ -5,7 +5,7 @@ class Chesspiece {
 		this.column = column;
 		this.color = color;
 		this.name = name;
-		// einträge im array moves nach schema [row,column],[row2,column2]...
+		// einträge im array moves nach schema [row,column] or [y-coordinate,x-coordinate]...
 		this.moves = [];
 	}
 

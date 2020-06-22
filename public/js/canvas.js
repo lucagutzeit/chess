@@ -376,22 +376,6 @@ $(document).ready(function () {
 	
 	var canvas = $("#chess")[0];
 	canvas.addEventListener("click",function(){highlighting(event,board.boardstate);});
-	canvas.addEventListener("click",function(){checkIfChesspieceShouldMove(event,board.boardstate);});
-	//test
-/*  board.boardstate[5][5] = new Rook(5,5,"white","whiteRook",board.boardstate);
-	board.boardstate[4][4] = new Bishop(4,4,"white","whiteBishop",board.boardstate);
-	board.boardstate[4][2] = new Queen(4,2,"black","blackQueen",board.boardstate);
-	board.boardstate[3][6] = new King(3,6,"black","blackKing",board.boardstate);
-	
-	console.log(board.boardstate[4][4].moves);
-	console.log(board.boardstate[5][5].moves);
-	console.log(board.boardstate[6][6].moves);
-	console.log(board.boardstate[6][7].moves);
-	console.log(board.boardstate[4][2].moves);
-	console.log(board.boardstate[3][6].moves);
-*/
-	//test ende
-	
 	board.drawBoardstate();
 	
 });
