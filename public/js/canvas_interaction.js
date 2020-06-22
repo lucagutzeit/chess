@@ -6,8 +6,8 @@
 var IMGDATA_BEFORE_HIGHLIGHTING = false;
 
 // saves the last Selected Chesspiece-coordinates
-var SELECTEDARRAY = [false, false];
-var SELECTEDARRAYHELPER = false;
+var CURRENTLY_SELECTED_FIELD = [];
+
 
 // Handles highlighting
 function highlighting(event, boardstate) {
@@ -34,22 +34,26 @@ function highlighting(event, boardstate) {
     //check if chesspiece is clicked
     if (boardstate[coordY][coordX] != "") {
         //check if another chesspiece is currently Selected
-        if (SELECTEDARRAYHELPER != false) {
+        if (CURRENTLY_SELECTED_FIELD.length != 0) {
             //check if Chesspiece is clicked twice
             if (
                 boardstate[coordY][coordX] ==
-                boardstate[SELECTEDARRAY[0]][SELECTEDARRAY[1]]
+                boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]]
             ) {
                 resetHighlighting();
-                SELECTEDARRAYHELPER = false;
+                CURRENTLY_SELECTED_FIELD = [];
                 return;
-            }
+            } // gegnrerische figur ?
         }
         resetHighlighting();
         highlightChesspiece(boardstate[coordY][coordX]);
-        SELECTEDARRAY = [coordY, coordX];
-        SELECTEDARRAYHELPER = true;
-    } else {
+        CURRENTLY_SELECTED_FIELD = [coordY, coordX];
+    } else if(CURRENTLY_SELECTED_FIELD.length != 0){
+			if(boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]].moves.indexOf([coordY,coordX]) != -1){
+				moveChesspiece(boardstate,coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
+				CURRENTLY_SELECTED_FIELD = [];
+			}
+		} else {
         resetHighlighting();
     }
 }
@@ -76,15 +80,7 @@ function resetHighlighting() {
     var ctx = canvas.getContext("2d");
     ctx.putImageData(IMGDATA_BEFORE_HIGHLIGHTING, 0, 0);
 }
-/**
- *	Check White/black player
- *	Block other player moves
- *	Maybe Drag Drop for moving
- *	Otherwhise check klicks
- *
- */
 
-//TODO Implement
 function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
     //initialize some variables for later usage
     var canvas = $("#chess")[0];

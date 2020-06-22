@@ -1,5 +1,5 @@
 //TODO: attribut des Typs Skin einfügen und Skin klasse schreiben welche die src als attribut speichert
-var FIELD_COLOR_BLACK = "#000000";
+var FIELD_COLOR_BLACK = "#785027";
 var FIELD_COLOR_WHITE = "#FFFFFF";
 var NUMBER_OF_ROWS = 8;
 var NUMBER_OF_COLUMNS = 8;
