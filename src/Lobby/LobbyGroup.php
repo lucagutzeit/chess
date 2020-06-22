@@ -15,7 +15,14 @@ class LobbyGroup extends ClientGroup
     {
         parent::__construct($name);
         $this->dbConnection = $dbConnection;
-        $this->openGames = array();
+
+        $query = $this->dbConnection->prepare("SELECT id, name, player1, player2  FROM games WHERE state=0");
+        $query->execute();
+        $sql_results = $query->get_result();
+
+        while ($result = $sql_results->fetch_assoc()) {
+            $this->openGames[$result['id']] = ["name" => $result['name'], 'player1' => $result['player1'], 'player2' => $result['player2']];
+        }
     }
 
     /**
@@ -32,31 +39,32 @@ class LobbyGroup extends ClientGroup
      */
     public function update()
     {
-
+        // Read Messages from clients
         $changed = $this->getReadableSockets();
         if (!empty($changed)) {
             foreach ($changed as $socket) {
-                $msg = $this->receiveMessage($socket);
+                $msg = $this->readMessage($socket);
                 if ($msg != false) {
                     $msg->unmask();
                     switch ($msg->getOpcode()) {
                         case '8':
                             $this->removeClient($socket);
-                            socket_close($socket);
                             break;
                     }
                 }
             }
         }
-
+        /* 
+        $removedGames = $this->openGames;
         $newOpenGames = array();
 
-        $query = $this->dbConnection->prepare("SELECT * FROM games WHERE state=0"); //? Check for player1 or player2 = null.
+        $query = $this->dbConnection->prepare("SELECT id, name, player1, player2  FROM games WHERE state=0"); //? Check for player1 or player2 = null.
         $query->execute();
         $sql_results = $query->get_result();
 
         while ($result = $sql_results->fetch_assoc()) {
-            $newOpenGames[$result['id']] = ["name" => $result['name'], 'player1' => $result['player1'], 'player2' => $result['player2'], 'state' => 0];
+            $newOpenGames[$result['id']] = ["name" => $result['name'], 'player1' => $result['player1'], 'player2' => $result['player2']];
+            unset($removedGames[$result['id']]);
         }
 
         if (!empty($newOpenGames)) {
@@ -65,5 +73,30 @@ class LobbyGroup extends ClientGroup
             $updateMessage->setType('update');
             $this->sendToAll($updateMessage);
         }
+
+        if (!empty($removedGames)) {
+            $removedMessage = new LobbyMessage();
+            $removedMessage->setType('remove');
+            $removedMessage->setGames($removedGames);
+            $this->sendToAll($removedMessage);
+        } */
+    }
+
+    public function sendInitial($socket)
+    {
+        $allGamesMessage = new LobbyMessage();
+        $allGamesMessage->setType('add');
+        $allGamesMessage->setGames($this->openGames);
+        $allGamesMessage->mask();
+
+        $maskedMessage = $allGamesMessage->getMaskedMessage();
+        if (!socket_write($socket, $maskedMessage, strlen($maskedMessage))) {
+            printf("Error:\n%s", socket_strerror(socket_last_error()));
+        }
+    }
+
+    public function updateGames()
+    {
+        $this->openGames;
     }
 }

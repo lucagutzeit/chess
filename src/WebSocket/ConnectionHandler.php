@@ -19,7 +19,6 @@ class ConnectionHandler
         // SetUp for WebSocket.
         socket_bind($this->connectionSocket, $host, $port);
         socket_listen($this->connectionSocket);
-        socket_set_option($this->connectionSocket, SOL_SOCKET, SO_REUSEADDR, 1);
     }
 
     /**
