@@ -77,8 +77,6 @@ function resetHighlighting() {
     ctx.putImageData(IMGDATA_BEFORE_HIGHLIGHTING, 0, 0);
 }
 /**
- *
- * TODO:
  *	Check White/black player
  *	Block other player moves
  *	Maybe Drag Drop for moving
@@ -93,13 +91,16 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
     var ctx = canvas.getContext("2d");
     var height = canvas.height;
     var width = canvas.width;
+
     //resets Highlightings
     resetHighlighting();
+
     //moves Chesspiece
     boardstate[yAfter][xAfter] = boardstate[yBefore][xBefore];
     boardstate[yAfter][xAfter].row = yAfter;
     boardstate[yAfter][xAfter].column = xAfter;
     boardstate[yBefore][xBefore] = "";
+
     //Resets Fields on Board and draws Chesspiece at right place
     drawField(yBefore, xBefore);
     drawField(yAfter, xAfter);
@@ -108,8 +109,10 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
         (xAfter * canvas.height) / 8,
         (yAfter * canvas.width) / 8
     );
+
     //updates Chesspiece move array
     boardstate[xAfter][yAfter].setMoves(boardstate);
-    // get new ImageData
+
+    //save new ImageData
     IMGDATA_BEFORE_HIGHLIGHTING = ctx.getImageData(0, 0, width, height);
 }
