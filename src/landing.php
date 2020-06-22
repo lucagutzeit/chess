@@ -15,8 +15,8 @@ if (!isset($_SESSION['nickname'])) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 
-    <link rel="Stylesheet" href="./public/css/Stylesheet.css">
-    <link rel="Stylesheet" href="./public/css/StylesheetLanding.css">
+    <link rel="Stylesheet" href="./../public/css/Stylesheet.css">
+    <link rel="Stylesheet" href="./../public/css/StylesheetLanding.css">
 
     <title>
       Chess
@@ -28,7 +28,7 @@ if (!isset($_SESSION['nickname'])) {
     <nav class="navbar navbar-light bg-light">
       <a class="navbar-brand">Chess</a>
       <form class="form-inline">
-        <a href="./src/anmelden.php">
+        <a href="./anmelden.php">
           <button type="button" class="btn btn-outline-danger">Anmelden</button>
         </a>
       </form>
@@ -63,7 +63,7 @@ if (!isset($_SESSION['nickname'])) {
       <div class=register>
         <div class=rectangle>
           <div class=login>
-            <form action="./src/Login_logic.php" method="post">
+            <form action="Login_logic.php" method="post">
               <div class="form-group">
                 <label for="nickname">Nickname</label>
                 <input type="nickname" class="form-control" id="nickname" name="nickname" required>
