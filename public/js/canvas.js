@@ -305,6 +305,13 @@ function setMovesOfChesspieces(boardstate) {
             }
         }
     }
+	for(var i = 0; i < 8; i++){
+		for(var j = 0; j < 8; j++){
+			if(boardstate[i][j].name == "whiteKing" ||boardstate[i][j].name == "blackKing"){
+				isKingInCheck(boardstate[i][j],boardstate)
+			}
+		}
+	}
 }
 function resetMovesOfChesspieces(boardstate){
    for (var i = 0; i < 8; i++) {
