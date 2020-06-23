@@ -32,9 +32,7 @@ while (true) {
         socket_write($newSocket, $response, strlen($response));
 
         // add the new socket to the chat
-        $game->addClient($newSocket);
-
-        if ($game->readyCheck()) {
+        if ($game->addClient($newSocket) && $game->readyCheck()) {
             $game->decideColors();
             $game->sendStartMessage();
         }

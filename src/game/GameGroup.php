@@ -5,34 +5,50 @@ require ROOT . 'src\game\GameMessage.php';
 
 class GameGroup extends ClientGroup
 {
-
     private $dbConnection;
     private $socketWhite;
     private $socketBlack;
 
+    private $playerOnTurn;
+    private $boardstate;
 
+    /**
+     * Constructor
+     * @param string id Identifier of this game.
+     * @param sql_smnt Connection to a database.
+     */
     public function __construct(string $id, $dbConnection)
     {
         parent::__construct($id);
 
         $this->dbConnection = $dbConnection;
+        $this->playerOnTurn = 0;
     }
 
+    /**
+     * Adds a new client to the game. Cannot have more then 2 connected clients.
+     * @return bool Returns false if tehre are already 2 connected clients. True if the client has been added.
+     */
     public function addClient($socket)
     {
         if ($this->clientCount() < 2) {
             parent::addClient($socket);
+            return true;
         } else {
             printf("Error: Game already full.");
+            return false;
         }
     }
 
+    /**
+     * Checks for new incoming messages and handels them.
+     */
     public function update()
     {
         $changed = $this->getReadableSockets();
         if (!empty($changed)) {
 
-            foreach ($changed as $socket) {
+            foreach ($changed as $key => $socket) {
                 $msg = $this->readMessage($socket);
                 if ($msg != false) {
                     $msg->unmask();
@@ -40,12 +56,35 @@ class GameGroup extends ClientGroup
                         case '8':
                             $this->removeClient($socket);
                             break;
+                        case '1':
+                            $this->evaluateMessage($msg, $key);
+                            break;
                     }
                 }
             }
         }
     }
 
+    /**
+     * 
+     * @param 
+     */
+    public function evaluateMessage(Message $msg, $senderKey)
+    {
+        $jsonData = json_decode($msg->getUnmaskedMessage());
+
+        // If key black socket white. Und andersrum.
+        switch ($jsonData->type) {
+            case 'move':
+                $this->sendMoveMessage($socket, $msg);
+                break;
+        }
+    }
+
+    /**
+     * Checks if this game is full.
+     * @return bool Returns true if game is full, false should that not be the case.
+     */
     public function readyCheck()
     {
         if ($this->clientCount() === 2) {
@@ -55,6 +94,9 @@ class GameGroup extends ClientGroup
         }
     }
 
+    /**
+     * Allocates the colors randomly between the players.
+     */
     public function decideColors()
     {
         if (rand() % 2) {
@@ -66,6 +108,9 @@ class GameGroup extends ClientGroup
         }
     }
 
+    /**
+     * Sends a start Message to all Players. Transmits which player may make the first move.
+     */
     public function sendStartMessage()
     {
         // Prepare message for white player.
@@ -87,8 +132,34 @@ class GameGroup extends ClientGroup
         printf("Send start message to game %s.", $this->getId());
     }
 
+    /**
+     * Sends a message with a move to the given client.
+     * @param WebSocket $socket Socket which should receive the move.
+     */
+    public function sendMoveMessage($socket, $msg)
+    {
+    }
+
+    /**
+     * 
+     */
     public function sendErrorMessage(string $reason)
     {
         # code...
+    }
+
+    /**
+     * Get the sockets on which a message can be read. 
+     * @return array Returns an array with sockets that can be read. 
+     */
+    public function getReadableSockets()
+    {
+        $changed = ["white" => $this->socketWhite, "black" => $this->socketBlack];
+        if (!empty($changed)) {
+            socket_select($changed, $null, $null, 0);
+            return  $changed;
+        } else {
+            return array();
+        }
     }
 }

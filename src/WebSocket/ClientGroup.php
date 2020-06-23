@@ -99,8 +99,8 @@ abstract class ClientGroup
     }
 
     /**
-     * 
-     * @param WebSocket
+     * Reads the message on the socket and converts it to a message object.
+     * @param WebSocket $socket Socket to read from.
      * @return Message|false returns a new Message object or false if there is no new message on the socket.
      */
     public function readMessage($socket)
