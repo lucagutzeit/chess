@@ -73,7 +73,7 @@ class GameGroup extends ClientGroup
     {
         $jsonData = json_decode($msg->getUnmaskedMessage());
 
-        $receivingSockets = array_diff_key($sockets, [$senderSocket]);
+        $receivingSockets = array_diff($sockets, [$senderSocket]);
 
         // If key black socket white. Und andersrum.
         switch ($jsonData->type) {
@@ -82,7 +82,8 @@ class GameGroup extends ClientGroup
                 $yBefore = $jsonData->yBefore;
                 $xAfter = $jsonData->xAfter;
                 $yAfter = $jsonData->yAfter;
-                $this->sendMoveMessage($receivingSockets, $xBefore, $yBefore, $xAfter, $yAfter);
+                $enemyInCheck = $jsonData->enemyInCheck;
+                $this->sendMoveMessage($receivingSockets, $xBefore, $yBefore, $xAfter, $yAfter, $enemyInCheck);
                 break;
         }
     }
@@ -142,11 +143,12 @@ class GameGroup extends ClientGroup
      * Sends a message with a move to the given client.
      * @param WebSocket $socket Socket which should receive the move.
      */
-    public function sendMoveMessage(array $receivingSockets, $xBefore, $yBefore, $xAfter, $yAfter)
+    public function sendMoveMessage(array $receivingSockets, $xBefore, $yBefore, $xAfter, $yAfter, $enemyInCheck)
     {
         $msg = new GameMessage('chesspieceMove');
         $msg->setMoveAfter($xAfter, $yAfter);
         $msg->setMoveBefore($xBefore, $yBefore);
+        $msg->setInCheck($enemyInCheck);
 
         $msg->mask();
         $maskedMsg = $msg->getMaskedMessage();

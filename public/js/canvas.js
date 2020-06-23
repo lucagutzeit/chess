@@ -600,19 +600,28 @@ $(document).ready(function () {
                     MY_TURN = true;
                 }
                 setMovesOfChesspieces(board.boardstate);
-                IMGDATA_BEFORE_HIGHLIGHTING = ctx.getImageData(
+                /*   IMGDATA_BEFORE_HIGHLIGHTING = ctx.getImageData(
                     0,
                     0,
                     width,
                     height
-                );
+                ); */
                 break;
             }
             case "chesspieceMove": {
                 var yBefore = response.yBefore,
                     xBefore = response.xBefore,
                     yAfter = response.yAfter,
-                    xAfter = response.xAfter;
+                    xAfter = response.xAfter,
+                    kingName =
+                        PLAYER_COLOR === "black" ? "blackKing" : "whiteKing";
+                board.boardstate.forEach((element) => {
+                    if (element != "") {
+                        if (element.name === kingName) {
+                            element.inCheck = response.inCheck;
+                        }
+                    }
+                });
                 moveChesspiece(
                     board.boardstate,
                     yAfter,

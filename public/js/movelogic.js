@@ -1,3 +1,5 @@
+var ENEMY_IN_CHECK = false;
+
 /**
  * uses methods to fill an array with legit moves
  *
@@ -769,6 +771,9 @@ function isKingInCheck(chesspiece, boardstate) {
                         ) != undefined
                     ) {
                         chesspiece.inCheck = true;
+
+                        ENEMY_IN_CHECK = true;
+
                         console.log("CHECK");
                     }
                 }

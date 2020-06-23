@@ -9,6 +9,7 @@ class GameMessage extends Message
 
     private $moveBefore;
     private $moveAfter;
+    private $inCheck;
 
     public function __construct(string $type)
     {
@@ -80,6 +81,7 @@ class GameMessage extends Message
         return $this->moveAfter;
     }
 
+
     /**
      * Setter for moveAfter.
      * @param int x
@@ -88,6 +90,24 @@ class GameMessage extends Message
     public function setMoveAfter(int $x, int $y)
     {
         $this->moveAfter = [$x, $y];
+    }
+
+    /**
+     * Getter for inCheck.
+     * @return bool inCheck.
+     */
+    public function getInCheck()
+    {
+        return $this->inCheck;
+    }
+
+    /**
+     * Setter for inCheck.
+     * @param bool inCheck
+     */
+    public function setInCheck(bool $inCheck)
+    {
+        $this->inCheck = $inCheck;
     }
 
     /**
@@ -109,6 +129,7 @@ class GameMessage extends Message
                 $moveAfter = $this->getMoveAfter();
                 $arr['xAfter'] = $moveAfter[0];
                 $arr['yAfter'] = $moveAfter[1];
+                $arr['inCheck'] = $this->getInCheck();
                 break;
             default:
                 printf("%s is not an supportyed type for GameMessage", $this->type);

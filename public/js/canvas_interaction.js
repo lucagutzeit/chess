@@ -26,6 +26,7 @@ function clickEvaluation(event, boardstate, playerColor) {
     var mouseCoordY = 0;
     mouseCoordX = event.clientX;
     mouseCoordY = event.clientY;
+
     // converts mouse Coordinates into boardstate-coordinates
     var coordX = 0;
     var coordY = 0;
@@ -78,7 +79,8 @@ function clickEvaluation(event, boardstate, playerColor) {
                         coordY,
                         coordX,
                         CURRENTLY_SELECTED_FIELD[0],
-                        CURRENTLY_SELECTED_FIELD[1]
+                        CURRENTLY_SELECTED_FIELD[1],
+                        ENEMY_IN_CHECK
                     );
                     //unselect Field
                     CURRENTLY_SELECTED_FIELD = [];
@@ -114,13 +116,14 @@ function clickEvaluation(event, boardstate, playerColor) {
                 coordY,
                 coordX,
                 CURRENTLY_SELECTED_FIELD[0],
-                CURRENTLY_SELECTED_FIELD[1]
+                CURRENTLY_SELECTED_FIELD[1],
+                ENEMY_IN_CHECK
             );
             //unselect Field
             CURRENTLY_SELECTED_FIELD = [];
+        } else {
+            resetHighlighting();
         }
-    } else {
-        resetHighlighting();
     }
 }
 // Highlights the chosen Chesspiece
@@ -143,9 +146,11 @@ function highlightChesspiece(chesspiece) {
 }
 // Resets all Highlighting
 function resetHighlighting() {
-    var canvas = $("#chess")[0];
-    var ctx = canvas.getContext("2d");
-    ctx.putImageData(IMGDATA_BEFORE_HIGHLIGHTING, 0, 0);
+    if (IMGDATA_BEFORE_HIGHLIGHTING !== false) {
+        var canvas = $("#chess")[0];
+        var ctx = canvas.getContext("2d");
+        ctx.putImageData(IMGDATA_BEFORE_HIGHLIGHTING, 0, 0);
+    }
 }
 // Moves a Chesspiece from before to After
 function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
@@ -192,13 +197,14 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
     MY_TURN = false;
 }
 //sends moveMessage after player has done his Turn
-function sendMessage(yAfter, xAfter, yBefore, xBefore) {
+function sendMessage(yAfter, xAfter, yBefore, xBefore, enemyInCheck) {
     var moveMessage = {
         type: "chesspieceMove",
         yBefore: yBefore,
         xBefore: xBefore,
         yAfter: yAfter,
         xAfter: xAfter,
+        enemyInCheck: enemyInCheck,
     };
     gameWS.send(JSON.stringify(moveMessage));
 }
