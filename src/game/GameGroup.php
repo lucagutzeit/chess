@@ -1,7 +1,7 @@
 <?php
-require __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 require ROOT . 'src\WebSocket\ClientGroup.php';
-require ROOT . 'src\game\GameMessage';
+require ROOT . 'src\game\GameMessage.php';
 
 class GameGroup extends ClientGroup
 {
@@ -20,16 +20,35 @@ class GameGroup extends ClientGroup
 
     public function addClient($socket)
     {
-        if ($this->getClientCount() < 2) {
+        if ($this->clientCount() < 2) {
             parent::addClient($socket);
         } else {
             printf("Error: Game already full.");
         }
     }
 
+    public function update()
+    {
+        $changed = $this->getReadableSockets();
+        if (!empty($changed)) {
+
+            foreach ($changed as $socket) {
+                $msg = $this->readMessage($socket);
+                if ($msg != false) {
+                    $msg->unmask();
+                    switch ($msg->getOpcode()) {
+                        case '8':
+                            $this->removeClient($socket);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
     public function readyCheck()
     {
-        if ($this->getClientCount() === 2) {
+        if ($this->clientCount() === 2) {
             return true;
         } else {
             return false;
@@ -39,11 +58,11 @@ class GameGroup extends ClientGroup
     public function decideColors()
     {
         if (rand() % 2) {
-            $this->socketWhite = $this->clientSockets[1];
-            $this->socketBlack = $this->clientSockets[0];
+            $this->socketWhite = $this->getClientSockets()[1];
+            $this->socketBlack = $this->getClientSockets()[0];
         } else {
-            $this->socketWhite = $this->clientSockets[0];
-            $this->socketBlack = $this->clientSockets[1];
+            $this->socketWhite = $this->getClientSockets()[0];
+            $this->socketBlack = $this->getClientSockets()[1];
         }
     }
 
@@ -64,6 +83,8 @@ class GameGroup extends ClientGroup
 
         $maskedMsg = $msg->getMaskedMessage();
         socket_write($this->socketBlack, $maskedMsg, strlen($maskedMsg));
+
+        printf("Send start message to game %s.", $this->getId());
     }
 
     public function sendErrorMessage(string $reason)

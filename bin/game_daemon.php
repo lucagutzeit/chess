@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../config/config.php';
 require ROOT . 'src/WebSocket/ConnectionHandler.php';
 require ROOT . 'src/Websocket/Handshaker.php';
-require ROOT . 'src/Chat/ChatGroup.php';
+require ROOT . 'src/game/GameGroup.php';
 require ROOT . 'src/DBConnection.php';
 
 $null = NULL;
@@ -16,7 +16,9 @@ $chatConnections = new ConnectionHandler($host, $portGame);
 $handshaker = new Handshaker($protocols, [$host]);
 $game = new GameGroup("game1", $connection);
 while (true) {
-    // Chech for new connection request
+    $game->update();
+
+    // Check for new connection request
     $newSocket = $chatConnections->receiveNewConnection($handshaker);
     if ($newSocket != false) {
 
@@ -33,6 +35,7 @@ while (true) {
         $game->addClient($newSocket);
 
         if ($game->readyCheck()) {
+            $game->decideColors();
             $game->sendStartMessage();
         }
     }

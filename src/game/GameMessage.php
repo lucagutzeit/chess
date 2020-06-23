@@ -1,4 +1,5 @@
 <?php
+require ROOT . 'src/WebSocket/Message.php';
 class GameMessage extends Message
 {
     private $type;

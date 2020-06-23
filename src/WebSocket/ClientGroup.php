@@ -45,6 +45,15 @@ abstract class ClientGroup
     }
 
     /**
+     * Getter for id.
+     * @return string id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Adds the Websocket $socket to $clients.
      * @param resource $socket WebSocket to add.
      */
@@ -72,10 +81,19 @@ abstract class ClientGroup
     }
 
     /**
+     * Getter for clientSockets.
+     * @return array clientSockets
+     */
+    public function getClientSockets()
+    {
+        return $this->clientSockets;
+    }
+
+    /**
      * Get the number of connected clients.
      * @return int Returns the number of connected clients.
      */
-    public function getClientCount()
+    public function clientCount()
     {
         return sizeof($this->clientSockets);
     }
