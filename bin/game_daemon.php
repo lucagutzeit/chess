@@ -1,19 +1,20 @@
 <?php
-require_once __DIR__ . '\..\src\WebSocket\ConnectionHandler.php';
-require_once __DIR__ . '\..\src\Websocket\Handshaker.php';
-require __DIR__ . '\..\src\Chat\ChatGroup.php';
+require_once __DIR__ . '/../config/config.php';
+require ROOT . 'src/WebSocket/ConnectionHandler.php';
+require ROOT . 'src/Websocket/Handshaker.php';
+require ROOT . 'src/Chat/ChatGroup.php';
+require ROOT . 'src/DBConnection.php';
 
 $null = NULL;
 $host = '127.0.0.1';
 $portGame = '9090';
-$protocols = ['games'];
+$protocols = ['game'];
 
-print("Chat daemon started\n\n");
+print("Game daemon started\n\n");
 
 $chatConnections = new ConnectionHandler($host, $portGame);
 $handshaker = new Handshaker($protocols, [$host]);
-$allChat = new ChatGroup("chatGlobal");
-
+$allChat = new GameGroup("game1", $connection);
 while (true) {
     // Chech for new connection request
     $newSocket = $chatConnections->receiveNewConnection($handshaker);
@@ -32,6 +33,7 @@ while (true) {
         $allChat->addClient($newSocket);
     }
 }
+
 /**
  * !! Help function
  */
