@@ -90,6 +90,7 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
                   <div class="form-group col-md-12">
                     <label for="inputName">Name</label>
                     <input type="text" class="form-control" id= "game_name" name="game_name" required>
+
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -101,6 +102,7 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
         </div>
       </div>
     </div>
+
 
 
     <div id="lobby_container">
