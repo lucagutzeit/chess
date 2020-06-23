@@ -10,7 +10,7 @@ var CURRENTLY_SELECTED_FIELD = [];
 
 
 // Handles ighlighting and Moving of Chesspieces
-function clickEvaluation(event, boardstate) {
+function clickEvaluation(event, boardstate,playerColor) {
 	// killswitch for Cheating in enemies Turn
 	if(MY_TURN === false){
 		return;
@@ -53,9 +53,15 @@ function clickEvaluation(event, boardstate) {
                 boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]].color
 				){
 				var moves = boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]].moves;
+				// actually moving the Chespiece and sending the message to the other Player
 				if(moves.find((element) => element[0] === coordY && (element[1]) === coordX) != undefined){
+					//move
 					moveChesspiece(boardstate,coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
+					//check Checkmate
+					amICheckmate(boardstate,playerColor);
+					//send msg
 					sendMessage(coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
+					//unselect Field
 					CURRENTLY_SELECTED_FIELD = [];
 					return;
 				}
@@ -66,9 +72,15 @@ function clickEvaluation(event, boardstate) {
         CURRENTLY_SELECTED_FIELD = [coordY, coordX];
     } else if(CURRENTLY_SELECTED_FIELD.length != 0){
 		var moves = boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]].moves;
+		// actually moving the Chespiece and sending the message to the other Player
 			if(moves.find((element) => element[0] === coordY && (element[1]) === coordX) != undefined){
+				//move
 				moveChesspiece(boardstate,coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
+				//check Checkmate
+				amICheckmate(boardstate,playerColor);
+				//send msg
 				sendMessage(coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
+				//unselect Field
 				CURRENTLY_SELECTED_FIELD = [];
 			}
 		} else {
@@ -155,4 +167,26 @@ function sendMessage(yAfter,xAfter,yBefore,xBefore){
 	};
 	gameWS.send(JSON.stringify(moveMessage));
 	
+}
+// CHeck if a player is Checkmate after he done his Turn.
+function amICheckmate(boardstate,playerColor){
+	
+	for (var i = 0; i < 8; i++){
+		for(var j = 0; j < 8; j++){
+			//Check if its a Chesspiece
+			if(boardstate[i][j] != ""){
+				//Check if Chesspiece is the same Color as the Player
+				if(boardstate[i][j].color == playerColor){
+					//Check if the Chesspiece is any kind of King
+					if(boardstate[i][j].name == "whiteKing" || boardstate[i][j].name == "blackKing"){
+						//Check if King is in Check after own Turn
+						//TODO: end Game.
+						if(boardstate[i][j].inCheck == true){
+							console.log(`You Lost the Game: ${playerColor}`);
+						}
+					}
+				}
+			}
+		}
+	}
 }

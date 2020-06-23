@@ -5,6 +5,8 @@ var NUMBER_OF_ROWS = 8;
 var NUMBER_OF_COLUMNS = 8;
 var PLAYER_COLOR = false;
 var MY_TURN = false;
+var IM_CHECKMATE = false;
+
 //websockets
 var wsUri = "ws://127.0.0.1:9090/bin/game_daemon.php";
 var gameWS = new WebSocket(wsUri, "game");
@@ -577,7 +579,7 @@ $(document).ready(function () {
 
     var canvas = $("#chess")[0];
     canvas.addEventListener("click", function () {
-        clickEvaluation(event, board.boardstate);
+        clickEvaluation(event, board.boardstate, PLAYER_COLOR);
     });
     board.drawBoardstate();
 
@@ -610,4 +612,4 @@ $(document).ready(function () {
             }
         }
     };
-});
+};
