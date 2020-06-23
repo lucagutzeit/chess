@@ -14,7 +14,7 @@ print("Game daemon started\n\n");
 
 $chatConnections = new ConnectionHandler($host, $portGame);
 $handshaker = new Handshaker($protocols, [$host]);
-$allChat = new GameGroup("game1", $connection);
+$game = new GameGroup("game1", $connection);
 while (true) {
     // Chech for new connection request
     $newSocket = $chatConnections->receiveNewConnection($handshaker);
@@ -30,7 +30,11 @@ while (true) {
         socket_write($newSocket, $response, strlen($response));
 
         // add the new socket to the chat
-        $allChat->addClient($newSocket);
+        $game->addClient($newSocket);
+
+        if ($game->readyCheck()) {
+            $game->sendStartMessage();
+        }
     }
 }
 
