@@ -1,10 +1,28 @@
-var chatWs = new WebSocket("ws://127.0.0.1:9001/chat", "chat");
 var lobbyWs = new WebSocket("ws://127.0.0.1:8080/lobby", "lobby");
+var chatWs = new WebSocket("ws://127.0.0.1:9001/chat", "chat");
 
 $(document).ready(function () {
     $("#send_btn")[0].addEventListener("click", function () {
         sendChatMessage();
     });
+
+    lobbyWs.onopen = () => {
+        console.log("Verbindung zur lobby hergestellt.");
+    };
+
+    lobbyWs.onmessage = (ev) => {
+        var response = JSON.parse(ev.data);
+
+        console.log(response);
+        switch (response.type) {
+            case "update":
+                updateLobby(response.add, response.remove);
+                break;
+
+            default:
+                break;
+        }
+    };
 
     chatWs.onopen = function () {
         console.log("Message open.");
@@ -53,24 +71,6 @@ $(document).ready(function () {
             '<div class="msg system_msg">Verbindung geschlossen.</div>'
         );
     };
-
-    lobbyWs.addEventListener("open", () => {
-        console.log("Verbindung zur lobby hergestellt.");
-    });
-
-    lobbyWs.addEventListener("message", (ev) => {
-        var response = JSON.parse(ev.data);
-
-        console.log(response);
-        switch (response.type) {
-            case "add":
-                updateLobby(response.games);
-                break;
-
-            default:
-                break;
-        }
-    });
 });
 
 function sendChatMessage() {
@@ -94,9 +94,12 @@ function sendChatMessage() {
     messageInput.val(""); //reset message input
 }
 
-function updateLobby(games) {
-    $.each(games, function (index, value) {
+function updateLobby(gamesNew, gamesRemoved) {
+    $.each(gamesNew, function (index, value) {
         addGame(value);
+    });
+    $.each(gamesRemoved, function (index, value) {
+        removeGame(value);
     });
 }
 
@@ -114,4 +117,9 @@ function addGame({ id, name }) {
     </div>`;
 
     container.append(gameCard);
+}
+
+function removeGame({ id }) {
+    var gameCard = $(`${id}`);
+    gameCard.parentNode.removeChild(gameCard);
 }

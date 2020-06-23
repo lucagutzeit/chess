@@ -32,6 +32,7 @@ while (true) {
     }
 
     $lobby->update();
+    $lobby->updateGames();
 }
 
 /**

@@ -4,7 +4,8 @@ require __DIR__ . '/../WebSocket/Message.php';
 class LobbyMessage extends Message
 {
     private $type;
-    private $games;
+    private $gamesAdded;
+    private $gamesRemoved;
 
     /**
      * Constructor.
@@ -32,21 +33,39 @@ class LobbyMessage extends Message
     }
 
     /**
-     * Getter for games
-     * @return array games
+     * Getter for gamesAdded
+     * @return array gamesAdded
      */
-    public function getGames()
+    public function getGamesAdded()
     {
-        return $this->games;
+        return $this->gamesAdded;
     }
 
     /**
-     * Setter for games.
-     * @param array games
+     * Setter for gamesAdded.
+     * @param array gamesAdded
      */
-    public function setGames(array $games)
+    public function setGamesAdded(array $gamesAdded)
     {
-        $this->games = $games;
+        $this->gamesAdded = $gamesAdded;
+    }
+
+    /**
+     * Getter for gamesRemoved.
+     * @return array gamesRemoved
+     */
+    public function getGamesRemoved()
+    {
+        return $this->gamesRemoved;
+    }
+
+    /**
+     * Setter for gamesRemoved.
+     * @param array gamesRemoved
+     */
+    public function setGamesRemoved(array $gamesRemoved)
+    {
+        $this->gamesRemoved = $gamesRemoved;
     }
 
     /**
@@ -55,8 +74,8 @@ class LobbyMessage extends Message
     public function mask()
     {
         $arr['type'] = $this->getType();
-        $arr['games'] = $this->getGames();
-
+        $arr['add'] = $this->getGamesAdded();
+        $arr['remove'] = $this->getGamesRemoved();
         $unmaskedMessage = json_encode($arr);
 
         $this->setLength(strlen($unmaskedMessage));

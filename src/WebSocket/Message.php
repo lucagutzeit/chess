@@ -255,6 +255,10 @@ class Message
         $this->setUnmaskedMessage($maskedMessage);
     }
 
+    /**
+     * Concats header and unmaskedMessage, saving as masked message.
+     * TODO: maskKey as param. Masking the message.
+     */
     public function mask()
     {
         $this->setMaskedMessage($this->getHeader() . $this->getUnmaskedMessage());
