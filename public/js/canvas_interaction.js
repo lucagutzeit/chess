@@ -11,6 +11,11 @@ var CURRENTLY_SELECTED_FIELD = [];
 
 // Handles ighlighting and Moving of Chesspieces
 function clickEvaluation(event, boardstate) {
+	// killswitch for Cheating in enemies Turn
+	if(MY_TURN === false){
+		return;
+	}
+	
     var canvas = $("#chess")[0];
     // saves the ImgData before any clickEvaluation or chesspiecemoves Appear
     if (IMGDATA_BEFORE_HIGHLIGHTING === false) {
@@ -132,4 +137,17 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
 
     //save new ImageData
 	IMGDATA_BEFORE_HIGHLIGHTING = false;
+	
+	//end Turn
+	MY_TURN = false;
+	
+	//sends moveMessage after player has done his Turn
+	var moveMessage = 
+	{
+		yBefore: yBefore,
+		xBefore: xBefore,
+		yAfter: yAfter,
+		xAfter: xAfter,
+	};
+	gameWS.send(JSON.stringify(moveMessage));
 }

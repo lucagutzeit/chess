@@ -3,9 +3,11 @@ var FIELD_COLOR_BLACK = "#785027";
 var FIELD_COLOR_WHITE = "#FFFFFF";
 var NUMBER_OF_ROWS = 8;
 var NUMBER_OF_COLUMNS = 8;
+var PLAYER_COLOR = false;
+var MY_TURN = null;
 //websockets 
 var wsUri = "ws://127.0.0.1:9090/bin/game_daemon.php";
-var websocket = new WebSocket(wsUri, "game");
+var gameWS = new WebSocket(wsUri, "game");
 
 class Board {
     // Constructor
@@ -305,7 +307,7 @@ function setMovesOfChesspieces(boardstate) {
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {
             if (boardstate[i][j] != "") {
-                boardstate[i][j].setMoves(boardstate);
+                boardstate[i][j].setMoves(boardstate,PLAYER_COLOR);
             }
         }
     }
@@ -567,10 +569,6 @@ function drawField(rowCount, columnCount) {
     }
 }
 
-websocket.onmessage = function (){
-	
-	
-}
 
 $(document).ready(function () {
     var board = new Board();
@@ -582,4 +580,27 @@ $(document).ready(function () {
         clickEvaluation(event, board.boardstate);
     });
     board.drawBoardstate();
+	
+	gameWS.onmessage = function (ev){
+		var response = JSON.parse(ev.data);
+		
+		switch(response.type){
+			case "gameStart":
+			{	
+				PLAYER_COLOR = response.playerColor;
+				if(PLAYER_COLOR === "white"){
+					MY_TURN = true;
+				}
+			}
+			case "chesspieceMove":
+			{
+				var yBefore = response.yBefore,
+					xBefore = response.xBefore,
+					yAfter = response.yAfter,
+					xAfter = response.xAfter;
+				moveChesspiece(board.boardstate,yAfter,xAfter,yBefore,xBefore);
+				MY_TURN = true;
+			}
+		}		
+	}
 });
