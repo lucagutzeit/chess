@@ -55,6 +55,7 @@ function clickEvaluation(event, boardstate) {
 				var moves = boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]].moves;
 				if(moves.find((element) => element[0] === coordY && (element[1]) === coordX) != undefined){
 					moveChesspiece(boardstate,coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
+					sendMessage(coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
 					CURRENTLY_SELECTED_FIELD = [];
 					return;
 				}
@@ -67,6 +68,7 @@ function clickEvaluation(event, boardstate) {
 		var moves = boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]].moves;
 			if(moves.find((element) => element[0] === coordY && (element[1]) === coordX) != undefined){
 				moveChesspiece(boardstate,coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
+				sendMessage(coordY,coordX,CURRENTLY_SELECTED_FIELD[0],CURRENTLY_SELECTED_FIELD[1]);
 				CURRENTLY_SELECTED_FIELD = [];
 			}
 		} else {
@@ -141,7 +143,9 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
 	//end Turn
 	MY_TURN = false;
 	
-	//sends moveMessage after player has done his Turn
+}
+//sends moveMessage after player has done his Turn
+function sendMessage(yAfter,xAfter,yBefore,xBefore){
 	var moveMessage = 
 	{
 		yBefore: yBefore,
@@ -150,4 +154,5 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
 		xAfter: xAfter,
 	};
 	gameWS.send(JSON.stringify(moveMessage));
+	
 }
