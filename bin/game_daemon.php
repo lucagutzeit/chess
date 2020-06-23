@@ -5,15 +5,14 @@ require __DIR__ . '\..\src\Chat\ChatGroup.php';
 
 $null = NULL;
 $host = '127.0.0.1';
-$portChat = '9001';
-$protocols = ['games'];
+$portGame = '9090';
+$protocols = ['game'];
 
 print("Chat daemon started\n\n");
 
-$chatConnections = new ConnectionHandler($host, $portChat);
+$chatConnections = new ConnectionHandler($host, $portGame);
 $handshaker = new Handshaker($protocols, [$host]);
 $allChat = new ChatGroup("chatGlobal");
-
 while (true) {
     // Chech for new connection request
     $newSocket = $chatConnections->receiveNewConnection($handshaker);
@@ -31,6 +30,4 @@ while (true) {
         // add the new socket to the chat
         $allChat->addClient($newSocket);
     }
-
-    $allChat->update();
 }
