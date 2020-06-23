@@ -571,7 +571,7 @@ $(document).ready(function () {
 
     var canvas = $("#chess")[0];
     canvas.addEventListener("click", function () {
-        highlighting(event, board.boardstate);
+        clickEvaluation(event, board.boardstate);
     });
     board.drawBoardstate();
 });

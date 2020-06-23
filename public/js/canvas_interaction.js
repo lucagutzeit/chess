@@ -1,18 +1,18 @@
 /**
- * Highlighting, moveChesspiece,
+ * clickEvaluation, moveChesspiece,
  */
 
-// saves the ImageData for resetting Highlighting
+// saves the ImageData for resetting clickEvaluation
 var IMGDATA_BEFORE_HIGHLIGHTING = false;
 
 // saves the last Selected Chesspiece-coordinates
 var CURRENTLY_SELECTED_FIELD = [];
 
 
-// Handles highlighting
-function highlighting(event, boardstate) {
+// Handles ighlighting and Moving of Chesspieces
+function clickEvaluation(event, boardstate) {
     var canvas = $("#chess")[0];
-    // saves the ImgData before any Highlighting or chesspiecemoves Appear
+    // saves the ImgData before any clickEvaluation or chesspiecemoves Appear
     if (IMGDATA_BEFORE_HIGHLIGHTING === false) {
         var ctx = canvas.getContext("2d");
         var height = canvas.height;
@@ -21,15 +21,15 @@ function highlighting(event, boardstate) {
     }
 
     // mouse Coordinates
-    var mouseCoordX = 0;
-    var mouseCoordY = 0;
-    mouseCoordX = event.clientX;
-    mouseCoordY = event.clientY;
-    // converts mouse Coordinates into boardstate-coordinates
-    var coordX = 0;
-    var coordY = 0;
-    coordX = Math.floor(mouseCoordX / (canvas.width / 8));
-    coordY = Math.floor(mouseCoordY / (canvas.height / 8));
+	var mouseCoordX = 0;
+	var mouseCoordY = 0;
+	mouseCoordX = event.clientX;
+	mouseCoordY = event.clientY;
+	// converts mouse Coordinates into boardstate-coordinates
+	var coordX = 0;
+	var coordY = 0;
+	coordX = Math.floor(mouseCoordX / (canvas.width / 8));
+	coordY = Math.floor(mouseCoordY / (canvas.height / 8));
 
     //check if chesspiece is clicked
     if (boardstate[coordY][coordX] != "") {

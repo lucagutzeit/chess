@@ -729,6 +729,5 @@ function isKingInCheck(chesspiece,boardstate){
 				}
 			}		
 		}
-		
 	}
 }
