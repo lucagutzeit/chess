@@ -40,12 +40,37 @@ include '../nav.php';
 
 <body>
 
-  <form action="newGame_logic.php" method="post">
+  <?php
+
+    $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    if (strpos($Url, "name=exists") == true) {
+      echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Ungültige Eingabe!</strong> Der Name der Lobby existiert bereits
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> </html>';
+    }
+
+
+    if (strpos($Url, "error=empty") == true) {
+      echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Achtung!</strong> Sie müssen angemeldet sein um eine Lobby zu erstellen
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> </html>';
+    }
+
+   ?>
+
+
     <div class="button">
     <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal">
-      Create new game
+      new game
     </button>
   </div>
+
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -57,21 +82,24 @@ include '../nav.php';
             </button>
           </div>
           <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">name:</label>
-                  <input type="text" class="form-control" id="game_name">
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-outline-success">create</button>
+
+            <form class="container" action= "newGame_logic.php" method="post">
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="inputName">Name</label>
+                    <input type="text" class="form-control" id= "game_name" name="game_name" required>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                <button type="submit" class="btn btn-outline-success">create</button>
+                </div>
+              </form>
+
           </div>
         </div>
       </div>
     </div>
-  </form>
+
 
   <div id="lobby_container">
 
@@ -84,6 +112,7 @@ include '../nav.php';
       ?>
     </div>
   </div>
+
 
   <?php
 
