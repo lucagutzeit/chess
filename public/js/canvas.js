@@ -4,7 +4,7 @@ var FIELD_COLOR_WHITE = "#FFFFFF";
 var NUMBER_OF_ROWS = 8;
 var NUMBER_OF_COLUMNS = 8;
 var PLAYER_COLOR = false;
-var MY_TURN = null;
+var MY_TURN = false;
 //websockets
 var wsUri = "ws://127.0.0.1:9090/bin/game_daemon.php";
 var gameWS = new WebSocket(wsUri, "game");
@@ -189,7 +189,6 @@ class Board {
                 }
             }
         }
-        setMovesOfChesspieces(this.boardstate);
     }
 
     /**
@@ -591,6 +590,7 @@ $(document).ready(function () {
                 if (PLAYER_COLOR === "white") {
                     MY_TURN = true;
                 }
+                setMovesOfChesspieces(board.boardstate);
                 break;
             }
             case "chesspieceMove": {
