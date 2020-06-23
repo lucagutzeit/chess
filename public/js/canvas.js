@@ -7,6 +7,9 @@ var PLAYER_COLOR = false;
 var MY_TURN = false;
 var IM_CHECKMATE = false;
 
+// saves the ImageData for resetting clickEvaluation
+var IMGDATA_BEFORE_HIGHLIGHTING = false;
+
 //websockets
 var wsUri = "ws://127.0.0.1:9090/bin/game_daemon.php";
 var gameWS = new WebSocket(wsUri, "game");
@@ -578,6 +581,10 @@ $(document).ready(function () {
     board.initializeBoardstate();
 
     var canvas = $("#chess")[0];
+    var ctx = canvas.getContext("2d");
+    var height = canvas.height;
+    var width = canvas.width;
+
     canvas.addEventListener("click", function () {
         clickEvaluation(event, board.boardstate, PLAYER_COLOR);
     });
@@ -593,6 +600,12 @@ $(document).ready(function () {
                     MY_TURN = true;
                 }
                 setMovesOfChesspieces(board.boardstate);
+                IMGDATA_BEFORE_HIGHLIGHTING = ctx.getImageData(
+                    0,
+                    0,
+                    width,
+                    height
+                );
                 break;
             }
             case "chesspieceMove": {
@@ -612,4 +625,4 @@ $(document).ready(function () {
             }
         }
     };
-};
+});

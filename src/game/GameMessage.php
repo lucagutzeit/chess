@@ -101,7 +101,7 @@ class GameMessage extends Message
                 $arr['type'] = "gameStart";
                 $arr['playerColor'] = $this->getPlayerColor();
                 break;
-            case 'move':
+            case 'chesspieceMove':
                 $arr['type'] = "chesspieceMove";
                 $moveBefore = $this->getMoveBefore();
                 $arr['xBefore'] = $moveBefore[0];

@@ -57,7 +57,7 @@ class GameGroup extends ClientGroup
                             $this->removeClient($socket);
                             break;
                         case '1':
-                            $this->evaluateMessage($changed, $socket, $msg);
+                            $this->evaluateMessage($this->getClientSockets(), $socket, $msg);
                             break;
                     }
                 }
@@ -77,7 +77,7 @@ class GameGroup extends ClientGroup
 
         // If key black socket white. Und andersrum.
         switch ($jsonData->type) {
-            case 'move':
+            case 'chesspieceMove':
                 $xBefore = $jsonData->xBefore;
                 $yBefore = $jsonData->yBefore;
                 $xAfter = $jsonData->xAfter;
@@ -167,14 +167,14 @@ class GameGroup extends ClientGroup
      * Get the sockets on which a message can be read. 
      * @return array Returns an array with sockets that can be read. 
      */
-    public function getReadableSockets()
+    /* public function getReadableSockets()
     {
-        $changed = ["white" => $this->socketWhite, "black" => $this->socketBlack];
+        $changed = array($this->socketWhite, $this->socketBlack);
         if (!empty($changed)) {
             socket_select($changed, $null, $null, 0);
             return  $changed;
         } else {
             return array();
         }
-    }
+    } */
 }
