@@ -1,20 +1,24 @@
 <?php
-require_once __DIR__ . '\..\src\WebSocket\ConnectionHandler.php';
-require_once __DIR__ . '\..\src\Websocket\Handshaker.php';
-require __DIR__ . '\..\src\Chat\ChatGroup.php';
+require_once __DIR__ . '/../config/config.php';
+require ROOT . 'src/WebSocket/ConnectionHandler.php';
+require ROOT . 'src/Websocket/Handshaker.php';
+require ROOT . 'src/game/GameGroup.php';
+require ROOT . 'src/DBConnection.php';
 
 $null = NULL;
 $host = '127.0.0.1';
 $portGame = '9090';
 $protocols = ['game'];
 
-print("Chat daemon started\n\n");
+print("Game daemon started\n\n");
 
 $chatConnections = new ConnectionHandler($host, $portGame);
 $handshaker = new Handshaker($protocols, [$host]);
-$allChat = new ChatGroup("chatGlobal");
+$game = new GameGroup("game1", $connection);
 while (true) {
-    // Chech for new connection request
+    $game->update();
+
+    // Check for new connection request
     $newSocket = $chatConnections->receiveNewConnection($handshaker);
     if ($newSocket != false) {
 
@@ -28,11 +32,13 @@ while (true) {
         socket_write($newSocket, $response, strlen($response));
 
         // add the new socket to the chat
-        $allChat->addClient($newSocket);
+        if ($game->addClient($newSocket) && $game->readyCheck()) {
+            $game->decideColors();
+            $game->sendStartMessage();
+        }
     }
-<<<<<<< HEAD
-=======
 }
+
 /**
  * !! Help function
  */
@@ -43,5 +49,4 @@ function printRequest(array $requestArray)
         printf("%s : %s\n", $key, $value);
     }
     print("End of request\n______________\n\n");
->>>>>>> d1077f31a0dd3e4ab673b6c0bc5d3578ab84b534
 }

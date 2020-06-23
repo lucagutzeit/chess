@@ -1,8 +1,8 @@
 <?php
-require __DIR__ . '/../DBConnection.php';
-require __DIR__ . '/../WebSocket/ClientGroup.php';
-require __DIR__ . '/LobbyMessage.php';
-require __DIR__ . '/../Game/Game.php';
+require __DIR__ . '/../../config/config.php';
+require ROOT . 'src/DBConnection.php';
+require ROOT . 'src/WebSocket/ClientGroup.php';
+require ROOT . 'src/Lobby/LobbyMessage.php';
 
 
 class LobbyGroup extends ClientGroup

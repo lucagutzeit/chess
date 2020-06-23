@@ -45,6 +45,15 @@ abstract class ClientGroup
     }
 
     /**
+     * Getter for id.
+     * @return string id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Adds the Websocket $socket to $clients.
      * @param resource $socket WebSocket to add.
      */
@@ -56,21 +65,42 @@ abstract class ClientGroup
     }
 
     /**
-     * 
+     * Removes client from client list.
+     * @param WebSocket $socket Socket that need to be removed.
+     * @return bool Returns true if client has been removed. False if no such socket could be found.
      */
     public function removeClient($socket)
     {
         if (($key = array_search($socket, $this->clientSockets)) !== false) {
             unset($this->clientSockets[$key]);
+            return true;
         } else {
             printf("No such socket.\n");
+            return false;
         }
     }
 
+    /**
+     * Getter for clientSockets.
+     * @return array clientSockets
+     */
+    public function getClientSockets()
+    {
+        return $this->clientSockets;
+    }
 
     /**
-     * 
-     * @param WebSocket
+     * Get the number of connected clients.
+     * @return int Returns the number of connected clients.
+     */
+    public function clientCount()
+    {
+        return sizeof($this->clientSockets);
+    }
+
+    /**
+     * Reads the message on the socket and converts it to a message object.
+     * @param WebSocket $socket Socket to read from.
      * @return Message|false returns a new Message object or false if there is no new message on the socket.
      */
     public function readMessage($socket)
