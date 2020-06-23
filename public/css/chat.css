@@ -1,0 +1,12 @@
+#message-box {
+    min-height: 500px;
+    border: lightgray 1px solid;
+}
+
+.msg {
+    text-align: left;
+}
+
+.system_msg {
+    color: gray;
+}
