@@ -56,17 +56,29 @@ abstract class ClientGroup
     }
 
     /**
-     * 
+     * Removes client from client list.
+     * @param WebSocket $socket Socket that need to be removed.
+     * @return bool Returns true if client has been removed. False if no such socket could be found.
      */
     public function removeClient($socket)
     {
         if (($key = array_search($socket, $this->clientSockets)) !== false) {
             unset($this->clientSockets[$key]);
+            return true;
         } else {
             printf("No such socket.\n");
+            return false;
         }
     }
 
+    /**
+     * Get the number of connected clients.
+     * @return int Returns the number of connected clients.
+     */
+    public function getClientCount()
+    {
+        return sizeof($this->clientSockets);
+    }
 
     /**
      * 

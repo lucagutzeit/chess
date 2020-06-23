@@ -1,2 +1,2 @@
 <?php
-define("ROOT", __DIR__ . '\\');
+define("ROOT", __DIR__ . '\\..\\');
