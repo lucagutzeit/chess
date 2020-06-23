@@ -92,7 +92,7 @@ function resetHighlighting() {
     var ctx = canvas.getContext("2d");
     ctx.putImageData(IMGDATA_BEFORE_HIGHLIGHTING, 0, 0);
 }
-
+// Moves a Chesspiece from before to After
 function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
     //initialize some variables for later usage
     var canvas = $("#chess")[0];

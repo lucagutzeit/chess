@@ -30,4 +30,18 @@ while (true) {
         // add the new socket to the chat
         $allChat->addClient($newSocket);
     }
+<<<<<<< HEAD
+=======
+}
+/**
+ * !! Help function
+ */
+function printRequest(array $requestArray)
+{
+    print("_________________\nStart of request:\n");
+    foreach ($requestArray as $key => $value) {
+        printf("%s : %s\n", $key, $value);
+    }
+    print("End of request\n______________\n\n");
+>>>>>>> d1077f31a0dd3e4ab673b6c0bc5d3578ab84b534
 }
