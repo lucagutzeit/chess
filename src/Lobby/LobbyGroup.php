@@ -11,18 +11,15 @@ class LobbyGroup extends ClientGroup
 
     private $dbConnection;
 
+    /**
+     * Constructor
+     */
     public function __construct(string $name, object $dbConnection)
     {
         parent::__construct($name);
         $this->dbConnection = $dbConnection;
 
-        $query = $this->dbConnection->prepare("SELECT id, name, player1, player2  FROM games WHERE state=0");
-        $query->execute();
-        $sql_results = $query->get_result();
-
-        while ($result = $sql_results->fetch_assoc()) {
-            $this->openGames[$result['id']] = ["name" => $result['name'], 'player1' => $result['player1'], 'player2' => $result['player2']];
-        }
+        $this->openGames = $this->getDataFromDb();
     }
 
     /**
@@ -35,7 +32,28 @@ class LobbyGroup extends ClientGroup
     }
 
     /**
+     * Gets the games data from the Db provided in dbConnection.
+     * @return array Returns an array with all open games.
+     */
+    public function getDataFromDb()
+    {
+        $query = $this->dbConnection->prepare("SELECT id, name, player1, player2  FROM games WHERE state=0");
+        $query->execute();
+        $sql_results = $query->get_result();
+
+        $openGames = array();
+        while ($result = $sql_results->fetch_assoc()) {
+            $openGames[$result['id']] = ["name" => $result['name'], 'player1' => $result['player1'], 'player2' => $result['player2']];
+        }
+
+        return $openGames;
+    }
+
+    /**
+     * Reads incoming messages and evaluates what is to be done with them.
      * 
+     * Only checks for opcode 0x8 and closes the socket on such an message.
+     * All other uncoming messages ar ignored.
      */
     public function update()
     {
@@ -54,49 +72,55 @@ class LobbyGroup extends ClientGroup
                 }
             }
         }
-        /* 
-        $removedGames = $this->openGames;
-        $newOpenGames = array();
-
-        $query = $this->dbConnection->prepare("SELECT id, name, player1, player2  FROM games WHERE state=0"); //? Check for player1 or player2 = null.
-        $query->execute();
-        $sql_results = $query->get_result();
-
-        while ($result = $sql_results->fetch_assoc()) {
-            $newOpenGames[$result['id']] = ["name" => $result['name'], 'player1' => $result['player1'], 'player2' => $result['player2']];
-            unset($removedGames[$result['id']]);
-        }
-
-        if (!empty($newOpenGames)) {
-            $updateMessage = new LobbyMessage();
-            $updateMessage->setGames($newOpenGames);
-            $updateMessage->setType('update');
-            $this->sendToAll($updateMessage);
-        }
-
-        if (!empty($removedGames)) {
-            $removedMessage = new LobbyMessage();
-            $removedMessage->setType('remove');
-            $removedMessage->setGames($removedGames);
-            $this->sendToAll($removedMessage);
-        } */
     }
 
+    /**
+     * Sends all open games to socket.
+     * @param WeoSocket $socket Socket in need of initial game list.
+     * 
+     * Normally this is used to send the games to a socket that is new connected.
+     */
     public function sendInitial($socket)
     {
-        $allGamesMessage = new LobbyMessage();
-        $allGamesMessage->setType('add');
-        $allGamesMessage->setGames($this->openGames);
-        $allGamesMessage->mask();
+        $initialMessage = $this->createUpdateMessage($this->getOpenGames(), array());
+        $initialMessage->mask();
 
-        $maskedMessage = $allGamesMessage->getMaskedMessage();
+        $maskedMessage = $initialMessage->getMaskedMessage();
         if (!socket_write($socket, $maskedMessage, strlen($maskedMessage))) {
             printf("Error:\n%s", socket_strerror(socket_last_error()));
         }
     }
 
+    /**
+     * Checks the database for changes. If there are any a messages with added and removed games is send to all clients.
+     */
     public function updateGames()
     {
-        $this->openGames;
+        $openGamesOld = $this->getOpenGames();
+        $openGamesNew = $this->getDataFromDb();
+
+        $gamesAdded = array_diff_key($openGamesNew, $openGamesOld);
+        $gamesRemoved = array_diff_key($openGamesOld, $openGamesNew);
+
+        if (!(empty($gamesAdded) && empty($gamesRemoved))) {
+            $msg = $this->createUpdateMessage($gamesAdded, $gamesRemoved);
+            $this->sendToAll($msg);
+        }
+    }
+
+    /**
+     * Creates a LobbyMessage with type update.
+     * @param array $gamesAdded Array that contains the added games.
+     * @param array $gamesRemoved Array that contains the removed games.
+     * @return LobbyMessage returns new LobbyMessage.
+     */
+    public function createUpdateMessage($gamesAdded, $gamesRemoved)
+    {
+        $updateMsg = new LobbyMessage();
+        $updateMsg->setType('update');
+        $updateMsg->setGamesAdded($gamesAdded);
+        $updateMsg->setGamesRemoved($gamesRemoved);
+
+        return $updateMsg;
     }
 }

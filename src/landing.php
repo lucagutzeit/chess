@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-// ! Session variable should be nickname to work.
-if (!isset($_SESSION['nickname'])) {
+if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true) {
+  header('location: Lobby/lobby.php');
+} else {
 ?>
   <!DOCTYPE html>
   <html lang="en" dir="ltr">
@@ -79,12 +80,6 @@ if (!isset($_SESSION['nickname'])) {
       </div>
     </div>
   </body>
-
-
-
-
 <?php
   include 'footer.html';
-} else {
-  header('location: Lobby/lobby.php');
-}
+} ?>

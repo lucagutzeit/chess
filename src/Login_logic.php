@@ -22,6 +22,7 @@ if ($sql_result->num_rows == 1) {
 
     // Validates password
     if (password_verify($password, $result['Passwort']) == true) {
+      $_SESSION['loggedIn'] = true;
       $_SESSION['nickname'] = $nickname;
       header('location: http://localhost/chess/src/Lobby/lobby.php');
     } else {
