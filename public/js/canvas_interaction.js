@@ -160,13 +160,13 @@ function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
 function sendMessage(yAfter,xAfter,yBefore,xBefore){
 	var moveMessage = 
 	{
+		type: "chesspieceMove",
 		yBefore: yBefore,
 		xBefore: xBefore,
 		yAfter: yAfter,
 		xAfter: xAfter,
 	};
 	gameWS.send(JSON.stringify(moveMessage));
-	
 }
 // CHeck if a player is Checkmate after he done his Turn.
 function amICheckmate(boardstate,playerColor){
