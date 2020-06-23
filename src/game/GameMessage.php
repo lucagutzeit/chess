@@ -2,9 +2,13 @@
 require ROOT . 'src/WebSocket/Message.php';
 class GameMessage extends Message
 {
+
     private $type;
 
     private $playerColor;
+
+    private $moveBefore;
+    private $moveAfter;
 
     public function __construct(string $type)
     {
@@ -49,6 +53,44 @@ class GameMessage extends Message
     }
 
     /**
+     * Getter for moveBefore.
+     * @return array moveBefore
+     */
+    public function getMoveBefore()
+    {
+        return $this->moveBefore;
+    }
+
+    /**
+     * Setter for moveBefore.
+     * @param int x
+     * @param int y
+     */
+    public function setMoveBefore(int $x, int $y)
+    {
+        $this->moveBefore = [$x, $y];
+    }
+
+    /**
+     * Getter for moveAfter.
+     * @return array moveAfter
+     */
+    public function getMoveAfter()
+    {
+        return $this->moveAfter;
+    }
+
+    /**
+     * Setter for moveAfter.
+     * @param int x
+     * @param int y
+     */
+    public function setMoveAfter(int $x, int $y)
+    {
+        $this->moveAfter = [$x, $y];
+    }
+
+    /**
      * 
      */
     public function mask()
@@ -58,9 +100,16 @@ class GameMessage extends Message
             case 'gameStart':
                 $arr['type'] = "gameStart";
                 $arr['playerColor'] = $this->getPlayerColor();
-
                 break;
-
+            case 'move':
+                $arr['type'] = "chesspieceMove";
+                $moveBefore = $this->getMoveBefore();
+                $arr['xBefore'] = $moveBefore[0];
+                $arr['yBefore'] = $moveBefore[1];
+                $moveAfter = $this->getMoveAfter();
+                $arr['xAfter'] = $moveAfter[0];
+                $arr['yAfter'] = $moveAfter[1];
+                break;
             default:
                 printf("%s is not an supportyed type for GameMessage", $this->type);
                 return false;
