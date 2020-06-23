@@ -3,6 +3,10 @@ var FIELD_COLOR_BLACK = "#785027";
 var FIELD_COLOR_WHITE = "#FFFFFF";
 var NUMBER_OF_ROWS = 8;
 var NUMBER_OF_COLUMNS = 8;
+//websockets 
+var wsUri = "ws://127.0.0.1:9090/bin/game_daemon.php";
+var websocket = new WebSocket(wsUri, "game");
+
 class Board {
     // Constructor
     constructor() {
@@ -313,6 +317,7 @@ function setMovesOfChesspieces(boardstate) {
 		}
 	}
 }
+
 function resetMovesOfChesspieces(boardstate){
    for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {
@@ -526,7 +531,6 @@ function drawPiece(chesspiece, coordX, coordY) {
             break;
     }
 }
-
 /**
  * Calculates the color of a field by its position.
  * @param {Integer} rowCount Row of the field.
@@ -538,7 +542,6 @@ function getFieldColor(rowCount, columnCount) {
         ? FIELD_COLOR_WHITE
         : FIELD_COLOR_BLACK;
 }
-
 /**
  * Draws a field at the given position on the board
  * @param {*} rowCount
@@ -562,6 +565,11 @@ function drawField(rowCount, columnCount) {
             squareSize
         );
     }
+}
+
+websocket.onmessage = function (){
+	
+	
 }
 
 $(document).ready(function () {

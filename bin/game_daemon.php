@@ -5,12 +5,12 @@ require __DIR__ . '\..\src\Chat\ChatGroup.php';
 
 $null = NULL;
 $host = '127.0.0.1';
-$portChat = '9001';
+$portGame = '9090';
 $protocols = ['games'];
 
 print("Chat daemon started\n\n");
 
-$chatConnections = new ConnectionHandler($host, $portChat);
+$chatConnections = new ConnectionHandler($host, $portGame);
 $handshaker = new Handshaker($protocols, [$host]);
 $allChat = new ChatGroup("chatGlobal");
 
@@ -31,6 +31,15 @@ while (true) {
         // add the new socket to the chat
         $allChat->addClient($newSocket);
     }
-
-    $allChat->update();
+}
+/**
+ * !! Help function
+ */
+function printRequest(array $requestArray)
+{
+    print("_________________\nStart of request:\n");
+    foreach ($requestArray as $key => $value) {
+        printf("%s : %s\n", $key, $value);
+    }
+    print("End of request\n______________\n\n");
 }
