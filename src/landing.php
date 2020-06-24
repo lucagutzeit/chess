@@ -11,6 +11,8 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
   <head>
     <meta charset="utf-8">
 
+    <script src="./../public/js/landing.js"></script>
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -19,14 +21,43 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
     <link rel="Stylesheet" href="./../public/css/Stylesheet.css">
     <link rel="Stylesheet" href="./../public/css/StylesheetLanding.css">
 
+
+    <!--jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
     <title>
       Chess
     </title>
+
+    <script>
+      $(document).ready(function(){
+        $("form").submit(function(e){
+          //disable the action in the form tag
+          e.preventDefault();
+          var nickname = $("#nickname").val();
+          var password = $("#password").val();
+          var SignInSubmit = $("#SignInSubmit").val();
+
+          var error_message = $("#error_message").val();
+
+          $(".error-message").load("Login_logic.php", {
+            //first name is the post name, second is the value
+            nickname: nickname,
+            password: password,
+            SignInSubmit: SignInSubmit
+          });
+
+        });
+      });
+
+    </script>
+
   </head>
 
 
   <body>
-    <nav class="navbar navbar-light bg-light">
+    <nav id="nav" class="navbar navbar-light bg-light">
       <a class="navbar-brand">Chess</a>
       <form class="form-inline">
         <a href="./anmelden.php">
@@ -35,6 +66,9 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
       </form>
     </nav>
     <div class="background">
+
+
+      <div id="error_message" class="error-message"></div>
 
       <?php
       // TODO: Change to AJAX
@@ -60,11 +94,15 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
               </div> </html>';
       }
       ?>
+  <form id="form" action="Login_logic.php" method="post">
+
+    <p id="error_message" class="error-message"></p>
 
       <div class=register>
+
         <div class=rectangle>
           <div class=login>
-            <form action="Login_logic.php" method="post">
+
               <div class="form-group">
                 <label for="nickname">Nickname</label>
                 <input type="nickname" class="form-control" id="nickname" name="nickname" required>
@@ -73,7 +111,7 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
                 <label for="password">Passwort</label>
                 <input type="password" class="form-control" id="password" name="password" required>
               </div>
-              <button type="submit" class="btn btn-outline-success">Login</button>
+              <button id="SignInSubmit" type="submit" class="btn btn-outline-success">Login</button>
             </form>
           </div>
         </div>

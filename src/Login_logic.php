@@ -3,8 +3,12 @@ session_start();
 
 require 'DBConnection.php';
 
-$nickname = $_POST['nickname'];
-$password = $_POST['password'];
+//check if submit button was clicked
+if(isset($_POST['SignInSubmit'])){
+   $nickname = $_POST['nickname'];
+   $password = $_POST['password'];
+
+   $error=false;
 
 
 $sql = $connection->prepare("SELECT Passwort FROM Nutzer WHERE Nickname=?");
@@ -24,22 +28,45 @@ if ($sql_result->num_rows == 1) {
     if (password_verify($password, $result['Passwort']) == true) {
       $_SESSION['loggedIn'] = true;
       $_SESSION['nickname'] = $nickname;
-      header('location: http://localhost/chess/src/Lobby/lobby.php');
+      //header('location: http://localhost/chess/src/Lobby/lobby.php');
     } else {
       //if password is wrong
-      header('location: landing.php?error=FalscheEingabe');
+      //header('location: landing.php?error=FalscheEingabe');
+      echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Falsche Eingabe!</strong> Passwort/Nickname ist Falsch.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> </html>';
+      $error = true;
       session_destroy();
     }
   } else {
     //if there is a Problem with the array
-    header('location: landing.php?Fehler');
+    //header('location: landing.php?Fehler');
     session_destroy();
   }
 } else {
   //if nickname does not exist
-  header('location: landing.php?error=FalscheEingabe');
+  //header('location: landing.php?error=FalscheEingabe');
+  $error = true;
   session_destroy();
 }
 
 $connection->close();
 $sql->close();
+
+}
+?>
+
+<script>
+
+  var error ="<?php echo $error ?>";
+
+  if(error == true){
+    $("#error_message").addClass("alert alert-warning alert-dismissible fade show");
+  }else{
+    window.location.replace("http://localhost/chess/src/Lobby/lobby.php");
+  }
+
+</script>

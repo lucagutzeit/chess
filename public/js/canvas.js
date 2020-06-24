@@ -311,7 +311,7 @@ function setMovesOfChesspieces(boardstate) {
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {
             if (boardstate[i][j] != "") {
-                boardstate[i][j].setMoves(boardstate, PLAYER_COLOR);
+                boardstate[i][j].setMoves(boardstate);
             }
         }
     }

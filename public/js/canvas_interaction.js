@@ -83,7 +83,9 @@ function clickEvaluation(event, boardstate, playerColor) {
         }
         resetHighlighting();
         highlightChesspiece(boardstate[coordY][coordX]);
+		if(boardstate[coordY][coordX].color == playerColor){
         CURRENTLY_SELECTED_FIELD = [coordY, coordX];
+		}
     } else if (CURRENTLY_SELECTED_FIELD.length != 0) {
         var moves =
             boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]]

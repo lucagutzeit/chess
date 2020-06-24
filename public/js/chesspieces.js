@@ -15,8 +15,8 @@ class Pawn extends Chesspiece {
         this.hasMoved = false;
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate);
     }
 }
 class Rook extends Chesspiece {
@@ -26,8 +26,8 @@ class Rook extends Chesspiece {
         this.hasMoved = false;
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate);
     }
 }
 class Knight extends Chesspiece {
@@ -36,8 +36,8 @@ class Knight extends Chesspiece {
         super(row, column, color, name);
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate);
     }
 }
 class Bishop extends Chesspiece {
@@ -46,8 +46,8 @@ class Bishop extends Chesspiece {
         super(row, column, color, name);
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate, );
     }
 }
 class Queen extends Chesspiece {
@@ -56,8 +56,8 @@ class Queen extends Chesspiece {
         super(row, column, color, name);
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate, );
     }
 }
 class King extends Chesspiece {
@@ -68,7 +68,7 @@ class King extends Chesspiece {
         this.inCheck = false;
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate);
     }
 }
