@@ -13,7 +13,6 @@ $(document).ready(function () {
     lobbyWs.onmessage = (ev) => {
         var response = JSON.parse(ev.data);
 
-        console.log(response);
         switch (response.type) {
             case "update":
                 updateLobby(response.add, response.remove);
@@ -94,8 +93,8 @@ function sendChatMessage() {
     messageInput.val(""); //reset message input
 }
 
-function updateLobby(gamesNew, gamesRemoved) {
-    $.each(gamesNew, function (index, value) {
+function updateLobby(gamesAdded, gamesRemoved) {
+    $.each(gamesAdded, function (index, value) {
         addGame(value);
     });
     $.each(gamesRemoved, function (index, value) {
@@ -104,22 +103,29 @@ function updateLobby(gamesNew, gamesRemoved) {
 }
 
 function addGame({ id, name }) {
-    let container = $("#lobby_container");
+    var container = $("#lobby_container");
 
-    let gameCard = `<div class="Karte">
-        <div class="card" id="${id}" style="width: 18rem;">
+    var gameCard = `<div class="Karte">
+        <div class="card" id="card${id}" style="width: 18rem;">
             <img src="../../public/img/Schachbrett.jpeg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"> ${name} </h5>
-                <a href="#" class="btn btn-outline-success">Beitreten</a>
+                <button id="button${id}" class="btn btn-outline-success">Beitreten</button>
             </div>
         </div>
     </div>`;
 
     container.append(gameCard);
+
+    var selector = `#button${id}`;
+    $(selector).click(() => {
+        $.post("joinGame.php", id, (url) => {
+            location.href = url;
+        });
+    });
 }
 
 function removeGame({ id }) {
-    var gameCard = $(`${id}`);
+    var gameCard = $(`card${id}`);
     gameCard.parentNode.removeChild(gameCard);
 }
