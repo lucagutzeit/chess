@@ -32,9 +32,11 @@
           <label for="inputEmail">Email</label>
           <input type="email" class="form-control" id="inputEmail" name="inputEmail" required>
 
+        <P id="error-message">
           <div class="invalid-feedback">
             Die gewünschte Email ist bereits registriert!
           </div>
+        </p>
 
         </div>
           <div class="form-group col-md-5">
@@ -50,7 +52,7 @@
           </label>
         </div>
       </div>
-      <button type="submit" class="btn btn-outline-success">Registrieren</button>
+      <button id="SignUpSubmit" type="submit" class="btn btn-outline-success">Registrieren</button>
     </form>
 
 </div>
@@ -60,7 +62,7 @@
 
     $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     //check if there is a String after the URL. If so the user gets an error message
-    if (strpos($Url, "email=exist")==true){  
+    if (strpos($Url, "email=exist")==true){
       echo '<script>$("#inputEmail").addClass("is-invalid")</script>';
     }
     if (strpos($Url, "nickname=exist")==true){
