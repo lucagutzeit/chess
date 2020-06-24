@@ -304,9 +304,8 @@ class Board {
             }
         }
     }
-    //end
 }
-
+//initializes/updates the Moves-Array from all Chesspieces
 function setMovesOfChesspieces(boardstate) {
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {
@@ -326,6 +325,7 @@ function setMovesOfChesspieces(boardstate) {
         }
     }
 }
+//resets the Moves-Array from all Chesspieces
 function resetMovesOfChesspieces(boardstate) {
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {
@@ -337,7 +337,6 @@ function resetMovesOfChesspieces(boardstate) {
 }
 /**
  * Draws a piece onto the chessboard
- *
  * @returns
  * TODO:
  */
@@ -576,7 +575,10 @@ function drawField(rowCount, columnCount) {
 }
 
 $(document).ready(function () {
+	//initializes the Board
     var board = new Board();
+	//draws the Board and all Pieces 
+	//initializes all relevant variables
     board.drawBoard();
     board.initializeBoardstate();
 
@@ -584,35 +586,33 @@ $(document).ready(function () {
     var ctx = canvas.getContext("2d");
     var height = canvas.height;
     var width = canvas.width;
-
+	// adds an Event Listener for Evaluation of Clicks on the Chessboard
     canvas.addEventListener("click", function () {
         clickEvaluation(event, board.boardstate, PLAYER_COLOR);
     });
     board.drawBoardstate();
-
+	// evaluates a message from the Server
     gameWS.onmessage = function (ev) {
         var response = JSON.parse(ev.data);
 
         switch (response.type) {
+			// On Start of the game initializes MY_TURN 
             case "gameStart": {
                 PLAYER_COLOR = response.playerColor;
                 if (PLAYER_COLOR === "white") {
                     MY_TURN = true;
                 }
                 setMovesOfChesspieces(board.boardstate);
-                /*   IMGDATA_BEFORE_HIGHLIGHTING = ctx.getImageData(
-                    0,
-                    0,
-                    width,
-                    height
-                ); */
                 break;
             }
+			// After Enemy moves his Chesspiece
             case "chesspieceMove": {
+			// gets Coords for Chesspiece move 
                 var yBefore = response.yBefore,
                     xBefore = response.xBefore,
                     yAfter = response.yAfter,
                     xAfter = response.xAfter,
+			// gets if own King is in danger
                     kingName =
                         PLAYER_COLOR === "black" ? "blackKing" : "whiteKing";
                 board.boardstate.forEach((element) => {
@@ -623,6 +623,7 @@ $(document).ready(function () {
                         ? (king.inCheck = response.inCheck)
                         : null;
                 });
+				//moves Chesspiece
                 moveChesspiece(
                     board.boardstate,
                     yAfter,
@@ -633,12 +634,14 @@ $(document).ready(function () {
                 MY_TURN = true;
                 break;
             }
+			// when game Ends
+			// remove eventListener and add Redirection after click on the Chessboard
             case "gameOver": {
 				canvas.removeEventListener("click", function () {
 				clickEvaluation(event, board.boardstate, PLAYER_COLOR);
 				});
 				canvas.addEventListener("click",function (){
-					location.replace("http://localhost/chess/src/landing.php");
+					location.replace("http://localhost/chess/src/lobby/lobby.php");
 				});
                 if (response.winner === PLAYER_COLOR) {
                     MY_TURN = false;
