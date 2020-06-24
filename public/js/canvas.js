@@ -634,6 +634,12 @@ $(document).ready(function () {
                 break;
             }
             case "gameOver": {
+				canvas.removeEventListener("click", function () {
+				clickEvaluation(event, board.boardstate, PLAYER_COLOR);
+				});
+				canvas.addEventListener("click",function (){
+					location.replace("http://localhost/chess/src/landing.php");
+				});
                 if (response.winner === PLAYER_COLOR) {
                     MY_TURN = false;
                     var img = new Image();
