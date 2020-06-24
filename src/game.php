@@ -23,33 +23,22 @@
     ?>
 
    <div class="container">
-     <div class="row">
-       <div class="col-3">
-         <div clas="Figuren">
-           Figuren
-         </div>
-       </div>
+     <!--      <div class="Figuren col-3 row ">
+       Figuren
+     </div> -->
 
-       <div class="col-9">
-         <div class="Brett">
-           <div class="Brett_rectangel">
-             <?php include 'chessboard.php' ?>
-           </div>
-         </div>
-       </div>
+     <div id="board">
+       <?php include 'chessboard.php' ?>
      </div>
+   </div>
 
-     <!-- <div class="row">
+   <!-- <div class="row">
        <div class="col-12">
          <div class="game_chat">
            chat
          </div>
        </div>
      </div> -->
-
-
-   </div>
-   </div>
 
 
  </body>

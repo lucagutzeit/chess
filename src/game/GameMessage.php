@@ -11,6 +11,8 @@ class GameMessage extends Message
     private $moveAfter;
     private $inCheck;
 
+    private $winner;
+
     public function __construct(string $type)
     {
         parent::__construct();
@@ -111,6 +113,24 @@ class GameMessage extends Message
     }
 
     /**
+     * Getter for winner.
+     * @return string winner
+     */
+    public function getWinner()
+    {
+        return $this->winner;
+    }
+
+    /**
+     * Setter for winner.
+     * @param string winner Can be "white" or "black"
+     */
+    public function setWinner(string $winner)
+    {
+        $this->winner = $winner;
+    }
+
+    /**
      * 
      */
     public function mask()
@@ -131,6 +151,8 @@ class GameMessage extends Message
                 $arr['yAfter'] = $moveAfter[1];
                 $arr['inCheck'] = $this->getInCheck();
                 break;
+            case 'gameOver':
+                $arr['winner'] = $this->getWinner();
             default:
                 printf("%s is not an supportyed type for GameMessage", $this->type);
                 return false;

@@ -120,8 +120,8 @@ abstract class ClientGroup
     public function sendToAll(Message $msg)
     {
         $msg->mask();
+        $maskedMessage = $msg->getMaskedMessage();
         foreach ($this->clientSockets as $client) {
-            $maskedMessage = $msg->getMaskedMessage();
             if (!socket_write($client, $maskedMessage, strlen($maskedMessage))) {
                 printf("Error:\n%s", socket_strerror(socket_last_error()));
             }

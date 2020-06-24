@@ -73,11 +73,10 @@ class GameGroup extends ClientGroup
     {
         $jsonData = json_decode($msg->getUnmaskedMessage());
 
-        $receivingSockets = array_diff($sockets, [$senderSocket]);
-
         // If key black socket white. Und andersrum.
         switch ($jsonData->type) {
             case 'chesspieceMove':
+                $receivingSockets = array_diff($sockets, [$senderSocket]);
                 $xBefore = $jsonData->xBefore;
                 $yBefore = $jsonData->yBefore;
                 $xAfter = $jsonData->xAfter;
@@ -85,6 +84,8 @@ class GameGroup extends ClientGroup
                 $enemyInCheck = $jsonData->enemyInCheck;
                 $this->sendMoveMessage($receivingSockets, $xBefore, $yBefore, $xAfter, $yAfter, $enemyInCheck);
                 break;
+            case 'gameOver':
+                $this->sendGameOverMessage($jsonData->winner);
         }
     }
 
@@ -158,25 +159,22 @@ class GameGroup extends ClientGroup
     }
 
     /**
+     * Sends a message containing
+     * @param string "black"|"white" color of the winner. 
+     */
+    public function sendGameOverMessage($winner)
+    {
+        $msg = new GameMessage('gameOver');
+        $msg->setWinner($winner);
+
+        $this->sendToAll($msg);
+    }
+
+    /**
      * 
      */
     public function sendErrorMessage(string $reason)
     {
         # code...
     }
-
-    /**
-     * Get the sockets on which a message can be read. 
-     * @return array Returns an array with sockets that can be read. 
-     */
-    /* public function getReadableSockets()
-    {
-        $changed = array($this->socketWhite, $this->socketBlack);
-        if (!empty($changed)) {
-            socket_select($changed, $null, $null, 0);
-            return  $changed;
-        } else {
-            return array();
-        }
-    } */
 }

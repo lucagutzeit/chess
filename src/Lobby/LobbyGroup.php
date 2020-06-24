@@ -32,6 +32,15 @@ class LobbyGroup extends ClientGroup
     }
 
     /**
+     * Setter for openGames.
+     * @param array openGames
+     */
+    public function setOpenGames(array $openGames)
+    {
+        $this->openGames = $openGames;
+    }
+
+    /**
      * Gets the games data from the Db provided in dbConnection.
      * @return array Returns an array with all open games.
      */
@@ -106,6 +115,8 @@ class LobbyGroup extends ClientGroup
             $msg = $this->createUpdateMessage($gamesAdded, $gamesRemoved);
             $this->sendToAll($msg);
         }
+
+        $this->openGames = $openGamesNew;
     }
 
     /**

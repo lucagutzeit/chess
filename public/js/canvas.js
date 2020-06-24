@@ -616,11 +616,12 @@ $(document).ready(function () {
                     kingName =
                         PLAYER_COLOR === "black" ? "blackKing" : "whiteKing";
                 board.boardstate.forEach((element) => {
-                    if (element != "") {
-                        if (element.name === kingName) {
-                            element.inCheck = response.inCheck;
-                        }
-                    }
+                    var king = element.find(
+                        (element) => element.name === kingName
+                    );
+                    king != undefined
+                        ? (king.inCheck = response.inCheck)
+                        : null;
                 });
                 moveChesspiece(
                     board.boardstate,

@@ -1,11 +1,7 @@
-/**
- * clickEvaluation, moveChesspiece,
- */
-
 // saves the last Selected Chesspiece-coordinates
 var CURRENTLY_SELECTED_FIELD = [];
 
-// Handles ighlighting and Moving of Chesspieces
+// Handles highlighting and moving of Chesspieces
 function clickEvaluation(event, boardstate, playerColor) {
     // killswitch for Cheating in enemies Turn
     if (MY_TURN === false) {
@@ -22,16 +18,16 @@ function clickEvaluation(event, boardstate, playerColor) {
     }
 
     // mouse Coordinates
-    var mouseCoordX = 0;
-    var mouseCoordY = 0;
-    mouseCoordX = event.clientX;
-    mouseCoordY = event.clientY;
+    var offset = $("#board").offset();
+    var top = offset.top;
+    var left = offset.left;
+
+    var mouseCoordX = event.clientX - left;
+    var mouseCoordY = event.clientY - top;
 
     // converts mouse Coordinates into boardstate-coordinates
-    var coordX = 0;
-    var coordY = 0;
-    coordX = Math.floor(mouseCoordX / (canvas.width / 8));
-    coordY = Math.floor(mouseCoordY / (canvas.height / 8));
+    var coordX = Math.floor(mouseCoordX / (canvas.width / 8));
+    var coordY = Math.floor(mouseCoordY / (canvas.height / 8));
 
     //check if chesspiece is clicked
     if (boardstate[coordY][coordX] != "") {
@@ -225,6 +221,16 @@ function amICheckmate(boardstate, playerColor) {
                         //TODO: end Game.
                         if (boardstate[i][j].inCheck == true) {
                             console.log(`You Lost the Game: ${playerColor}`);
+                            gameWS.send(
+                                JSON.stringify({
+                                    type: "gameOver",
+                                    loser: playerColor,
+                                    winner:
+                                        playerColor === "white"
+                                            ? "black"
+                                            : "white",
+                                })
+                            );
                         }
                     }
                 }
