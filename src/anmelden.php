@@ -9,12 +9,37 @@
     <title>
       Anmeldung
     </title>
+
+    <script>
+      $(document).ready(function(){
+        $("form").submit(function(e){
+          //disable the action in the form tag
+          e.preventDefault();
+          var inputName = $("#inputName").val();
+          var inputEmail = $("#inputEmail").val();
+          var inputPassword = $("#inputPassword").val();
+          var SignUpSubmit = $("#SignUpSubmit").val();
+
+          var error_message = $("#error_message").val();
+
+          $(".error-message").load("Login_logic.php", {
+            //first name is the post name, second is the value
+            nickname: nickname,
+            password: password,
+            SignInSubmit: SignInSubmit
+          });
+
+        });
+      });
+
+    </script>
+
   </head>
 <body>
 
 <div class="anmelden">
 
-  <form class="container" action= "anmelden_logic.php" method="post">
+  <form id="form" class="container" action= "anmelden_logic.php" method="post">
 
       <div class="form-row">
         <div class="form-group col-md-12">

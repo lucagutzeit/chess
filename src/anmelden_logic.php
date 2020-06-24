@@ -1,9 +1,12 @@
 <?php
   require 'DBConnection.php';
 
+if(isset($_POST['SignUpSubmit'])){
   $nickname = $_POST['inputName'];
   $email = $_POST['inputEmail'];
   $password = password_hash($_POST['inputPassword'], PASSWORD_DEFAULT);
+
+  $error=false;
 
   //looking if email exist
   $sql_email = $connection->prepare('SELECT * FROM Nutzer WHERE Email=?');
@@ -22,13 +25,17 @@ if($sql_email_results->num_rows == 0 && $sql_nickname_results->num_rows ==0 ){
     $sql_insert = $connection->prepare('INSERT INTO Nutzer(Nickname, Email, Passwort) VALUES(?,?,?)');
     $sql_insert->bind_param('sss', $nickname, $email, $password);
     $sql_insert->execute();
-    header('location: landing.php');
+    //header('location: landing.php');
   }else{
     if($sql_email_results->num_rows == 1 ){
-      header('location: anmelden.php?email=exist');
+      //header('location: anmelden.php?email=exist');
+      //// TODO: echo
+      $error=true;
     }
     else if ($sql_nickname_results->num_rows ==1) {
-      header('location: anmelden.php?nickname=exist');
+      //header('location: anmelden.php?nickname=exist');
+      //// TODO: echo
+      $error=true;
     }
   }
 
@@ -36,4 +43,18 @@ if($sql_email_results->num_rows == 0 && $sql_nickname_results->num_rows ==0 ){
   $sql_email->close();
   $sql_nickname->close();
   $sql_insert->close();
+
+}
  ?>
+
+ <script>
+
+   var error ="<?php echo $error ?>";
+
+   if(error == true){
+     $("#error_message").addClass("alert alert-warning alert-dismissible fade show");
+   }else{
+     window.location.replace("http://localhost/chess/src/Lobby/lobby.php");
+   }
+
+ </script>

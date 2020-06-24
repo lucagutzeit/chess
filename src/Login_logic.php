@@ -49,6 +49,12 @@ if ($sql_result->num_rows == 1) {
 } else {
   //if nickname does not exist
   //header('location: landing.php?error=FalscheEingabe');
+  echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Falsche Eingabe!</strong> Passwort/Nickname ist Falsch.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> </html>';
   $error = true;
   session_destroy();
 }
