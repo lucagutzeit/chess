@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../config/config.php';
 require ROOT . 'src/WebSocket/Message.php';
 class GameMessage extends Message
 {
@@ -152,9 +153,11 @@ class GameMessage extends Message
                 $arr['inCheck'] = $this->getInCheck();
                 break;
             case 'gameOver':
+                $arr['type'] = "gameOver";
                 $arr['winner'] = $this->getWinner();
+                break;
             default:
-                printf("%s is not an supportyed type for GameMessage", $this->type);
+                printf("%s is not a supported type for GameMessage", $this->type);
                 return false;
         }
 

@@ -121,12 +121,12 @@ abstract class ClientGroup
     {
         $msg->mask();
         $maskedMessage = $msg->getMaskedMessage();
-        foreach ($this->clientSockets as $client) {
+        foreach ($this->getClientSockets() as $client) {
             if (!socket_write($client, $maskedMessage, strlen($maskedMessage))) {
                 printf("Error:\n%s", socket_strerror(socket_last_error()));
+            } else {
+                printf("Send to %s\n", $client);
             }
-
-            printf("Send to %s\n", $client);
         }
     }
 
