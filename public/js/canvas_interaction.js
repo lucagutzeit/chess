@@ -18,12 +18,9 @@ function clickEvaluation(event, boardstate, playerColor) {
     }
 
     // mouse Coordinates
-    var offset = $("#board").offset();
-    var top = offset.top;
-    var left = offset.left;
-
-    var mouseCoordX = event.clientX - left;
-    var mouseCoordY = event.clientY - top;
+    var boundRect = canvas.getBoundingClientRect();
+    var mouseCoordX = event.clientX - boundRect.left;
+    var mouseCoordY = event.clientY - boundRect.top;
 
     // converts mouse Coordinates into boardstate-coordinates
     var coordX = Math.floor(mouseCoordX / (canvas.width / 8));
