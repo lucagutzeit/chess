@@ -633,6 +633,25 @@ $(document).ready(function () {
                 MY_TURN = true;
                 break;
             }
+			case "gameOver":{
+				if(response.winner === PLAYER_COLOR) 
+				{
+					MY_TURN = false;
+					var img = new Image();
+					img.onload = function{
+						ctx.drawImage(img,0,0,width,height);
+						img.src = "..\\resources\\skins\\Victory.png";
+					}	 
+				} else {
+					MY_TURN = false;
+					var img = new Image();
+					img.onload = function{
+						ctx.drawImage(img,0,0,width,height);
+						img.src = "..\\resources\\skins\\Defeat.png";
+					} 
+				}
+				
+			}
         }
     };
 });
