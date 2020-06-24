@@ -23,7 +23,7 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!-- Bootstrap -->
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
 
     <!-- JavaScript -->
@@ -33,7 +33,6 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
     <link rel="stylesheet" href="../../public/css/chat.css" />
 
     <!--Bootstrap JS-->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
@@ -42,7 +41,7 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
 
   <body>
 
-  <?php
+    <?php
 
     $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     if (strpos($Url, "name=exists") == true) {
@@ -64,14 +63,14 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
             </div> </html>';
     }
 
-   ?>
+    ?>
 
 
     <div class="button">
-    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal">
-      new game
-    </button>
-  </div>
+      <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal">
+        new game
+      </button>
+    </div>
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -85,18 +84,18 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
           </div>
           <div class="modal-body">
 
-            <form class="container" action= "newGame_logic.php" method="post">
-                <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <label for="inputName">Name</label>
-                    <input type="text" class="form-control" id= "game_name" name="game_name" required>
+            <form class="container" action="newGame_logic.php" method="post">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="inputName">Name</label>
+                  <input type="text" class="form-control" id="game_name" name="game_name" required>
 
-                  </div>
                 </div>
-                <div class="modal-footer">
+              </div>
+              <div class="modal-footer">
                 <button type="submit" class="btn btn-outline-success">create</button>
-                </div>
-              </form>
+              </div>
+            </form>
 
           </div>
         </div>

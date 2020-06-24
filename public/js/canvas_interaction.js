@@ -1,15 +1,15 @@
-// saves the last Selected Chesspiece-coordinates
+//saves the last Selected Chesspiece-coordinates
 var CURRENTLY_SELECTED_FIELD = [];
 
-// Handles highlighting and moving of Chesspieces
+//Handles highlighting and moving of Chesspieces
 function clickEvaluation(event, boardstate, playerColor) {
-    // killswitch for Cheating in enemies Turn
+    //killswitch for Cheating in enemies Turn
     if (MY_TURN === false) {
         return;
     }
 
     var canvas = $("#chess")[0];
-    // saves the ImgData before any clickEvaluation or chesspiecemoves Appear
+    //saves the ImgData before any clickEvaluation or chesspiecemoves Appear
     if (IMGDATA_BEFORE_HIGHLIGHTING === false) {
         var ctx = canvas.getContext("2d");
         var height = canvas.height;
@@ -17,12 +17,12 @@ function clickEvaluation(event, boardstate, playerColor) {
         IMGDATA_BEFORE_HIGHLIGHTING = ctx.getImageData(0, 0, width, height);
     }
 
-    // mouse Coordinates
+    //mouse Coordinates
     var boundRect = canvas.getBoundingClientRect();
     var mouseCoordX = event.clientX - boundRect.left;
     var mouseCoordY = event.clientY - boundRect.top;
 
-    // converts mouse Coordinates into boardstate-coordinates
+    //converts mouse Coordinates into boardstate-coordinates
     var coordX = Math.floor(mouseCoordX / (canvas.width / 8));
     var coordY = Math.floor(mouseCoordY / (canvas.height / 8));
 
@@ -81,14 +81,18 @@ function clickEvaluation(event, boardstate, playerColor) {
                 }
             }
         }
+		//only get used when no Chesspiece is Selected and clicked on
+		//selects chesspiece if its has the same color then the player
         resetHighlighting();
         highlightChesspiece(boardstate[coordY][coordX]);
+		if(boardstate[coordY][coordX].color == playerColor){
         CURRENTLY_SELECTED_FIELD = [coordY, coordX];
+		}
     } else if (CURRENTLY_SELECTED_FIELD.length != 0) {
         var moves =
             boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]]
                 .moves;
-        // actually moving the Chespiece and sending the message to the other Player
+        //actually moving the Chespiece and sending the message to the other Player
         if (
             moves.find(
                 (element) => element[0] === coordY && element[1] === coordX
@@ -119,7 +123,7 @@ function clickEvaluation(event, boardstate, playerColor) {
         }
     }
 }
-// Highlights the chosen Chesspiece
+//Highlights the chosen Chesspiece
 function highlightChesspiece(chesspiece) {
     var canvas = $("#chess")[0];
     var ctx = canvas.getContext("2d");
@@ -137,7 +141,7 @@ function highlightChesspiece(chesspiece) {
         ctx.stroke();
     }
 }
-// Resets all Highlighting
+//Resets all Highlighting
 function resetHighlighting() {
     if (IMGDATA_BEFORE_HIGHLIGHTING !== false) {
         var canvas = $("#chess")[0];
@@ -145,7 +149,7 @@ function resetHighlighting() {
         ctx.putImageData(IMGDATA_BEFORE_HIGHLIGHTING, 0, 0);
     }
 }
-// Moves a Chesspiece from before to After
+//Moves a Chesspiece from before to After
 function moveChesspiece(boardstate, yAfter, xAfter, yBefore, xBefore) {
     //initialize some variables for later usage
     var canvas = $("#chess")[0];
@@ -201,7 +205,7 @@ function sendMessage(yAfter, xAfter, yBefore, xBefore, enemyInCheck) {
     };
     gameWS.send(JSON.stringify(moveMessage));
 }
-// CHeck if a player is Checkmate after he done his Turn.
+//Check if a player is Checkmate after he done his Turn.
 function amICheckmate(boardstate, playerColor) {
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {

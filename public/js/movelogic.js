@@ -6,56 +6,50 @@ var ENEMY_IN_CHECK = false;
  * @returns
  * TODO:
  */
-function moveLogic(chesspiece, boardstate, playerColor) {
-    if (playerColor === "white") {
-        switch (chesspiece.name) {
-            case "whitePawn":
-                getWhitePawnMoves(chesspiece, boardstate);
-                break;
-            case "whiteRook":
-                getRookMoves(chesspiece, boardstate);
-                break;
-            case "whiteKnight":
-                getKnightMoves(chesspiece, boardstate);
-                break;
-            case "whiteBishop":
-                getBishopMoves(chesspiece, boardstate);
-                break;
-            case "whiteQueen":
-                getQueenMoves(chesspiece, boardstate);
-                break;
-            case "whiteKing":
-                getKingMoves(chesspiece, boardstate);
-                break;
-            default:
-                break;
-        }
-    } else if (playerColor === "black") {
-        switch (chesspiece.name) {
-            case "blackPawn":
-                getBlackPawnMoves(chesspiece, boardstate);
-                break;
-            case "blackRook":
-                getRookMoves(chesspiece, boardstate);
-                break;
-            case "blackKnight":
-                getKnightMoves(chesspiece, boardstate);
-                break;
-            case "blackBishop":
-                getBishopMoves(chesspiece, boardstate);
-                break;
-            case "blackQueen":
-                getQueenMoves(chesspiece, boardstate);
-                break;
-            case "blackKing":
-                getKingMoves(chesspiece, boardstate);
-                break;
-            default:
-                break;
-        }
-    }
+function moveLogic(chesspiece, boardstate) {
+	switch (chesspiece.name) {
+		case "whitePawn":
+			getWhitePawnMoves(chesspiece, boardstate);
+			break;
+		case "whiteRook":
+			getRookMoves(chesspiece, boardstate);
+			break;
+		case "whiteKnight":
+			getKnightMoves(chesspiece, boardstate);
+			break;
+		case "whiteBishop":
+			getBishopMoves(chesspiece, boardstate);
+			break;
+		case "whiteQueen":
+			getQueenMoves(chesspiece, boardstate);
+			break;
+		case "whiteKing":
+			getKingMoves(chesspiece, boardstate);
+			break;
+		case "blackPawn":
+			getBlackPawnMoves(chesspiece, boardstate);
+			break;
+		case "blackRook":
+			getRookMoves(chesspiece, boardstate);
+			break;
+		case "blackKnight":
+			getKnightMoves(chesspiece, boardstate);
+			break;
+		case "blackBishop":
+			getBishopMoves(chesspiece, boardstate);
+			break;
+		case "blackQueen":
+			getQueenMoves(chesspiece, boardstate);
+			break;
+		case "blackKing":
+			getKingMoves(chesspiece, boardstate);
+			break;
+		default:
+			break;
+	
+	}
 }
-
+//fills moves-Array from all Black Pawns
 function getBlackPawnMoves(chesspiece, boardstate) {
     var row = chesspiece.row;
     var column = chesspiece.column;
@@ -103,6 +97,7 @@ function getBlackPawnMoves(chesspiece, boardstate) {
         }
     }
 }
+//fills moves-Array from all white Pawns
 function getWhitePawnMoves(chesspiece, boardstate) {
     var row = chesspiece.row;
     var column = chesspiece.column;
@@ -151,6 +146,7 @@ function getWhitePawnMoves(chesspiece, boardstate) {
         }
     }
 }
+//fills moves-Array from all Rooks
 function getRookMoves(chesspiece, boardstate) {
     var row = chesspiece.row;
     var column = chesspiece.column;
@@ -269,6 +265,7 @@ function getRookMoves(chesspiece, boardstate) {
         }
     }
 }
+//fills moves-Array from all Bishops
 function getBishopMoves(chesspiece, boardstate) {
     var row = chesspiece.row;
     var column = chesspiece.column;
@@ -385,6 +382,7 @@ function getBishopMoves(chesspiece, boardstate) {
         }
     }
 }
+//fills moves-Array from all Knights
 function getKnightMoves(chesspiece, boardstate) {
     var row = chesspiece.row;
     var column = chesspiece.column;
@@ -584,6 +582,7 @@ function getKnightMoves(chesspiece, boardstate) {
         counter++;
     }
 }
+//fills moves-Array from all Queens using Rook and Bishop functions
 function getQueenMoves(chesspiece, boardstate) {
     // be a good IT student and recycle code
     getRookMoves(chesspiece, boardstate);
@@ -595,6 +594,7 @@ function getQueenMoves(chesspiece, boardstate) {
     // make a nice new array with both bishop and rook moves
     chesspiece.moves = tempMoves.concat(tempMoves2);
 }
+//fills moves-Array from all Kings
 function getKingMoves(chesspiece, boardstate) {
     var row = chesspiece.row;
     var column = chesspiece.column;
@@ -758,6 +758,9 @@ function getKingMoves(chesspiece, boardstate) {
         counter++;
     }
 }
+//Checks if a King is in Check 
+//if own King is in Check after own Turn the game ends
+//otherwhise ENEMY_IN_CHECK is used to inform the enemy that his King is in Check
 function isKingInCheck(chesspiece, boardstate) {
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {

@@ -52,7 +52,7 @@ class LobbyGroup extends ClientGroup
 
         $openGames = array();
         while ($result = $sql_results->fetch_assoc()) {
-            $openGames[$result['id']] = ["name" => $result['name'], 'player1' => $result['player1'], 'player2' => $result['player2']];
+            $openGames[$result['id']] = ["id" => $result['id'], "name" => $result['name'], 'player1' => $result['player1'], 'player2' => $result['player2']];
         }
 
         return $openGames;

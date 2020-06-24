@@ -1,3 +1,7 @@
+/**
+ *	Chesspiece Class
+ *	@params row int ,column int, color string, name string, moves array
+ */
 class Chesspiece {
     constructor(row, column, color, name) {
         this.row = row;
@@ -8,6 +12,11 @@ class Chesspiece {
         this.moves = [];
     }
 }
+/**
+ *	Pawn Chesspiece Class 
+ *	extend Chesspiece Class
+ *	@param hasMoved boolean
+ */
 class Pawn extends Chesspiece {
     //constructor
     constructor(row, column, color, name) {
@@ -15,10 +24,15 @@ class Pawn extends Chesspiece {
         this.hasMoved = false;
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate);
     }
 }
+/**
+ *	Rook Chesspiece Class 
+ *	extend Chesspiece Class
+ *	@param hasMoved boolean
+ */
 class Rook extends Chesspiece {
     //constructor
     constructor(row, column, color, name) {
@@ -26,40 +40,58 @@ class Rook extends Chesspiece {
         this.hasMoved = false;
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate);
     }
 }
+/**
+ *	Knight Chesspiece Class 
+ *	extend Chesspiece Class
+ */
 class Knight extends Chesspiece {
     //constructor
     constructor(row, column, color, name) {
         super(row, column, color, name);
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate);
     }
 }
+/**
+ *	Bishop Chesspiece Class 
+ *	extend Chesspiece Class
+ */
 class Bishop extends Chesspiece {
     //constructor
     constructor(row, column, color, name) {
         super(row, column, color, name);
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate, );
     }
 }
+/**
+ *	Queen Chesspiece Class 
+ *	extend Chesspiece Class
+ */
 class Queen extends Chesspiece {
     //constructor
     constructor(row, column, color, name) {
         super(row, column, color, name);
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate, );
     }
 }
+/**
+ *	King Chesspiece Class 
+ *	extend Chesspiece Class
+ *	@param hasMoved boolean
+ *	@param inCheck boolean
+ */
 class King extends Chesspiece {
     //constructor
     constructor(row, column, color, name) {
@@ -68,7 +100,7 @@ class King extends Chesspiece {
         this.inCheck = false;
     }
 
-    setMoves(boardstate, playerColor) {
-        moveLogic(this, boardstate, playerColor);
+    setMoves(boardstate) {
+        moveLogic(this, boardstate);
     }
 }
