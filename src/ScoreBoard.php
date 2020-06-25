@@ -4,7 +4,7 @@ session_start();
 if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true)) {
   header("Location: http://localhost/chess/src/landing.php");
 } else {
-  require '../DBConnection.php';
+  require './DBConnection.php';
 ?>
 
   <!DOCTYPE html>
@@ -26,7 +26,7 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
 
     <?php
 
-    $sql = $connection->prepare("SELECT Nickname FROM Nutzer");
+    $sql = $connection->prepare("SELECT * FROM Nutzer");
     $sql->execute();
     $sql_result = $sql->get_result();
 
@@ -36,8 +36,8 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
       <table class="table table-dark">
         <thead>
           <tr>
-            <th scope="col">Nickname</th>
-            <th scope="col">Score</th>
+            <th scope="col">User</th>
+            <th scope="col">Win/Lose</th>
           </tr>
         </thead>
         <tbody>
@@ -49,7 +49,7 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
 
             <tr>
               <td><?php echo $results['Nickname'] ?></td>
-              <td><?php echo $results['Nickname'] ?></td>
+              <td><?php echo $results['win'] . '/' . $results['lose'] ?></td>
             </tr>
 
           <?php
