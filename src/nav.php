@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -27,6 +28,10 @@
           <a class="nav-link" href="./game.php">Games</a>
         </li>
       </ul>
+
+      
+        <a id="username" class="nickname" ><?php echo $_SESSION['nickname'];?></a>
+
 
       <form class="form-inline my-2 my-lg-0">
         <form class="form-inline">
