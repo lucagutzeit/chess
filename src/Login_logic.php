@@ -10,7 +10,7 @@ if (isset($_POST['SignInSubmit'])) {
 
   $error = false;
 
-
+//Select the passwort from DB where the nickname is equal to what the user has entered
   $sql = $connection->prepare("SELECT Passwort FROM Nutzer WHERE Nickname=?");
   $sql->bind_param('s', $nickname);
   $sql->execute();
@@ -39,11 +39,7 @@ if (isset($_POST['SignInSubmit'])) {
         $error = true;
         session_destroy();
       }
-    } else {
-      //if there is a Problem with the array
-      //header('location: landing.php?Fehler');
-      session_destroy();
-    }
+
   } else { //if there is a Problem with the array
     header('location: landing.php?Fehler');
     session_destroy();
@@ -62,7 +58,9 @@ if (isset($_POST['SignInSubmit'])) {
 
 $connection->close();
 $sql->close();
+}
 ?>
+
 
 <script>
   //value is equal to $error from php
@@ -71,5 +69,5 @@ $sql->close();
   if (error == false) {
     window.location.replace("lobby.php");
 
-  }
+}
 </script>
