@@ -31,11 +31,22 @@ class Game extends ClientGroup
      */
     public function addUser(User $user)
     {
-        if ($this->playerWhite == null) {
+        if ($this->playerBlack != null) {
+            if ($this->playerBlack->getName() === $user->getName()) {
+                $this->playerBlack->setSocket($user->getSocket());
+            }
+        } elseif ($this->playerWhite != null) {
+            if ($this->playerWhite->getName() === $user->getName()) {
+                $this->playerWhite->setSocket($user->getSocket());
+            }
+        } elseif ($this->playerWhite == null) {
             $this->playerWhite = $user;
 
+            $name = $user->getName();
+            $id = $user->getGameId();
+
             $sql = $this->dbConnection->prepare('UPDATE games SET starter = ? WHERE id = ?');
-            $sql->bind_param('si', $user->getName(), $this->getId());
+            $sql->bind_param('si', $name, $id);
             $sql->execute();
             $sql->close();
             return true;

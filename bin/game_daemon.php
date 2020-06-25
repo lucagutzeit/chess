@@ -33,6 +33,7 @@ while (true) {
         // add the new user to the waiting users.
         $games->addWaitingUser(new User($newSocket, $requestArray));
     }
+    /*     $games->sendValidationRequestToAll(); */
     $games->updateWaitingUsers();
     $games->updateAllGames();
 }

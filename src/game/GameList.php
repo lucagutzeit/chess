@@ -39,21 +39,31 @@ class GameList extends ClientGroup
 
             if (!empty($socket)) {
                 $msg = $this->readMessage(array_pop($socket));
-                $msg->unmask();
-                $jsonData = json_decode($msg->getUnmaskedMessage());
-                if ($jsonData->type === 'id') {
-                    $user->setName($jsonData->name);
-                    $user->setGameId($jsonData->gameId);
-
-                    if ($this->addUserToGame($user, $jsonData->gameId)) {
+                if ($msg != false) {
+                    $msg->unmask();
+                    if ($msg->getOpcode() == '8') {
+                        socket_close(array_pop($socket));
                         $this->unwaitUser($user);
                     } else {
-                        $this->sendError($socket, "Wrong game id.");
+                        $jsonData = json_decode($msg->getUnmaskedMessage());
+                        if ($jsonData->type === 'id') {
+                            $name = $jsonData->name;
+                            $name = ltrim($name);
+                            $name = rtrim($name);
+                            $user->setName($name);
+                            $user->setGameId($jsonData->gameId);
+
+                            if ($this->addUserToGame($user, $jsonData->gameId)) {
+                                $this->unwaitUser($user);
+                            } else {
+                                $this->sendError($socket, "Wrong game id.");
+                            }
+                        } else {
+                            $this->sendError($socket, "Wrong message format");
+                            socket_close($socket);
+                            $this->unwaitUser($user);
+                        }
                     }
-                } else {
-                    $this->sendError($socket, "Wrong message format");
-                    socket_close($socket);
-                    $this->unwaitUser($user);
                 }
             }
         }
@@ -79,12 +89,14 @@ class GameList extends ClientGroup
      */
     public function addUserToGame(User $user, int $gameId)
     {
+        $username = $user->getName();
         $userCheck = $this->dbConnection->prepare('SELECT * FROM games WHERE id=? AND (player1=? OR player2 = ?)');
-        $userCheck->bind_param('iss', $gameId, $user->getName(), $user->getName());
+        $userCheck->bind_param('iss', $gameId, $username, $username);
         $userCheck->execute();
         $result = $userCheck->get_result();
         if ($result->num_rows != 1) {
             $this->sendError($user->getSocket(), "Wrong game id.");
+            return false;
         } else {
             if (isset($this->runningGames[$gameId])) {
                 $this->runningGames[$gameId]->addUser($user);
@@ -93,6 +105,7 @@ class GameList extends ClientGroup
                 $newGame->addUser($user);
                 $this->runningGames[$gameId] = $newGame;
             }
+            return true;
         }
     }
 
@@ -105,11 +118,28 @@ class GameList extends ClientGroup
     public function unwaitUser(User $user)
     {
         $toRemove = array_search($user, $this->waitingUser);
-        if ($toRemove != false) {
+        if ($toRemove !== false) {
             unset($this->waitingUser[$toRemove]);
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function sendValidationRequestToAll()
+    {
+        $msg = new Message();
+        $arr['type'] = "validate";
+        $msg->setUnmaskedMessage(json_encode($arr));
+        $msg->mask();
+        $maskedMessage = $msg->getMaskedMessage();
+        foreach ($this->waitingUser as $user) {
+            $socket = $user->getSocket();
+            if (!socket_write($socket, $maskedMessage, strlen($maskedMessage))) {
+                printf("Error:\n%s", socket_strerror(socket_last_error()));
+            } else {
+                printf("Send to %s\n", $socket);
+            }
         }
     }
 }

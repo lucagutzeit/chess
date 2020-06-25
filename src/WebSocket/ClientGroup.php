@@ -125,8 +125,6 @@ abstract class ClientGroup
         foreach ($this->getClientSockets() as $client) {
             if (!socket_write($client, $maskedMessage, strlen($maskedMessage))) {
                 printf("Error:\n%s", socket_strerror(socket_last_error()));
-            } else {
-                printf("Send to %s\n", $client);
             }
         }
     }
@@ -159,7 +157,7 @@ abstract class ClientGroup
         $msg->setUnmaskedMessage(json_encode($arr));
         $msg->mask();
         $maskedMessage = $msg->getMaskedMessage();
-        if (!socket_write($socket, $maskedMessage, strlen($maskedMessage))) {
+        if (!socket_write(array_pop($socket), $maskedMessage, strlen($maskedMessage))) {
             printf("Error:\n%s", socket_strerror(socket_last_error()));
         } else {
             printf("Send to %s\n", $socket);
