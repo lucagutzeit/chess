@@ -682,4 +682,14 @@ $(document).ready(function () {
             }
         }
     };
+	gameWS.onopen = function(){
+		var urlParams = new URLSearchParams(window.location.search);
+	gameWS.send(
+		JSON.stringify({
+		type: "id",
+		name : document.getElementById("username")
+		gameId : urlParams.get("id");
+			})
+		);	
+	}
 });
