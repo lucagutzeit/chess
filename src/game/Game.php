@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/config.php';
-require ROOT . 'src\WebSocket\ClientGroup.php';
+require_once ROOT . 'src\WebSocket\ClientGroup.php';
 require ROOT . 'src\game\GameMessage.php';
 
 class Game extends ClientGroup

@@ -1,7 +1,7 @@
 <?php
-require __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 require ROOT . 'src/game/User.php';
-require ROOT . 'src/WebSocket/ClientGroup.php';
+require_once ROOT . 'src/WebSocket/ClientGroup.php';
 require ROOT . 'src/game/Game.php';
 class GameList extends ClientGroup
 {
