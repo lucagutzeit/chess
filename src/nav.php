@@ -35,6 +35,10 @@ session_start()
         </li>
       </ul>
 
+
+      <a id="username" class="nickname"><?php echo $_SESSION['nickname']; ?></a>
+
+
       <form class="form-inline my-2 my-lg-0">
         <form class="form-inline">
           <a href='./logout.php'> <button type="button" class="btn btn-outline-danger">Abmelden</button>

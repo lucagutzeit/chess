@@ -52,23 +52,25 @@
     align-items: center;
     text-align: center;
     padding-top: 50px;
-    padding-left: 200px;
-    padding-right: 200px;
+    padding-left: 10px;
+
 }
 
 .chat_include {
-    height: 100%;
-    width: 100%;
+  /*  height: 100%;
+    width: 100%;*/
     /*z-index: 1; */
     /*  top: 0; */
     /**  right: 0;*/
-    float: right;
+    /*float: right;
     overflow-x: hidden;
     overflow-y: hidden;
     position: fixed;
     padding-top: 50px;
     float: right;
-    padding-left: 50px;
+    padding-left: 50px;*/
+    padding-top: 50px;
+    padding-right: 10px;
 }
 
 .container {
@@ -90,4 +92,14 @@
 .form-error{
   color:  red;
   text-align: center;
+}
+
+.chat_include2{
+  padding-right: 10px;
+  padding-top: 50px;
+}
+
+.nickname{
+  padding-right: 50px;
+  color: #9c92a2;
 }

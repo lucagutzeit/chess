@@ -102,18 +102,23 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
       </div>
     </div>
 
-
+  <div class="row">
+    <div class="col-7" >
 
     <div id="lobby_container">
 
     </div>
-    <div class="row">
+    </div>
 
-      <div class="col-12" <div class="chat_include">
+
+
+      <div class="col-5" >
+      <div class="chat_include">
         <?php
         include './chat/index.php'
         ?>
       </div>
+    </div>
     </div>
 
 
