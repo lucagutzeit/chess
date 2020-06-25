@@ -28,8 +28,10 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
     $sql->execute();
     $result = $sql->get_result()->fetch_assoc();
     $id = $result['id'];
+
+    $_SESSION['gameId'] = $id;
     header("location: ../game.php?id=$id");
   } else {
-    header('location: lobby.php?name=exists');
+    header('location: ../lobby.php?name=exists');
   }
 }

@@ -1,35 +1,64 @@
 <?php
 require_once __DIR__ . '/../../config/config.php';
-require ROOT . 'src\WebSocket\ClientGroup.php';
+require_once ROOT . 'src\WebSocket\ClientGroup.php';
 require ROOT . 'src\game\GameMessage.php';
 
-class GameGroup extends ClientGroup
+class Game extends ClientGroup
 {
     private $dbConnection;
-    private $socketWhite;
-    private $socketBlack;
+    private $playerWhite;
+    private $playerBlack;
 
     /**
      * Constructor
-     * @param string id Identifier of this game.
-     * @param sql_smnt Connection to a database.
+     * @param int id Identifier of this game.
+     * @param sql_smnt dbConnection Connection to a database.
      */
-    public function __construct(string $id)
+    public function __construct(int $id, $dbConnection)
     {
         parent::__construct($id);
+        $this->dbConnection = $dbConnection;
+        $this->playerWhite = null;
+        $this->playerBlack = null;
     }
 
     /**
-     * Adds a new client to the game. Cannot have more then 2 connected clients.
-     * @return bool Returns false if tehre are already 2 connected clients. True if the client has been added.
+     * Adds a new User to the game. Cannot have more then 2 user. 
+     * Sould a third user try to connected, a error message is send as response.
+     * @param User The user
+     * @return bool Returns false if tehre are already 2 connected user. 
+     * True if the user has been added.
      */
-    public function addClient($socket)
+    public function addUser(User $user)
     {
-        if ($this->clientCount() < 2) {
-            parent::addClient($socket);
+        if ($this->playerBlack != null) {
+            if ($this->playerBlack->getName() === $user->getName()) {
+                $this->playerBlack->setSocket($user->getSocket());
+                return;
+            }
+        } elseif ($this->playerWhite != null) {
+            if ($this->playerWhite->getName() === $user->getName()) {
+                $this->playerWhite->setSocket($user->getSocket());
+                return;
+            }
+        }
+
+        if ($this->playerWhite == null) {
+            $this->playerWhite = $user;
+
+            $name = $user->getName();
+            $id = $user->getGameId();
+
+            $sql = $this->dbConnection->prepare('UPDATE games SET starter = ? WHERE id = ?');
+            $sql->bind_param('si', $name, $id);
+            $sql->execute();
+            $sql->close();
+            return true;
+        } elseif ($this->playerBlack == null) {
+            $this->playerBlack = $user;
             return true;
         } else {
-            printf("Error: Game already full.");
+            $this->sendError($user->getSocket(), "This game is already full.");
             return false;
         }
     }
@@ -42,7 +71,7 @@ class GameGroup extends ClientGroup
         $changed = $this->getReadableSockets();
         if (!empty($changed)) {
 
-            foreach ($changed as $key => $socket) {
+            foreach ($changed as $socket) {
                 $msg = $this->readMessage($socket);
                 if ($msg != false) {
                     $msg->unmask();
@@ -89,7 +118,7 @@ class GameGroup extends ClientGroup
      */
     public function readyCheck()
     {
-        if ($this->clientCount() === 2) {
+        if ($this->playerBlack != null && $this->playerWhite != null) {
             return true;
         } else {
             return false;
@@ -121,7 +150,8 @@ class GameGroup extends ClientGroup
         $msg->mask();
 
         $maskedMsg = $msg->getMaskedMessage();
-        socket_write($this->socketWhite, $maskedMsg, strlen($maskedMsg));
+        $socketWhite = $this->playerWhite->getSocket();
+        socket_write($socketWhite, $maskedMsg, strlen($maskedMsg));
 
         // Prepare message for black player.
         $msg = new GameMessage("gameStart");
@@ -129,7 +159,8 @@ class GameGroup extends ClientGroup
         $msg->mask();
 
         $maskedMsg = $msg->getMaskedMessage();
-        socket_write($this->socketBlack, $maskedMsg, strlen($maskedMsg));
+        $socketBlack = $this->playerBlack->getSocket();
+        socket_write($socketBlack, $maskedMsg, strlen($maskedMsg));
 
         printf("Send start message to game %s.", $this->getId());
     }
@@ -165,10 +196,24 @@ class GameGroup extends ClientGroup
     }
 
     /**
-     * 
+     * Check if the any socket from a player is readable and returns an array with
+     * these readable sockets.
+     * @return array Returns an array with all sockets that can be read.
      */
-    public function sendErrorMessage(string $reason)
+    public function getReadableSockets()
     {
-        # code...
+        $changed = array();
+        $this->playerBlack != null ? $changed[] = $this->playerBlack->getSocket() : null;
+        $this->playerWhite != null ? $changed[] = $this->playerWhite->getSocket() : null;
+
+        if (!empty($changed)) {
+            socket_select($changed, $null, $null, 0);
+            if (!empty($changed)) {
+                socket_select($changed, $null, $null, 0);
+                return  $changed;
+            } else {
+                return array();
+            }
+        }
     }
 }

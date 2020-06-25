@@ -1,3 +1,9 @@
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -27,10 +33,13 @@
         <li class="nav-item">
           <a class="nav-link" href="./game.php">Games</a>
         </li>
-
       </ul>
 
-
+      <div class="navbar-item">
+        <div id="username" class="mr-sm-3 navbar-text nickname">
+          <?php echo $_SESSION['nickname']; ?>
+        </div>
+      </div>
 
       <form class="form-inline my-2 my-lg-0">
         <form class="form-inline">
@@ -40,9 +49,5 @@
       </form>
     </div>
 
-          <div id="username" class="nickname" >
-            <div class="rectangle_2">
-            <?php echo $_SESSION['nickname'];?>
-            </div>
-          </div>
+
   </nav>

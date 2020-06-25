@@ -19,6 +19,7 @@ if (isset($_SESSION['gameId'])) {
     $_SESSION['gameId'] = !$_GET['id'] ? header("location: game.php?id=" . $_SESSION['gameId']) : null;
   } else {
     header("location: game.php?id=" . $_SESSION['gameId']);
+    die;
   }
 }
 

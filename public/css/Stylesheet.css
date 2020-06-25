@@ -53,7 +53,6 @@
     text-align: center;
     padding-top: 50px;
     padding-left: 10px;
-
 }
 
 .chat_include {
@@ -77,27 +76,18 @@
     padding-top: 10px;
 }
 
-.form-error{
-  color:  red;
-  text-align: center;
+.form-error {
+    color: red;
+    text-align: center;
 }
 
-.chat_include2{
-  padding-right: 10px;
-  padding-top: 50px;
+.chat_include2 {
+    padding-right: 10px;
+    padding-top: 50px;
 }
 
-.nickname{
-  padding-right: 50px;
-  padding-left: 50px;
+/* .nickname {
+    padding-right: 50px;
 
-  text-align: center;
-  padding-top: 5px;
-
-}
-.rectangle_2{
-  border-radius: 10px;
-  height: 30px;
-  width: 90px;
-  background-color: #cfcfcf;
-}
+    padding-top: 5px;
+} */

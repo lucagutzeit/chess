@@ -125,15 +125,13 @@ abstract class ClientGroup
         foreach ($this->getClientSockets() as $client) {
             if (!socket_write($client, $maskedMessage, strlen($maskedMessage))) {
                 printf("Error:\n%s", socket_strerror(socket_last_error()));
-            } else {
-                printf("Send to %s\n", $client);
             }
         }
     }
 
     /**
-     * 
-     * @return array 
+     * Get all readable sockets.
+     * @return array Returns an array with all sockets that can be read.
      */
     public function getReadableSockets()
     {
@@ -143,6 +141,26 @@ abstract class ClientGroup
             return  $changed;
         } else {
             return array();
+        }
+    }
+
+    /** 
+     * Send a error message at one socket.
+     * @param WebSocket Socket which the error should be send to.
+     * @param string Description of the error
+     */
+    public function sendError($socket, string $errorMsg)
+    {
+        $msg = new Message();
+        $arr['type'] = 'error';
+        $arr['description'] = $errorMsg;
+        $msg->setUnmaskedMessage(json_encode($arr));
+        $msg->mask();
+        $maskedMessage = $msg->getMaskedMessage();
+        if (!socket_write(array_pop($socket), $maskedMessage, strlen($maskedMessage))) {
+            printf("Error:\n%s", socket_strerror(socket_last_error()));
+        } else {
+            printf("Send to %s\n", $socket);
         }
     }
 }

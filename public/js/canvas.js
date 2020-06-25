@@ -679,19 +679,30 @@ $(document).ready(function () {
                     };
                     img.src = "..\\resources\\Defeat.png";
                 }
+                break;
             }
+            /*            case "validate":
+                var urlParams = new URLSearchParams(window.location.search);
+                gameWS.send(
+                    JSON.stringify({
+                        type: "id",
+                        name: document.getElementById("username").innerHTML,
+                        gameId: urlParams.get("id"),
+                    })
+                );
+                break; */
         }
     };
-	//sends identification message to backend when websocket is opened 
-	//contains Username and gameId 
-	gameWS.onopen = function(){
-		var urlParams = new URLSearchParams(window.location.search);
-	gameWS.send(
-		JSON.stringify({
-		type: "id",
-		name : document.getElementById("username")
-		gameId : urlParams.get("id");
-			})
-		);	
-	}
+    //sends identification message to backend when websocket is opened
+    //contains Username and gameId
+    gameWS.onopen = function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        gameWS.send(
+            JSON.stringify({
+                type: "id",
+                name: document.getElementById("username").innerHTML,
+                gameId: urlParams.get("id"),
+            })
+        );
+    };
 });
