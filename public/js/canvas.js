@@ -682,6 +682,8 @@ $(document).ready(function () {
             }
         }
     };
+	//sends identification message to backend when websocket is opened 
+	//contains Username and gameId 
 	gameWS.onopen = function(){
 		var urlParams = new URLSearchParams(window.location.search);
 	gameWS.send(
