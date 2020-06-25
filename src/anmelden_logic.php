@@ -16,7 +16,7 @@ if(isset($_POST['SignUpSubmit'])){
   $sql_email->execute();
   $sql_email_results = $sql_email->get_result();
 
-  /*looking if nickname exist*/
+  //looking if nickname exist
   $sql_nickname = $connection->prepare('SELECT * FROM Nutzer WHERE Nickname=?');
   $sql_nickname->bind_param('s', $nickname );
   $sql_nickname->execute();
@@ -27,10 +27,9 @@ if($sql_email_results->num_rows == 0 && $sql_nickname_results->num_rows ==0 ){
     $sql_insert = $connection->prepare('INSERT INTO Nutzer(Nickname, Email, Passwort) VALUES(?,?,?)');
     $sql_insert->bind_param('sss', $nickname, $email, $password);
     $sql_insert->execute();
-    //header('location: landing.php');
+
   }else{
     if($sql_email_results->num_rows == 1 ){
-      //header('location: anmelden.php?email=exist');
 
       echo '<html><div>
             Die gewünschte Email ist bereits registriert!
@@ -38,7 +37,6 @@ if($sql_email_results->num_rows == 0 && $sql_nickname_results->num_rows ==0 ){
       $error_email=true;
     }
     else if ($sql_nickname_results->num_rows ==1) {
-      //header('location: anmelden.php?nickname=exist');
 
       echo '<html><div>
             Der gewünschte Nickname ist bereits registriert!
@@ -58,8 +56,8 @@ if($sql_email_results->num_rows == 0 && $sql_nickname_results->num_rows ==0 ){
  <script>
 
    var error_email ="<?php echo $error_email ?>";
-    var error_nickname ="<?php echo $error_nickname ?>";
-   //
+   var error_nickname ="<?php echo $error_nickname ?>";
+
    if(error_email == true){
      $("#inputEmail").addClass("is-invalid");
    }else if(error_nickname == true){

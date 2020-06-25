@@ -70,18 +70,9 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
 
 
       <?php
-      // TODO: Change to AJAX
-      //Error Message when the nickname or the password is wrong
-      $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-      if (strpos($Url, "error=FalscheEingabe") == true) {
-        echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
-              <strong>Falsche Eingabe!</strong> Passwort/Nickname ist Falsch.
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              </button>
-              </div> </html>';
-      }
 
+
+      $Url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
       //Error Message if there is a Error wich is not caused by the user
       if (strpos($Url, "error=Fehler") == true) {
@@ -93,6 +84,8 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
               </div> </html>';
       }
       ?>
+
+
   <form id="form" action="Login_logic.php" method="post">
 
     <p id="error_message" class="error-message"></p>
@@ -117,6 +110,8 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
       </div>
     </div>
   </body>
+
+  
 <?php
   include 'footer.html';
 } ?>
