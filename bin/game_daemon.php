@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../config/config.php';
 require ROOT . 'src/WebSocket/ConnectionHandler.php';
 require ROOT . 'src/Websocket/Handshaker.php';
-require ROOT . 'src/game/GameGroup.php';
+require ROOT . 'src/game/GameList.php';
 require ROOT . 'src/DBConnection.php';
 
 $null = NULL;
@@ -14,10 +14,9 @@ print("Game daemon started\n\n");
 
 $chatConnections = new ConnectionHandler($host, $portGame);
 $handshaker = new Handshaker($protocols, [$host]);
-$game = new GameGroup("game1", $connection);
-while (true) {
-    $game->update();
+$games = new GameList($connection);
 
+while (true) {
     // Check for new connection request
     $newSocket = $chatConnections->receiveNewConnection($handshaker);
     if ($newSocket != false) {
@@ -31,12 +30,11 @@ while (true) {
         // Send response to the socket from which the request originates
         socket_write($newSocket, $response, strlen($response));
 
-        // add the new socket to the chat
-        if ($game->addClient($newSocket) && $game->readyCheck()) {
-            $game->decideColors();
-            $game->sendStartMessage();
-        }
+        // add the new user to the waiting users.
+        $games->addWaitingUser(new User($newSocket, $requestArray));
     }
+    $games->updateWaitingUsers();
+    $games->updateAllGames();
 }
 
 /**

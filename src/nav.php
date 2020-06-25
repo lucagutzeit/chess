@@ -1,3 +1,7 @@
+<?php
+session_start()
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -22,6 +26,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="./lobby.php">Lobby</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./game.php">Games</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="./game.php">Games</a>
