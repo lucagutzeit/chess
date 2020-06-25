@@ -2,7 +2,7 @@
 session_start();
 
 if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true)) {
-  header("Location: http://localhost/chess/src/landing.php");
+  header("Location: landing.php");
 } else {
   require '../DBConnection.php';
 
@@ -30,6 +30,6 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
     $id = $result['id'];
     header("location: ../game.php?id=$id");
   } else {
-    header('location: Lobby.php?name=exists');
+    header('location: lobby.php?name=exists');
   }
 }

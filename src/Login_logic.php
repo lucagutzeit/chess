@@ -69,7 +69,7 @@ $sql->close();
   var error = "<?php echo $error ?>";
 
   if (error == false) {
-    window.location.replace("http://localhost/chess/src/Lobby/lobby.php");
+    window.location.replace("lobby.php");
 
   }
 </script>

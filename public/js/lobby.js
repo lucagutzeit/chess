@@ -107,7 +107,7 @@ function addGame({ id, name }) {
 
     var gameCard = `<div class="Karte">
         <div class="card" id="card${id}" style="width: 18rem;">
-            <img src="../../public/img/Schachbrett.jpeg" class="card-img-top" alt="...">
+            <img src="../public/img/Schachbrett.jpeg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"> ${name} </h5>
                 <button id="button${id}" class="btn btn-outline-success">Beitreten</button>
@@ -119,7 +119,7 @@ function addGame({ id, name }) {
 
     var selector = `#button${id}`;
     $(selector).click(() => {
-        $.post("joinGame.php", { id: id }, (url) => {
+        $.post("lobby/joinGame.php", { id: id }, (url) => {
             location.href = url;
         });
     });
@@ -127,5 +127,5 @@ function addGame({ id, name }) {
 
 function removeGame({ id }) {
     var gameCard = $(`#card${id}`);
-    gameCard.parentNode.removeChild(gameCard);
+    /* gameCard.parentNode.removeChild(gameCard); */
 }
