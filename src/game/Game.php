@@ -34,12 +34,16 @@ class Game extends ClientGroup
         if ($this->playerBlack != null) {
             if ($this->playerBlack->getName() === $user->getName()) {
                 $this->playerBlack->setSocket($user->getSocket());
+                return;
             }
         } elseif ($this->playerWhite != null) {
             if ($this->playerWhite->getName() === $user->getName()) {
                 $this->playerWhite->setSocket($user->getSocket());
+                return;
             }
-        } elseif ($this->playerWhite == null) {
+        }
+
+        if ($this->playerWhite == null) {
             $this->playerWhite = $user;
 
             $name = $user->getName();
@@ -146,7 +150,8 @@ class Game extends ClientGroup
         $msg->mask();
 
         $maskedMsg = $msg->getMaskedMessage();
-        socket_write($this->socketWhite, $maskedMsg, strlen($maskedMsg));
+        $socketWhite = $this->playerWhite->getSocket();
+        socket_write($socketWhite, $maskedMsg, strlen($maskedMsg));
 
         // Prepare message for black player.
         $msg = new GameMessage("gameStart");
@@ -154,7 +159,8 @@ class Game extends ClientGroup
         $msg->mask();
 
         $maskedMsg = $msg->getMaskedMessage();
-        socket_write($this->socketBlack, $maskedMsg, strlen($maskedMsg));
+        $socketBlack = $this->playerBlack->getSocket();
+        socket_write($socketBlack, $maskedMsg, strlen($maskedMsg));
 
         printf("Send start message to game %s.", $this->getId());
     }

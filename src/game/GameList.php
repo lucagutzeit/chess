@@ -42,8 +42,6 @@ class GameList extends ClientGroup
                 if ($msg != false) {
                     $msg->unmask();
                     if ($msg->getOpcode() == '8') {
-                        socket_close(array_pop($socket));
-                        $this->unwaitUser($user);
                     } else {
                         $jsonData = json_decode($msg->getUnmaskedMessage());
                         if ($jsonData->type === 'id') {

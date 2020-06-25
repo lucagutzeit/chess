@@ -40,7 +40,8 @@ if (!isset($_SESSION['gameId'])) {
         $sql->execute();
         $_SESSION['gameId'] = $id;
     } else {
-        echo "?error='gameFull'";
+        echo "lobby.php?error='gameFull'";
+        die;
     }
 
     /**
@@ -51,6 +52,7 @@ if (!isset($_SESSION['gameId'])) {
         $sql->bind_param('i', $id);
         $sql->execute();
     }
+    echo "game.php?id=$id";
 } else {
     /**
      * Redirect to the right game.
