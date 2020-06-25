@@ -6,6 +6,8 @@ var NUMBER_OF_COLUMNS = 8;
 var PLAYER_COLOR = false;
 var MY_TURN = false;
 var IM_CHECKMATE = false;
+var TURN_COUNT = null;
+var ONLY_ONCE_HELP = false;
 
 // saves the ImageData for resetting clickEvaluation
 var IMGDATA_BEFORE_HIGHLIGHTING = false;
@@ -603,10 +605,25 @@ $(document).ready(function () {
                     MY_TURN = true;
                 }
                 setMovesOfChesspieces(board.boardstate);
+				//displays Player Color
+				document.getElementById("color").append(PLAYER_COLOR);
+				//game Start message
+				document.getElementById("secondRow").append("Game has Started!");
+				//initializes TURN_COUNT
+				TURN_COUNT = 1;
+				document.getElementById("turncount").innerHTML = "Your Turn is Turn nr. #" + TURN_COUNT;
                 break;
             }
 			// After Enemy moves his Chesspiece
             case "chesspieceMove": {
+				TURN_COUNT++;
+				if(ONLY_ONCE_HELP === false && PLAYER_COLOR == "black"){
+					TURN_COUNT--;
+					ONLY_ONCE_HELP = true;
+				} else {
+					document.getElementById("secondRow").innerHTML = "";
+				}
+				document.getElementById("turncount").innerHTML = "Your Turn is Turn nr. #" + TURN_COUNT;
 			// gets Coords for Chesspiece move 
                 var yBefore = response.yBefore,
                     xBefore = response.xBefore,

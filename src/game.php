@@ -36,6 +36,15 @@
        <div class="col-sm"></div>
        <div class="col-sm" id="board">
          <?php include 'chessboard.php' ?>
+		<div class = "color" id="color">
+			Color:
+		</div>
+		<div class = "secondRow" id="secondRow">
+			
+		</div>
+		<div class = "turncount" id="turncount">
+		
+		</div>
        </div>
        <div class="col-sm"></div>
      </div>
@@ -43,8 +52,6 @@
    <!--      <div class="Figuren col-3 row ">
        Figuren
      </div> -->
-
-
    </div>
 
    <!-- <div class="row">
