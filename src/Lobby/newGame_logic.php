@@ -32,6 +32,6 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
     $_SESSION['gameId'] = $id;
     header("location: ../game.php?id=$id");
   } else {
-    header('location: lobby.php?name=exists');
+    header('location: ../lobby.php?name=exists');
   }
 }
