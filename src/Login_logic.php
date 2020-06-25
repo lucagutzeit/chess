@@ -24,14 +24,13 @@ if (isset($_POST['SignInSubmit'])) {
     // Checks if passwort exists in $result
     if (isset($result['Passwort'])) {
 
-    // Validates password
-    if (password_verify($password, $result['Passwort']) == true) {
-      $_SESSION['loggedIn'] = true;
-      $_SESSION['nickname'] = $nickname;
+      // Validates password
+      if (password_verify($password, $result['Passwort']) == true) {
+        $_SESSION['loggedIn'] = true;
+        $_SESSION['nickname'] = $nickname;
+      } else { //if password is wrong
 
-    } else { //if password is wrong
-
-      echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>Falsche Eingabe!</strong> Passwort/Nickname ist Falsch.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -63,19 +62,13 @@ if (isset($_POST['SignInSubmit'])) {
 
 $connection->close();
 $sql->close();
-
-  $connection->close();
-  $sql->close();
-}
 ?>
 
 <script>
+  //value is equal to $error from php
   var error = "<?php echo $error ?>";
 
-  //value is equal to $error from php
-  var error ="<?php echo $error ?>";
-
-  if (error==false) {
+  if (error == false) {
     window.location.replace("http://localhost/chess/src/Lobby/lobby.php");
 
   }
