@@ -32,7 +32,7 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
 
     <script>
       $(document).ready(function(){
-        $("form").submit(function(e){
+        $("#form").submit(function(e){
           //disable the action in the form tag
           e.preventDefault();
           var nickname = $("#nickname").val();
@@ -41,7 +41,7 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
 
           var error_message = $("#error_message").val();
 
-          $(".error-message").load("Login_logic.php", {
+          $("#error_message").load("Login_logic.php", {
             //first name is the post name, second is the value
             nickname: nickname,
             password: password,
@@ -68,7 +68,6 @@ if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['l
     <div class="background">
 
 
-      <div id="error_message" class="error-message"></div>
 
       <?php
       // TODO: Change to AJAX

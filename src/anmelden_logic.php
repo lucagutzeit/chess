@@ -1,12 +1,14 @@
 <?php
   require 'DBConnection.php';
 
+//check if submit button was clicked
 if(isset($_POST['SignUpSubmit'])){
   $nickname = $_POST['inputName'];
   $email = $_POST['inputEmail'];
   $password = password_hash($_POST['inputPassword'], PASSWORD_DEFAULT);
 
-  $error=false;
+  $error_nickname=false;
+  $error_email=false;
 
   //looking if email exist
   $sql_email = $connection->prepare('SELECT * FROM Nutzer WHERE Email=?');
@@ -14,7 +16,7 @@ if(isset($_POST['SignUpSubmit'])){
   $sql_email->execute();
   $sql_email_results = $sql_email->get_result();
 
-  //looking if nickname exist
+  /*looking if nickname exist*/
   $sql_nickname = $connection->prepare('SELECT * FROM Nutzer WHERE Nickname=?');
   $sql_nickname->bind_param('s', $nickname );
   $sql_nickname->execute();
@@ -29,32 +31,41 @@ if($sql_email_results->num_rows == 0 && $sql_nickname_results->num_rows ==0 ){
   }else{
     if($sql_email_results->num_rows == 1 ){
       //header('location: anmelden.php?email=exist');
-      //// TODO: echo
-      $error=true;
+
+      echo '<html><div>
+            Die gewünschte Email ist bereits registriert!
+            </div></html>';
+      $error_email=true;
     }
     else if ($sql_nickname_results->num_rows ==1) {
       //header('location: anmelden.php?nickname=exist');
-      //// TODO: echo
-      $error=true;
+
+      echo '<html><div>
+            Der gewünschte Nickname ist bereits registriert!
+            </div></html>';
+      $error_nickname=true;
     }
   }
 
   $connection->close();
   $sql_email->close();
   $sql_nickname->close();
-  $sql_insert->close();
+
 
 }
  ?>
 
  <script>
 
-   var error ="<?php echo $error ?>";
-
-   if(error == true){
-     $("#error_message").addClass("alert alert-warning alert-dismissible fade show");
+   var error_email ="<?php echo $error_email ?>";
+    var error_nickname ="<?php echo $error_nickname ?>";
+   //
+   if(error_email == true){
+     $("#inputEmail").addClass("is-invalid");
+   }else if(error_nickname == true){
+     $("#inputName").addClass("is-invalid");
    }else{
-     window.location.replace("http://localhost/chess/src/Lobby/lobby.php");
+      window.location.replace("http://localhost/chess/src/Lobby/lobby.php");
    }
 
  </script>

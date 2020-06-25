@@ -86,3 +86,8 @@
     padding-left: 50px;
     padding-top: 10px;
 }
+
+.form-error{
+  color:  red;
+  text-align: center;
+}

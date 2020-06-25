@@ -2,9 +2,20 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="Stylesheet" href="../public/css/Stylesheet.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="./../public/js/anmelden.js"></script>
+
+    <link rel="Stylesheet" href="./../public/css/Stylesheet.css">
+
+    <!--jQuery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
 
     <title>
       Anmeldung
@@ -12,7 +23,7 @@
 
     <script>
       $(document).ready(function(){
-        $("form").submit(function(e){
+        $("#form").submit(function(e){
           //disable the action in the form tag
           e.preventDefault();
           var inputName = $("#inputName").val();
@@ -22,11 +33,12 @@
 
           var error_message = $("#error_message").val();
 
-          $(".error-message").load("Login_logic.php", {
+          $("#error_message").load("anmelden_logic.php", {
             //first name is the post name, second is the value
-            nickname: nickname,
-            password: password,
-            SignInSubmit: SignInSubmit
+            inputName: inputName,
+            inputEmail: inputEmail,
+            inputPassword: inputPassword,
+            SignUpSubmit: SignUpSubmit
           });
 
         });
@@ -41,27 +53,21 @@
 
   <form id="form" class="container" action= "anmelden_logic.php" method="post">
 
+
+
       <div class="form-row">
         <div class="form-group col-md-12">
           <label for="inputName">Nickname</label>
           <input type="text" class="form-control" id= "inputName" name="inputName" required>
-
-          <div class="invalid-feedback">
-            Der gewünschte Nickname ist bereits registriert!
-          </div>
-
         </div>
-      </div>
+        </div>
+
+
       <div class="form-row">
         <div class="form-group col-md-7">
           <label for="inputEmail">Email</label>
           <input type="email" class="form-control" id="inputEmail" name="inputEmail" required>
 
-        <P id="error-message">
-          <div class="invalid-feedback">
-            Die gewünschte Email ist bereits registriert!
-          </div>
-        </p>
 
         </div>
           <div class="form-group col-md-5">
@@ -78,6 +84,11 @@
         </div>
       </div>
       <button id="SignUpSubmit" type="submit" class="btn btn-outline-success">Registrieren</button>
+
+
+        <div id="error_message" class="form-error">
+
+        </div>
     </form>
 
 </div>
