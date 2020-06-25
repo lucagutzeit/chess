@@ -30,7 +30,7 @@ class ChatGroup extends ClientGroup
         if (!empty($changed)) {
 
             foreach ($changed as $socket) {
-                $msg = $this->receiveMessage($socket);
+                $msg = $this->readMessage($socket);
                 if ($msg != false) {
                     $msg->unmask();
                     switch ($msg->getOpcode()) {
@@ -38,8 +38,8 @@ class ChatGroup extends ClientGroup
                             $this->removeClient($socket);
                             break;
                         default:
-                            $msg->setType('usermsg');
-                            $msg->setColor($this->color);
+                            $data = json_decode($msg->getUnmaskedMessage());
+                            $msg = $this->createUserMessage($data->name, $data->message, $this->color);
                             $this->sendToAll($msg);
                             break;
                     }
@@ -49,31 +49,16 @@ class ChatGroup extends ClientGroup
     }
 
     /**
-     * @param WebSocket
-     * @return ChatMessage|false returns a new Message object or false if there is no new message on the socket.
+     * Creates a chat message send by an user.
+     * @return ChatMessage returns a populated caht message
      */
-    public function receiveMessage($socket)
+    public function createUserMessage(string $userName, string $message, string  $color)
     {
-        if (socket_recv($socket, $buf, 1024, 0) > 0) {
-            $receivedMsg = new ChatMessage();
-            $receivedMsg->setMaskedMessage($buf);
-            return $receivedMsg;
-        }
-        return false;
-    }
+        $msg = new ChatMessage('usermsg');
+        $msg->setUsername($userName);
+        $msg->setColor($color);
+        $msg->setChatMessage($message);
 
-    /**
-     * 
-     */
-    public function createUserMessage($name, $message, $color)
-    {
-        $jsonResponse = json_encode(array(
-            'type' => 'usermsg',
-            'name' => $name,
-            'message' => $message,
-            'color' => $color
-        ));
-
-        return $jsonResponse;
+        return $msg;
     }
 }

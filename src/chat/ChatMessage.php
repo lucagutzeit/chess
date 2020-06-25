@@ -11,8 +11,9 @@ class ChatMessage extends Message
     /**
      * Constructor.
      */
-    public function __construct()
+    public function __construct(string $type)
     {
+        $this->type = $type;
         parent::__construct();
     }
 

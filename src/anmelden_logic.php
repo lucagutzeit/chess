@@ -23,6 +23,7 @@ if($sql_email_results->num_rows == 0 && $sql_nickname_results->num_rows ==0 ){
     $sql_insert->bind_param('sss', $nickname, $email, $password);
     $sql_insert->execute();
     header('location: landing.php');
+    $sql_insert->close();
   }else{
     if($sql_email_results->num_rows == 1 ){
       header('location: anmelden.php?email=exist');
@@ -35,5 +36,3 @@ if($sql_email_results->num_rows == 0 && $sql_nickname_results->num_rows ==0 ){
   $connection->close();
   $sql_email->close();
   $sql_nickname->close();
-  $sql_insert->close();
- ?>

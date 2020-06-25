@@ -1,9 +1,15 @@
 <?php
-require 'DBConnection.php'
+session_start();
+
+if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true)) {
+  header("Location: http://localhost/chess/src/landing.php");
+} else {
+  require '../DBConnection.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+  <!DOCTYPE html>
+  <html lang="en" dir="ltr">
+
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="./../public/css/Stylesheet.css">
@@ -34,25 +40,26 @@ require 'DBConnection.php'
             <th scope="col">Score</th>
           </tr>
         </thead>
-      <tbody>
+        <tbody>
 
-               <?php
-                  while($results = $sql_result->fetch_assoc()){
+          <?php
+          while ($results = $sql_result->fetch_assoc()) {
 
-                   ?>
+          ?>
 
-                        <tr>
-                            <td><?php echo $results['Nickname']?></td>
-                            <td><?php echo $results['Nickname']?></td>
-                        </tr>
+            <tr>
+              <td><?php echo $results['Nickname'] ?></td>
+              <td><?php echo $results['Nickname'] ?></td>
+            </tr>
 
-                <?php
-                }
-                ?>
-                   </tbody>
-                   </table>
-                 </div>
+          <?php
+          }
+          ?>
+        </tbody>
+      </table>
+    </div>
 
-<?php
-  include 'footer.html'
- ?>
+  <?php
+  include 'footer.html';
+}
+  ?>

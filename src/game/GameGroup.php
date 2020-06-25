@@ -9,20 +9,14 @@ class GameGroup extends ClientGroup
     private $socketWhite;
     private $socketBlack;
 
-    private $playerOnTurn;
-    private $boardstate;
-
     /**
      * Constructor
      * @param string id Identifier of this game.
      * @param sql_smnt Connection to a database.
      */
-    public function __construct(string $id, $dbConnection)
+    public function __construct(string $id)
     {
         parent::__construct($id);
-
-        $this->dbConnection = $dbConnection;
-        $this->playerOnTurn = 0;
     }
 
     /**

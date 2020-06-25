@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../config/config.php';
 require ROOT . 'src/WebSocket/Message.php';
 class GameMessage extends Message
 {
-
+    // Type of message.
     private $type;
 
     private $playerColor;
@@ -14,6 +14,9 @@ class GameMessage extends Message
 
     private $winner;
 
+    /**
+     * Constructor
+     */
     public function __construct(string $type)
     {
         parent::__construct();

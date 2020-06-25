@@ -119,13 +119,13 @@ function addGame({ id, name }) {
 
     var selector = `#button${id}`;
     $(selector).click(() => {
-        $.post("joinGame.php", id, (url) => {
+        $.post("joinGame.php", { id: id }, (url) => {
             location.href = url;
         });
     });
 }
 
 function removeGame({ id }) {
-    var gameCard = $(`card${id}`);
+    var gameCard = $(`#card${id}`);
     gameCard.parentNode.removeChild(gameCard);
 }

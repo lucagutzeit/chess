@@ -72,6 +72,7 @@ abstract class ClientGroup
     public function removeClient($socket)
     {
         if (($key = array_search($socket, $this->clientSockets)) !== false) {
+            socket_close($socket);
             unset($this->clientSockets[$key]);
             return true;
         } else {
@@ -105,7 +106,7 @@ abstract class ClientGroup
      */
     public function readMessage($socket)
     {
-        if (socket_recv($socket, $buf, 1024, 0) >= 1) {
+        while (socket_recv($socket, $buf, 1024, 0) >= 1) {
             $receivedMsg = new Message();
             $receivedMsg->setMaskedMessage($buf);
             return $receivedMsg;

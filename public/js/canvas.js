@@ -11,7 +11,7 @@ var IM_CHECKMATE = false;
 var IMGDATA_BEFORE_HIGHLIGHTING = false;
 
 //websockets
-var wsUri = "ws://127.0.0.1:9090/bin/game_daemon.php";
+var wsUri = "ws://127.0.0.1:9090/game";
 var gameWS = new WebSocket(wsUri, "game");
 
 class Board {
@@ -634,12 +634,12 @@ $(document).ready(function () {
                 break;
             }
             case "gameOver": {
-				canvas.removeEventListener("click", function () {
-				clickEvaluation(event, board.boardstate, PLAYER_COLOR);
-				});
-				canvas.addEventListener("click",function (){
-					location.replace("http://localhost/chess/src/landing.php");
-				});
+                canvas.removeEventListener("click", function () {
+                    clickEvaluation(event, board.boardstate, PLAYER_COLOR);
+                });
+                canvas.addEventListener("click", function () {
+                    location.replace("http://localhost/chess/src/landing.php");
+                });
                 if (response.winner === PLAYER_COLOR) {
                     MY_TURN = false;
                     var img = new Image();

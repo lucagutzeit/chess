@@ -4,9 +4,9 @@ session_start();
 if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true)) {
   header("Location: http://localhost/chess/src/landing.php");
 } else {
-  require '../DBConnection.php';
+  require './DBConnection.php';
 
-  include '../nav.php';
+  include './nav.php';
 ?>
 
   <!DOCTYPE html>
@@ -15,7 +15,7 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
   <head>
     <meta charset="utf-8">
 
-    <link rel="Stylesheet" href="../../public/css/Stylesheet.css">
+    <link rel="Stylesheet" href="../public/css/Stylesheet.css">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -27,10 +27,10 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
 
     <!-- JavaScript -->
-    <script src="../../public/js/lobby.js"></script>
+    <script src="../public/js/lobby.js"></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../../public/css/chat.css" />
+    <link rel="stylesheet" href="../public/css/chat.css" />
 
     <!--Bootstrap JS-->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -84,7 +84,7 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
           </div>
           <div class="modal-body">
 
-            <form class="container" action="newGame_logic.php" method="post">
+            <form class="container" action="lobby/newGame_logic.php" method="post">
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="inputName">Name</label>
@@ -111,13 +111,13 @@ if (!(isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION[
 
       <div class="col-12" <div class="chat_include">
         <?php
-        include '../chat/index.php'
+        include './chat/index.php'
         ?>
       </div>
     </div>
 
 
   <?php
-  include '../footer.html';
+  include './footer.html';
 }
   ?>
