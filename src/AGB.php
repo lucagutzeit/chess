@@ -7,8 +7,7 @@
 </head>
 
 <body>
-  <h1>Hi</h1>
-  Wenn wir nicht zu Faul wären, würden Sie jetzt hier die Allgemeinen Geschäftsbedingungen finden.
+  Normalerweise würden Sie jetzt hier die Allgemeinen Geschäftsbedingungen finden.
 </body>
 
 </html>

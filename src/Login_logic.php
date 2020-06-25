@@ -24,15 +24,14 @@ if (isset($_POST['SignInSubmit'])) {
     // Checks if passwort exists in $result
     if (isset($result['Passwort'])) {
 
-      // Validates password
-      if (password_verify($password, $result['Passwort']) == true) {
-        $_SESSION['loggedIn'] = true;
-        $_SESSION['nickname'] = $nickname;
-        //header('location: http://localhost/chess/src/Lobby/lobby.php');
-      } else {
-        //if password is wrong
-        //header('location: landing.php?error=FalscheEingabe');
-        echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    // Validates password
+    if (password_verify($password, $result['Passwort']) == true) {
+      $_SESSION['loggedIn'] = true;
+      $_SESSION['nickname'] = $nickname;
+
+    } else { //if password is wrong
+
+      echo '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>Falsche Eingabe!</strong> Passwort/Nickname ist Falsch.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -46,12 +45,24 @@ if (isset($_POST['SignInSubmit'])) {
       //header('location: landing.php?Fehler');
       session_destroy();
     }
-  } else {
-    //if nickname does not exist
-    //header('location: landing.php?error=FalscheEingabe');
-    $error = true;
+  } else { //if there is a Problem with the array
+    header('location: landing.php?Fehler');
     session_destroy();
   }
+} else { //if nickname does not exist
+
+  echo  '<html> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Falsche Eingabe!</strong> Passwort/Nickname ist Falsch.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> </html>';
+  $error = true;
+  session_destroy();
+}
+
+$connection->close();
+$sql->close();
 
   $connection->close();
   $sql->close();
@@ -61,9 +72,11 @@ if (isset($_POST['SignInSubmit'])) {
 <script>
   var error = "<?php echo $error ?>";
 
-  if (error == true) {
-    $("#error_message").addClass("alert alert-warning alert-dismissible fade show");
-  } else {
+  //value is equal to $error from php
+  var error ="<?php echo $error ?>";
+
+  if (error==false) {
     window.location.replace("http://localhost/chess/src/Lobby/lobby.php");
+
   }
 </script>

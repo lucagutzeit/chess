@@ -98,9 +98,18 @@ if (!isset($_SESSION['gameId'])) {
       <div class="col-sm"></div>
       <div class="col-sm" id="board">
         <?php include 'chessboard.php' ?>
+        <div class="color" id="color">
+          Color:
+        </div>
+        <div id="secondRow"></div>
+        <div id="turncount"></div>
       </div>
       <div class="col-sm"></div>
     </div>
+  </div>
+  <!--      <div class="Figuren col-3 row ">
+       Figuren
+     </div> -->
   </div>
   <!--      <div class="Figuren col-3 row ">
  Figuren
