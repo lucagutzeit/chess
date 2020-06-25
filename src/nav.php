@@ -27,10 +27,9 @@
         <li class="nav-item">
           <a class="nav-link" href="./game.php">Games</a>
         </li>
+
       </ul>
 
-      
-        <a id="username" class="nickname" ><?php echo $_SESSION['nickname'];?></a>
 
 
       <form class="form-inline my-2 my-lg-0">
@@ -40,4 +39,10 @@
         </form>
       </form>
     </div>
+
+          <div id="username" class="nickname" >
+            <div class="rectangle_2">
+            <?php echo $_SESSION['nickname'];?>
+            </div>
+          </div>
   </nav>

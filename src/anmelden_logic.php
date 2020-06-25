@@ -10,7 +10,7 @@ if (isset($_POST['SignUpSubmit'])) {
   $error_nickname = false;
   $error_email = false;
 
-  //looking if email exist
+  //get email from DB to check if the input from user exist
   $sql_email = $connection->prepare('SELECT * FROM Nutzer WHERE Email=?');
   $sql_email->bind_param('s', $email);
   $sql_email->execute();
