@@ -16,7 +16,7 @@ function clickEvaluation(event, boardstate, playerColor) {
         var width = canvas.width;
         IMGDATA_BEFORE_HIGHLIGHTING = ctx.getImageData(0, 0, width, height);
     }
-
+	
     //mouse Coordinates
     var boundRect = canvas.getBoundingClientRect();
     var mouseCoordX = event.clientX - boundRect.left;
