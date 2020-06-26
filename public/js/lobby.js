@@ -1,7 +1,7 @@
-var lobbyWs = new WebSocket("ws://127.0.0.1:8080/lobby", "lobby");
-var chatWs = new WebSocket("ws://127.0.0.1:9001/chat", "chat");
-
 $(document).ready(function () {
+    var lobbyWs = new WebSocket("ws://127.0.0.1:8080/lobby", "lobby");
+    var chatWs = new WebSocket("ws://127.0.0.1:9001/chat", "chat");
+
     $("#send_btn")[0].addEventListener("click", function () {
         sendChatMessage();
     });

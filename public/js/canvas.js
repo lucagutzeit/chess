@@ -14,7 +14,7 @@ var IMGDATA_BEFORE_HIGHLIGHTING = false;
 
 //websockets
 var wsUri = "ws://127.0.0.1:9090/game";
-var gameWS = new WebSocket(wsUri, "game");
+var gameWS;
 
 class Board {
     // Constructor
@@ -577,6 +577,7 @@ function drawField(rowCount, columnCount) {
 }
 
 $(document).ready(function () {
+    gameWS = new WebSocket(wsUri, "game");
     //initializes the Board
     var board = new Board();
     //draws the Board and all Pieces
@@ -695,7 +696,7 @@ $(document).ready(function () {
     };
     //sends identification message to backend when websocket is opened
     //contains Username and gameId
-    gameWS.onopen = function () {
+    gameWS.addEventListener("open", () => {
         var urlParams = new URLSearchParams(window.location.search);
         gameWS.send(
             JSON.stringify({
@@ -704,5 +705,5 @@ $(document).ready(function () {
                 gameId: urlParams.get("id"),
             })
         );
-    };
+    });
 });

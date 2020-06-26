@@ -8,6 +8,7 @@ class Game extends ClientGroup
     private $dbConnection;
     private $playerWhite;
     private $playerBlack;
+    private $state;
 
     /**
      * Constructor
@@ -20,6 +21,7 @@ class Game extends ClientGroup
         $this->dbConnection = $dbConnection;
         $this->playerWhite = null;
         $this->playerBlack = null;
+        $this->state = 0;
     }
 
     /**
@@ -64,6 +66,18 @@ class Game extends ClientGroup
     }
 
     /**
+     * Gets all sockets from the connected users.
+     * @return array Returns an array with all connected sockets of this game
+     */
+    public function getAllConnectedSockets()
+    {
+        $allSockets = array();
+        $this->playerBlack != null ? $allSockets[] = $this->playerBlack->getSocket() : null;
+        $this->playerWhite != null ? $allSockets[] = $this->playerWhite->getSocket() : null;
+        return $allSockets;
+    }
+
+    /**
      * Checks for new incoming messages and handels them.
      */
     public function update()
@@ -77,10 +91,14 @@ class Game extends ClientGroup
                     $msg->unmask();
                     switch ($msg->getOpcode()) {
                         case '8':
-                            $this->removeClient($socket);
+                            $this->removeUser($socket);
+                            /**
+                             *  !! Victory goes to the one that did not disconnect. Remove after adding reconnect capabilities.
+                             */
+                            $this->playerBlack === null ? $this->sendGameOverMessage("white") : $this->sendGameOverMessage("black");
                             break;
                         case '1':
-                            $this->evaluateMessage($this->getClientSockets(), $socket, $msg);
+                            $this->evaluateMessage($this->getAllConnectedSockets(), $socket, $msg);
                             break;
                     }
                 }
@@ -109,6 +127,50 @@ class Game extends ClientGroup
                 break;
             case 'gameOver':
                 $this->sendGameOverMessage($jsonData->winner);
+
+                $sql_gameOver_select = $this->dbConnection->prepare('SELECT player1, player2 FROM games WHERE id=?');
+                $id = $this->getId();
+                $sql_gameOver_select->bind_param('i', $id);
+                $sql_gameOver_select->execute();
+                $result = $sql_gameOver_select->get_result();
+                $result = $result->fetch_assoc();
+                $sql_gameOver_select->close();
+
+                $jsonData->winner === "white" ? $name = $this->playerWhite->getName() : $name = $this->playerBlack->getName();
+                $result['player1'] === $name ? $state = 2 : $state = 3;
+                $sql_gameOver_update = $this->dbConnection->prepare('UPDATE games SET state = ? WHERE id=?');
+                $id = $this->getId();
+                $sql_gameOver_update->bind_param('ii', $state, $id);
+                $sql_gameOver_update->execute();
+                $sql_gameOver_update->close();
+
+                // Add a win to the stats of the winner.
+                $sql_winner_select = $this->dbConnection->prepare('SELECT win FROM nutzer WHERE Nickname=?');
+                $name = ($state === 2 ? $result['player1'] : $result['player2']);
+                $sql_winner_select->bind_param('s', $name);
+                $sql_winner_select->execute;
+                $result = $sql_winner_select->get_result();
+                $result = $result->fetch_assoc();
+                $win = $result['win'] + 1;
+                $sql_winner_select->close();
+                $sql_winner_update = $this->dbConnection->prepare('UPDATE nutzer SET win=? WHERE Nickname=?');
+                $sql_winner_update->bind_param('is', $win, $name);
+                $sql_winner_update->execute();
+                $sql_winner_update->close();
+
+                // Add a lose to the stats of the winner.
+                $sql_loser_select = $this->dbConnection->prepare('SELECT lose FROM nutzer WHERE Nickname=?');
+                $name = ($state === 2 ? $result['player2'] : $result['player1']);
+                $sql_loser_select->bind_param('s', $name);
+                $sql_loser_select->execute;
+                $result = $sql_winner_select->get_result();
+                $result = $result->fetch_assoc();
+                $lose = $result['lose'] + 1;
+                $sql_loser_select->close();
+                $sql_loser_update = $this->dbConnection->prepare('UPDATE nutzer SET win=? WHERE Nickname=?');
+                $sql_loser_update->bind_param('is', $lose, $name);
+                $sql_loser_update->execute();
+                $sql_loser_update->closer();
         }
     }
 
@@ -118,24 +180,13 @@ class Game extends ClientGroup
      */
     public function readyCheck()
     {
-        if ($this->playerBlack != null && $this->playerWhite != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Allocates the colors randomly between the players.
-     */
-    public function decideColors()
-    {
-        if (rand() % 2) {
-            $this->socketWhite = $this->getClientSockets()[1];
-            $this->socketBlack = $this->getClientSockets()[0];
-        } else {
-            $this->socketWhite = $this->getClientSockets()[0];
-            $this->socketBlack = $this->getClientSockets()[1];
+        if ($this->state === 0) {
+            if ($this->playerBlack != null && $this->playerWhite != null) {
+                $this->state = 1;
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -187,7 +238,7 @@ class Game extends ClientGroup
      * Sends a message containing
      * @param string "black"|"white" color of the winner. 
      */
-    public function sendGameOverMessage($winner)
+    public function sendGameOverMessage(string $winner)
     {
         $msg = new GameMessage('gameOver');
         $msg->setWinner($winner);
@@ -213,6 +264,42 @@ class Game extends ClientGroup
                 return  $changed;
             } else {
                 return array();
+            }
+        }
+    }
+
+    /**
+     * Removes and closes connected socket. Checks the connected players for that socket.
+     * @return bool Returns true if the socket is found and removed. False if not.
+     */
+    public function removeUser($socket)
+    {
+        if ($this->playerBlack != null) {
+            if ($this->playerBlack->getSocket() === $socket) {
+                $this->playerBlack = null;
+                socket_close($socket);
+                return true;
+            }
+        }
+
+        if ($this->playerWhite != null) {
+            if ($this->playerWhite->getSocket() === $socket) {
+                $this->playerWhite = null;
+                socket_close($socket);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function sendToAll(Message $msg)
+    {
+        $msg->mask();
+        $maskedMessage = $msg->getMaskedMessage();
+        foreach ($this->getAllConnectedSockets() as $client) {
+            if (!socket_write($client, $maskedMessage, strlen($maskedMessage))) {
+                printf("Error:\n%s", socket_strerror(socket_last_error()));
             }
         }
     }

@@ -1,6 +1,7 @@
-var wsUri = "ws://127.0.0.1:9001/bin/chat_daemon.php";
-var websocket = new WebSocket(wsUri, "chat");
 $(document).ready(function () {
+    var wsUri = "ws://127.0.0.1:9001/bin/chat_daemon.php";
+    var websocket = new WebSocket(wsUri, "chat");
+
     $("#send_btn")[0].addEventListener("click", function () {
         sendMessage();
     });
