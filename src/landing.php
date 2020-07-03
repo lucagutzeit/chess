@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['nickname']) && isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true) {
-  header('location: Lobby/lobby.php');
+  header('location: lobby.php');
 } else {
 ?>
   <!DOCTYPE html>

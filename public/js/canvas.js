@@ -201,7 +201,6 @@ class Board {
     /**
      * Prints the complete Boardstate
      *
-     * @returns
      * TODO: create Textures for black and white Pieces and include their path.
      */
     drawBoardstate() {
@@ -667,14 +666,14 @@ $(document).ready(function () {
                 });
                 if (response.winner === PLAYER_COLOR) {
                     MY_TURN = false;
-                    var img = new Image();
+                    let img = new Image();
                     img.onload = () => {
                         ctx.drawImage(img, 0, 0, width, height);
                     };
                     img.src = "..\\resources\\Victory.png";
                 } else {
                     MY_TURN = false;
-                    var img = new Image();
+                    let img = new Image();
                     img.onload = () => {
                         ctx.drawImage(img, 0, 0, width, height);
                     };

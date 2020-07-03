@@ -16,7 +16,7 @@ function clickEvaluation(event, boardstate, playerColor) {
         var width = canvas.width;
         IMGDATA_BEFORE_HIGHLIGHTING = ctx.getImageData(0, 0, width, height);
     }
-	
+
     //mouse Coordinates
     var boundRect = canvas.getBoundingClientRect();
     var mouseCoordX = event.clientX - boundRect.left;
@@ -81,13 +81,13 @@ function clickEvaluation(event, boardstate, playerColor) {
                 }
             }
         }
-		//only get used when no Chesspiece is Selected and clicked on
-		//selects chesspiece if its has the same color then the player
+        //only get used when no Chesspiece is Selected and clicked on
+        //selects chesspiece if its has the same color then the player
         resetHighlighting();
         highlightChesspiece(boardstate[coordY][coordX]);
-		if(boardstate[coordY][coordX].color == playerColor){
-        CURRENTLY_SELECTED_FIELD = [coordY, coordX];
-		}
+        if (boardstate[coordY][coordX].color == playerColor) {
+            CURRENTLY_SELECTED_FIELD = [coordY, coordX];
+        }
     } else if (CURRENTLY_SELECTED_FIELD.length != 0) {
         var moves =
             boardstate[CURRENTLY_SELECTED_FIELD[0]][CURRENTLY_SELECTED_FIELD[1]]
@@ -219,7 +219,6 @@ function amICheckmate(boardstate, playerColor) {
                         boardstate[i][j].name == "blackKing"
                     ) {
                         //Check if King is in Check after own Turn
-                        //TODO: end Game.
                         if (boardstate[i][j].inCheck == true) {
                             console.log(`You Lost the Game: ${playerColor}`);
                             gameWS.send(

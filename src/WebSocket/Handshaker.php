@@ -61,8 +61,4 @@ class Handshaker
 
         return $acceptHeader;
     }
-
-    public function verifyProtocol()
-    {
-    }
 }

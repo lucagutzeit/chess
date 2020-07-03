@@ -60,6 +60,6 @@ if (isset($_POST['SignUpSubmit'])) {
   } else if (error_nickname == true) {
     $("#inputName").addClass("is-invalid");
   } else {
-    window.location.replace("http://localhost/chess/src/Lobby/lobby.php");
+    window.location.replace("lobby.php");
   }
 </script>

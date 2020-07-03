@@ -25,7 +25,7 @@ class ConnectionHandler
      * Checks if there is a new Request on the socket, initiates a handshake and adds it
      * to $client with the subprotocol as its key.
      * 
-     * @return socket|null returns the accepted socket. Returns false , if there is no new connection 
+     * @return socket|false returns the accepted socket. Returns false , if there is no new connection 
      */
     public function receiveNewConnection()
     {
